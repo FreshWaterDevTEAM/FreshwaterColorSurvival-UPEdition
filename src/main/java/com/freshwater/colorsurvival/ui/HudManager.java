@@ -130,7 +130,7 @@ public final class HudManager {
         if (color != null && team != null) {
             int progress = card != null ? card.bestLineProgress(team) : 0;
             int completed = card != null ? card.completedCount(team) : 0;
-            set(obj, ChatColor.WHITE + "颜色: " + color.colored(), score--);
+            set(obj, ChatColor.WHITE + "颜色: " + color.coloredSection(), score--);
             set(obj, ChatColor.WHITE + "队伍: " + team.colored(), score--);
             set(obj, ChatColor.WHITE + "连线: " + ChatColor.YELLOW + progress + "/5", score--);
             set(obj, ChatColor.WHITE + "完成: " + ChatColor.YELLOW + completed + "/25", score--);

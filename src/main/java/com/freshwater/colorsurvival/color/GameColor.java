@@ -1,35 +1,35 @@
 package com.freshwater.colorsurvival.color;
 
-import org.bukkit.ChatColor;
+import com.freshwater.colorsurvival.util.Text;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 
 /**
  * 游戏内使用的 11 种颜色：红、棕、橙、黄、绿、蓝、紫、粉、黑、灰、白。
- * 玩家界面统一用对应颜色的 ■ 显示，不用汉字。作者：淡水岛开发组
+ * 采用真·十六进制 RGB 显示，界面统一用对应颜色的 ■。作者：淡水岛开发组
  */
 public enum GameColor {
-    RED("红", ChatColor.RED, DyeColor.RED),
-    BROWN("棕", ChatColor.DARK_RED, DyeColor.BROWN),
-    ORANGE("橙", ChatColor.GOLD, DyeColor.ORANGE),
-    YELLOW("黄", ChatColor.YELLOW, DyeColor.YELLOW),
-    GREEN("绿", ChatColor.GREEN, DyeColor.LIME),
-    BLUE("蓝", ChatColor.BLUE, DyeColor.BLUE),
-    PURPLE("紫", ChatColor.DARK_PURPLE, DyeColor.PURPLE),
-    PINK("粉", ChatColor.LIGHT_PURPLE, DyeColor.PINK),
-    BLACK("黑", ChatColor.BLACK, DyeColor.BLACK),
-    GRAY("灰", ChatColor.GRAY, DyeColor.GRAY),
-    WHITE("白", ChatColor.WHITE, DyeColor.WHITE);
+    RED("红", "E53935", DyeColor.RED),
+    BROWN("棕", "8B5A2B", DyeColor.BROWN),
+    ORANGE("橙", "FB8C00", DyeColor.ORANGE),
+    YELLOW("黄", "FDD835", DyeColor.YELLOW),
+    GREEN("绿", "43A047", DyeColor.LIME),
+    BLUE("蓝", "1E88E5", DyeColor.BLUE),
+    PURPLE("紫", "8E24AA", DyeColor.PURPLE),
+    PINK("粉", "FF6FB5", DyeColor.PINK),
+    BLACK("黑", "1A1A1A", DyeColor.BLACK),
+    GRAY("灰", "9E9E9E", DyeColor.GRAY),
+    WHITE("白", "FFFFFF", DyeColor.WHITE);
 
     private static final String SQUARE = "\u25A0";
 
     private final String shortName;
-    private final ChatColor chatColor;
+    private final String hex;
     private final DyeColor dyeColor;
 
-    GameColor(String shortName, ChatColor chatColor, DyeColor dyeColor) {
+    GameColor(String shortName, String hex, DyeColor dyeColor) {
         this.shortName = shortName;
-        this.chatColor = chatColor;
+        this.hex = hex;
         this.dyeColor = dyeColor;
     }
 
@@ -37,20 +37,24 @@ public enum GameColor {
         return shortName;
     }
 
-    public ChatColor chatColor() {
-        return chatColor;
+    public String hex() {
+        return hex;
     }
 
     public DyeColor dyeColor() {
         return dyeColor;
     }
 
-    /** 玩家界面显示：对应颜色的 ■。 */
+    /** 用于聊天/消息（& 形式，经 Text.amp 解析）。 */
     public String colored() {
-        return chatColor + SQUARE + ChatColor.RESET;
+        return "&#" + hex + SQUARE + "&r";
     }
 
-    /** 用于 GUI 的代表方块（接近该颜色的羊毛）。 */
+    /** 用于 scoreboard 等需要 '§' 字符串的场景。 */
+    public String coloredSection() {
+        return Text.legacy(colored());
+    }
+
     public Material woolMaterial() {
         Material m = Material.matchMaterial(dyeColor.name() + "_WOOL");
         return m != null ? m : Material.WHITE_WOOL;
