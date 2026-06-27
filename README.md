@@ -1,0 +1,91 @@
+# FreshwaterColorSurvival（颜色生存 + Bingo）
+
+> 作者：淡水岛开发组 ｜ 平台：Paper 1.21.11 ｜ Java 21
+
+每名玩家分配一种**专属颜色**，只能**破坏 / 放置 / 右键使用**与自己颜色一致的方块；
+配合两队 **5x5 Bingo 连线竞速**玩法，先连成一线（横 / 竖 / 斜）的队伍获胜。
+
+## 玩法规则
+
+- 游戏内几乎所有方块都会被映射到 16 种颜色之一（带色方块按本色；自然方块用精选映射表 + 名称哈希兜底；可在 `config.yml` 覆盖）。
+- 两队（A 队 / B 队），16 色拆成 **8 + 8 不重叠**，每队最多 8 人，同队内颜色唯一，因此队伍必须靠不同颜色的队友互相配合。
+- **两阶段惩罚**
+  - 宽容阶段（开局默认）：操作错误颜色仅取消 + action bar 提示。
+  - 惩罚阶段：取消 + 扣血 + 随机清除背包一个物品（带冷却）。
+  - 开局 **15 分钟**（可配置）后自动进入惩罚阶段；管理员可随时手动开启 / 关闭。
+- 功能方块（工作台 / 熔炉 / 箱子等）默认**豁免**颜色限制，可用命令开关。
+- **观战模式**：`/fwc spectate` 可切换观战，观战者不会被分队；对局进行中观战者自动进入旁观视角，对局结束后还原。
+- **胜利烟花**：某队连成一线获胜时，会在获胜队伍成员位置按各自颜色连续燃放烟花庆祝。
+
+## 安装
+
+1. 使用 JDK 21 构建：
+   ```bash
+   mvn clean package
+   ```
+2. 将 `target/FreshwaterColorSurvival-1.0.0.jar` 放入服务端 `plugins/` 目录。
+3. 重启服务器，编辑生成的 `plugins/FreshwaterColorSurvival/config.yml` 后用 `/fwc reload` 重载。
+
+## 命令（主命令 `/fwfish-colors`，别名 `/fwc`）
+
+| 命令 | 说明 | 权限 |
+| --- | --- | --- |
+| `/fwc help` | 帮助 | 所有人 |
+| `/fwc about` | 插件信息 | 所有人 |
+| `/fwc join <A/B>` | 加入队伍 | `fwfish-colors.play` |
+| `/fwc leave` | 离开队伍 | `fwfish-colors.play` |
+| `/fwc spectate` | 切换观战模式（观战者不分队，对局中为旁观视角） | `fwfish-colors.play` |
+| `/fwc color` | 查看自己的颜色 | 所有人 |
+| `/fwc card` | 打开 Bingo 卡 GUI | 所有人 |
+| `/fwc whatcolor` | 查看视线 / 手中方块的颜色 | 所有人 |
+| `/fwc team` | 查看队伍与成员颜色 | 所有人 |
+| `/fwc start` | 开始对局（自动平衡未分队玩家、发色、生成卡） | `fwfish-colors.admin` |
+| `/fwc stop` | 结束对局 | `fwfish-colors.admin` |
+| `/fwc punish <on/off/status>` | 手动开启 / 关闭惩罚阶段、查看剩余时间 | `fwfish-colors.admin` |
+| `/fwc config <...>` | 配置豁免（见下） | `fwfish-colors.admin` |
+| `/fwc bypass` | 切换个人无视颜色限制 | `fwfish-colors.admin` / `.bypass` |
+| `/fwc reload` | 重载配置 | `fwfish-colors.admin` |
+
+### config 子命令
+
+- `/fwc config utility-exempt <true/false>` — 功能方块是否豁免
+- `/fwc config exempt-add <方块>` — 添加豁免方块
+- `/fwc config exempt-remove <方块>` — 移除豁免方块
+- `/fwc config show` — 查看当前配置
+
+## 权限
+
+- `fwfish-colors.admin`（默认 OP）：管理对局与配置。
+- `fwfish-colors.bypass`（默认 OP）：无视颜色限制。
+- `fwfish-colors.play`（默认所有人）：参与游戏。
+
+## 配置项（`config.yml`）
+
+- `show-action-bar`：违规时是否用 action bar 提示。
+- `utility-exempt` / `exempt-materials`：功能方块豁免开关与列表。
+- `punishment.auto-enable-after-minutes`：多少分钟后自动进入惩罚阶段（默认 15）。
+- `punishment.damage`：惩罚扣血（默认 2.0 = 1 颗心）。
+- `punishment.clear-random-item`：是否随机清除一个物品。
+- `punishment.cooldown-seconds`：惩罚冷却秒数。
+- `bingo-items`：Bingo 物品池（随机抽 25 个）。
+- `block-colors`：方块 → 颜色 覆盖表。
+
+## 持续集成与发布
+
+仓库已配置 GitHub Actions：
+
+- `.github/workflows/build.yml`：每次推送 / PR 自动用 JDK 21 构建，并上传 jar 工件。
+- `.github/workflows/release.yml`：推送 `v*` 标签（或手动 `workflow_dispatch` 输入标签）时自动构建并发布 Release，附带 jar。
+
+发布新版本：
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+随后 Actions 会自动在 [Releases](https://github.com/FreshWaterDevTEAM/FreshwaterColorSurvival-UPEdition/releases) 生成对应版本并附上 `FreshwaterColorSurvival-1.0.0.jar`。
+
+---
+
+淡水岛开发组 出品。

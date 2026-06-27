@@ -1,0 +1,21 @@
+name: FreshwaterColorSurvival
+version: ${project.version}
+main: com.freshwater.colorsurvival.FreshwaterColorSurvival
+api-version: '1.21'
+author: 淡水岛开发组
+description: 每名玩家分配一种颜色，只能破坏/使用/放置自己颜色的方块，配合两队 5x5 Bingo 连线竞速玩法。
+commands:
+  fwfish-colors:
+    description: FreshwaterColorSurvival 主命令
+    aliases: [fwc]
+    usage: /fwfish-colors help
+permissions:
+  fwfish-colors.admin:
+    description: 管理对局（start/stop/punish/config/reload）
+    default: op
+  fwfish-colors.bypass:
+    description: 无视颜色限制
+    default: op
+  fwfish-colors.play:
+    description: 参与游戏（join/leave 等）
+    default: true
