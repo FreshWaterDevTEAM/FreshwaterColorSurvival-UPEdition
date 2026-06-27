@@ -4,6 +4,9 @@
 # 是否在违规时显示 action bar 提示
 show-action-bar: true
 
+# 是否显示侧边栏记分板（管理员也可用 /fwc config sidebar <true/false> 切换），默认开启
+sidebar-enabled: true
+
 # 功能方块（工作台/熔炉/箱子等）是否豁免颜色限制（所有人都能使用）
 utility-exempt: true
 
@@ -43,14 +46,15 @@ punishment:
   # 每名玩家触发惩罚的冷却（秒），避免连点瞬间清空背包
   cooldown-seconds: 3
 
-# 提示消息（支持 & 颜色代码）
+# 提示消息（支持 & 颜色代码；%color% 会替换为该方块可交互的颜色 ■）
 messages:
   prefix: "&b[颜色生存]&r "
   no-permission: "&c你没有权限执行此操作。"
   not-in-game: "&c当前没有进行中的对局。"
-  break-deny: "&c这是 %color% 的方块，你不能破坏它！"
-  place-deny: "&c你只能放置 %color% 的方块！"
-  use-deny: "&c这是 %color% 的方块，你不能使用它！"
+  break-deny: "&c无法破坏！可交互颜色: %color%"
+  place-deny: "&c无法放置！可交互颜色: %color%"
+  use-deny: "&c无法使用！可交互颜色: %color%"
+  pickup-deny: "&c无法拾取！可交互颜色: %color%"
 
 # bingo 物品池（从中随机抽取 25 个生成卡片）。填写 Material 名称（大写）
 bingo-items:
@@ -105,6 +109,11 @@ bingo-items:
   - BOW
   - ARROW
 
-# 方块->颜色 覆盖（key 为 Material 名称大写，value 为颜色名）
-# 颜色名：WHITE ORANGE MAGENTA LIGHT_BLUE YELLOW LIME PINK GRAY LIGHT_GRAY CYAN PURPLE BLUE BROWN GREEN RED BLACK
+# 方块->颜色 覆盖（一个方块可拥有多种颜色，玩家有其中任意一种即可交互）
+# 颜色名：RED BROWN ORANGE YELLOW GREEN BLUE PURPLE PINK BLACK GRAY WHITE
+# value 可写单个颜色，或用列表/逗号分隔的多个颜色，例如：
+# block-colors:
+#   GRASS_BLOCK: [GREEN, BROWN]
+#   BIRCH_LOG: "YELLOW, WHITE"
+#   STONE: GRAY
 block-colors: {}

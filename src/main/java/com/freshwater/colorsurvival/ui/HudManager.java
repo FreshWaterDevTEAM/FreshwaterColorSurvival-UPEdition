@@ -26,6 +26,7 @@ public final class HudManager {
     private final JavaPlugin plugin;
     private GameManager game;
     private BukkitTask task;
+    private boolean cleared;
 
     public HudManager(JavaPlugin plugin) {
         this.plugin = plugin;
@@ -74,6 +75,17 @@ public final class HudManager {
         if (game == null) {
             return;
         }
+        if (!game.config().isSidebarEnabled()) {
+            if (!cleared) {
+                Scoreboard main = Bukkit.getScoreboardManager().getMainScoreboard();
+                for (Player p : Bukkit.getOnlinePlayers()) {
+                    p.setScoreboard(main);
+                }
+                cleared = true;
+            }
+            return;
+        }
+        cleared = false;
         for (Player p : Bukkit.getOnlinePlayers()) {
             render(p);
         }

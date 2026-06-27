@@ -5,39 +5,36 @@ import org.bukkit.DyeColor;
 import org.bukkit.Material;
 
 /**
- * 游戏内使用的 16 种颜色。枚举名与 {@link DyeColor} 对应，方便按方块名前缀匹配。
- * 作者：淡水岛开发组
+ * 游戏内使用的 11 种颜色：红、棕、橙、黄、绿、蓝、紫、粉、黑、灰、白。
+ * 玩家界面统一用对应颜色的 ■ 显示，不用汉字。作者：淡水岛开发组
  */
 public enum GameColor {
-    WHITE("白色", ChatColor.WHITE, DyeColor.WHITE),
-    ORANGE("橙色", ChatColor.GOLD, DyeColor.ORANGE),
-    MAGENTA("品红", ChatColor.LIGHT_PURPLE, DyeColor.MAGENTA),
-    LIGHT_BLUE("淡蓝", ChatColor.AQUA, DyeColor.LIGHT_BLUE),
-    YELLOW("黄色", ChatColor.YELLOW, DyeColor.YELLOW),
-    LIME("黄绿", ChatColor.GREEN, DyeColor.LIME),
-    PINK("粉红", ChatColor.LIGHT_PURPLE, DyeColor.PINK),
-    GRAY("灰色", ChatColor.DARK_GRAY, DyeColor.GRAY),
-    LIGHT_GRAY("淡灰", ChatColor.GRAY, DyeColor.LIGHT_GRAY),
-    CYAN("青色", ChatColor.DARK_AQUA, DyeColor.CYAN),
-    PURPLE("紫色", ChatColor.DARK_PURPLE, DyeColor.PURPLE),
-    BLUE("蓝色", ChatColor.BLUE, DyeColor.BLUE),
-    BROWN("棕色", ChatColor.GOLD, DyeColor.BROWN),
-    GREEN("绿色", ChatColor.DARK_GREEN, DyeColor.GREEN),
-    RED("红色", ChatColor.RED, DyeColor.RED),
-    BLACK("黑色", ChatColor.BLACK, DyeColor.BLACK);
+    RED("红", ChatColor.RED, DyeColor.RED),
+    BROWN("棕", ChatColor.GOLD, DyeColor.BROWN),
+    ORANGE("橙", ChatColor.GOLD, DyeColor.ORANGE),
+    YELLOW("黄", ChatColor.YELLOW, DyeColor.YELLOW),
+    GREEN("绿", ChatColor.GREEN, DyeColor.LIME),
+    BLUE("蓝", ChatColor.AQUA, DyeColor.LIGHT_BLUE),
+    PURPLE("紫", ChatColor.DARK_PURPLE, DyeColor.PURPLE),
+    PINK("粉", ChatColor.LIGHT_PURPLE, DyeColor.PINK),
+    BLACK("黑", ChatColor.DARK_GRAY, DyeColor.BLACK),
+    GRAY("灰", ChatColor.GRAY, DyeColor.GRAY),
+    WHITE("白", ChatColor.WHITE, DyeColor.WHITE);
 
-    private final String displayName;
+    private static final String SQUARE = "\u25A0";
+
+    private final String shortName;
     private final ChatColor chatColor;
     private final DyeColor dyeColor;
 
-    GameColor(String displayName, ChatColor chatColor, DyeColor dyeColor) {
-        this.displayName = displayName;
+    GameColor(String shortName, ChatColor chatColor, DyeColor dyeColor) {
+        this.shortName = shortName;
         this.chatColor = chatColor;
         this.dyeColor = dyeColor;
     }
 
-    public String displayName() {
-        return displayName;
+    public String shortName() {
+        return shortName;
     }
 
     public ChatColor chatColor() {
@@ -48,20 +45,19 @@ public enum GameColor {
         return dyeColor;
     }
 
-    /** 带颜色的中文显示名（'§' 代码）。 */
+    /** 玩家界面显示：对应颜色的 ■。 */
     public String colored() {
-        return chatColor + displayName + ChatColor.RESET;
+        return chatColor + SQUARE + ChatColor.RESET;
     }
 
-    /** 用于 GUI / 展示的代表方块（该颜色的羊毛）。 */
+    /** 用于 GUI 的代表方块（接近该颜色的羊毛）。 */
     public Material woolMaterial() {
-        Material m = Material.matchMaterial(name() + "_WOOL");
+        Material m = Material.matchMaterial(dyeColor.name() + "_WOOL");
         return m != null ? m : Material.WHITE_WOOL;
     }
 
-    /** 用于 HUD 装饰的玻璃板。 */
     public Material glassPaneMaterial() {
-        Material m = Material.matchMaterial(name() + "_STAINED_GLASS_PANE");
+        Material m = Material.matchMaterial(dyeColor.name() + "_STAINED_GLASS_PANE");
         return m != null ? m : Material.WHITE_STAINED_GLASS_PANE;
     }
 

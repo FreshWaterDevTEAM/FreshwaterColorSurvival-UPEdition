@@ -8,21 +8,20 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * 两支队伍，各自拥有 16 色中不重叠的 8 色池。作者：淡水岛开发组
+ * 两支队伍。两队都从全部 11 色中取色（同队内唯一，跨队可重复）。作者：淡水岛开发组
  */
 public enum GameTeam {
-    TEAM_A("A队", ChatColor.RED, 0, 8),
-    TEAM_B("B队", ChatColor.AQUA, 8, 16);
+    TEAM_A("A队", ChatColor.RED),
+    TEAM_B("B队", ChatColor.AQUA);
 
     private final String displayName;
     private final ChatColor chatColor;
     private final List<GameColor> pool;
 
-    GameTeam(String displayName, ChatColor chatColor, int from, int to) {
+    GameTeam(String displayName, ChatColor chatColor) {
         this.displayName = displayName;
         this.chatColor = chatColor;
-        GameColor[] all = GameColor.values();
-        this.pool = Collections.unmodifiableList(Arrays.asList(Arrays.copyOfRange(all, from, to)));
+        this.pool = Collections.unmodifiableList(Arrays.asList(GameColor.values()));
     }
 
     public String displayName() {

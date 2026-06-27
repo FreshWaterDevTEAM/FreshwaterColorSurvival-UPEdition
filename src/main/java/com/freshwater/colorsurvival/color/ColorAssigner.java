@@ -15,7 +15,7 @@ import java.util.UUID;
 public final class ColorAssigner {
 
     /** 单队人数上限（= 色池大小）。 */
-    public static final int MAX_PER_TEAM = 8;
+    public static final int MAX_PER_TEAM = GameColor.values().length;
 
     public static class AssignException extends Exception {
         public AssignException(String message) {

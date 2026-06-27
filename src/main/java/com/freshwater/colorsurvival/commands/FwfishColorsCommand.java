@@ -185,8 +185,8 @@ public final class FwfishColorsCommand implements CommandExecutor, TabCompleter 
             type = hand.getType();
             source = "手中物品";
         }
-        GameColor color = mapper.colorOf(type);
-        msg(sender, "&7" + source + " &f" + type.name() + " &7的颜色是 " + color.colored());
+        String colors = com.freshwater.colorsurvival.color.BlockColorMapper.describe(mapper.colorsOf(type));
+        msg(sender, "&7" + source + " &f" + type.name() + " &7的颜色: " + colors);
     }
 
     private void team(CommandSender sender) {
@@ -280,11 +280,21 @@ public final class FwfishColorsCommand implements CommandExecutor, TabCompleter 
             return;
         }
         if (args.length < 2) {
-            msg(sender, "&c用法: /fwc config <utility-exempt <true/false> | exempt-add <方块> | exempt-remove <方块> | show>");
+            msg(sender, "&c用法: /fwc config <utility-exempt <true/false> | sidebar <true/false> | exempt-add <方块> | exempt-remove <方块> | show>");
             return;
         }
         String key = args[1].toLowerCase(Locale.ROOT);
         switch (key) {
+            case "sidebar" -> {
+                if (args.length < 3) {
+                    msg(sender, "&7sidebar 当前为：" + (config.isSidebarEnabled() ? "&a开启" : "&c关闭"));
+                    return;
+                }
+                boolean value = Boolean.parseBoolean(args[2]);
+                config.setSidebarEnabled(value);
+                game.hud().refreshSoon();
+                msg(sender, "&a已设置 侧边栏 sidebar = " + value);
+            }
             case "utility-exempt" -> {
                 if (args.length < 3) {
                     msg(sender, "&7utility-exempt 当前为：" + (config.isUtilityExempt() ? "&a开启" : "&c关闭"));
@@ -311,6 +321,7 @@ public final class FwfishColorsCommand implements CommandExecutor, TabCompleter 
                 msg(sender, ok ? "&a已移除豁免方块：&f" + m.name() : "&7该方块不在豁免列表中。");
             }
             case "show" -> {
+                msg(sender, "&7sidebar 侧边栏: " + (config.isSidebarEnabled() ? "&a开启" : "&c关闭"));
                 msg(sender, "&7utility-exempt: " + (config.isUtilityExempt() ? "&a开启" : "&c关闭"));
                 msg(sender, "&7豁免方块数量: &f" + config.getExemptMaterials().size());
                 msg(sender, "&7自动惩罚: &f" + config.getAutoEnableAfterMinutes() + " 分钟后");
@@ -368,7 +379,7 @@ public final class FwfishColorsCommand implements CommandExecutor, TabCompleter 
                     return filter(List.of("on", "off", "status"), args[1]);
                 }
                 case "config" -> {
-                    return filter(List.of("utility-exempt", "exempt-add", "exempt-remove", "show"), args[1]);
+                    return filter(List.of("sidebar", "utility-exempt", "exempt-add", "exempt-remove", "show"), args[1]);
                 }
                 default -> {
                     return List.of();
@@ -377,7 +388,7 @@ public final class FwfishColorsCommand implements CommandExecutor, TabCompleter 
         }
         if (args.length == 3 && sub.equals("config")) {
             String key = args[1].toLowerCase(Locale.ROOT);
-            if (key.equals("utility-exempt")) {
+            if (key.equals("utility-exempt") || key.equals("sidebar")) {
                 return filter(List.of("true", "false"), args[2]);
             }
             if (key.equals("exempt-add") || key.equals("exempt-remove")) {
