@@ -43,9 +43,10 @@ public final class GameManager {
     private HudManager hudManager;
 
     private GameState state = GameState.LOBBY;
+    private GameTeam winner;
     private final Map<UUID, GameTeam> teams = new ConcurrentHashMap<>();
     private final Map<UUID, GameColor> colors = new ConcurrentHashMap<>();
-    private final Set<UUID> bypass = ConcurrentHashMap.newKeySet();
+    private final Map<UUID, Boolean> bypassOverride = new ConcurrentHashMap<>();
     private final Set<UUID> spectators = ConcurrentHashMap.newKeySet();
     private final Map<UUID, GameMode> previousGameMode = new ConcurrentHashMap<>();
     private BukkitTask fireworkTask;
@@ -67,6 +68,10 @@ public final class GameManager {
 
     public boolean isRunning() {
         return state == GameState.RUNNING;
+    }
+
+    public GameTeam getWinner() {
+        return winner;
     }
 
     public PluginConfig config() {
@@ -106,17 +111,18 @@ public final class GameManager {
     // ---- 旁路 ----
 
     public boolean isBypassing(Player player) {
-        return player.hasPermission("fwfish-colors.bypass") || bypass.contains(player.getUniqueId());
+        // 个人显式开关优先于权限默认值，方便 OP 自测
+        Boolean override = bypassOverride.get(player.getUniqueId());
+        if (override != null) {
+            return override;
+        }
+        return player.hasPermission("fwfish-colors.bypass");
     }
 
     public boolean toggleBypass(Player player) {
-        UUID id = player.getUniqueId();
-        if (bypass.contains(id)) {
-            bypass.remove(id);
-            return false;
-        }
-        bypass.add(id);
-        return true;
+        boolean next = !isBypassing(player);
+        bypassOverride.put(player.getUniqueId(), next);
+        return next;
     }
 
     // ---- 观战 ----
@@ -223,6 +229,7 @@ public final class GameManager {
 
         colors.clear();
         colors.putAll(assigned);
+        winner = null;
 
         bingoManager.generateCard();
 
@@ -299,7 +306,11 @@ public final class GameManager {
             return;
         }
         state = GameState.ENDED;
+        this.winner = winner;
         punishmentManager.onGameStop();
+        if (hudManager != null) {
+            hudManager.refreshSoon();
+        }
         Bukkit.broadcast(Text.amp(config.prefix() + winner.colored() + " &a完成了一条 Bingo 连线，获得胜利！"));
         for (Player p : Bukkit.getOnlinePlayers()) {
             p.showTitle(Title.title(
@@ -363,6 +374,7 @@ public final class GameManager {
     /** 清空所有对局数据，回到大厅。 */
     public void reset() {
         state = GameState.LOBBY;
+        winner = null;
         teams.clear();
         colors.clear();
         stopFireworks();

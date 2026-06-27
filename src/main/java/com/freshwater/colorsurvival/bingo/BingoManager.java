@@ -11,7 +11,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -62,23 +64,21 @@ public final class BingoManager {
     }
 
     private void scanAll() {
+        recomputeAll();
+    }
+
+    /** 重新计算所有队伍的持有状态。 */
+    public void recomputeAll() {
         if (game == null || !game.isRunning() || card == null) {
             return;
         }
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            GameTeam team = game.getTeam(p.getUniqueId());
-            if (team == null) {
-                continue;
-            }
-            for (ItemStack it : p.getInventory().getStorageContents()) {
-                if (it != null && !it.getType().isAir()) {
-                    handleObtain(team, it.getType());
-                }
-            }
+        for (GameTeam team : GameTeam.values()) {
+            recompute(team);
         }
     }
 
-    public void handleObtain(Player player, Material material) {
+    /** 玩家背包发生变化时，下一 tick 重新计算其队伍（确保背包已更新）。 */
+    public void recomputeForPlayer(Player player) {
         if (game == null || !game.isRunning() || card == null) {
             return;
         }
@@ -86,21 +86,40 @@ public final class BingoManager {
         if (team == null) {
             return;
         }
-        handleObtain(team, material);
+        Bukkit.getScheduler().runTask(plugin, () -> {
+            if (game.isRunning() && card != null) {
+                recompute(team);
+            }
+        });
     }
 
-    private void handleObtain(GameTeam team, Material material) {
-        if (card == null || material == null) {
-            return;
+    private void recompute(GameTeam team) {
+        Set<Material> held = EnumSet.noneOf(Material.class);
+        for (UUID id : game.teamMembers(team)) {
+            Player p = Bukkit.getPlayer(id);
+            if (p == null) {
+                continue;
+            }
+            for (ItemStack it : p.getInventory().getStorageContents()) {
+                if (it != null && !it.getType().isAir()) {
+                    held.add(it.getType());
+                }
+            }
         }
-        boolean changed = card.mark(team, material);
-        if (!changed) {
-            return;
-        }
-        Bukkit.broadcast(Text.amp(config.prefix() + team.colored() + " &7收集到 &f"
-                + material.name() + " &7(" + card.completedCount(team) + "/" + BingoCard.CELLS + ")"));
-        if (game.hud() != null) {
-            game.hud().refreshSoon();
+
+        BingoCard.Diff diff = card.updateHeld(team, held);
+        if (!diff.isEmpty()) {
+            for (Material m : diff.added) {
+                Bukkit.broadcast(Text.amp(config.prefix() + team.colored() + " &7集齐 &f"
+                        + m.name() + " &7(" + card.completedCount(team) + "/" + BingoCard.CELLS + ")"));
+            }
+            for (Material m : diff.removed) {
+                Bukkit.broadcast(Text.amp(config.prefix() + team.colored() + " &c失去 &f"
+                        + m.name() + " &7(" + card.completedCount(team) + "/" + BingoCard.CELLS + ")"));
+            }
+            if (game.hud() != null) {
+                game.hud().refreshSoon();
+            }
         }
         if (card.hasLine(team)) {
             game.onTeamWin(team);

@@ -41,6 +41,7 @@ public final class FreshwaterColorSurvival extends JavaPlugin {
         this.hudManager = new HudManager(this);
         this.hudManager.setGame(gameManager);
         this.gameManager.wire(bingoManager, punishmentManager, hudManager);
+        this.hudManager.enable();
 
         CardGui cardGui = new CardGui(gameManager);
 
@@ -71,6 +72,9 @@ public final class FreshwaterColorSurvival extends JavaPlugin {
         }
         if (gameManager != null) {
             gameManager.reset();
+        }
+        if (hudManager != null) {
+            hudManager.disable();
         }
         getLogger().info("FreshwaterColorSurvival 已卸载。  作者：淡水岛开发组");
     }

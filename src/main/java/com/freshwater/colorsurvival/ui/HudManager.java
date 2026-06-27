@@ -1,7 +1,9 @@
 package com.freshwater.colorsurvival.ui;
 
+import com.freshwater.colorsurvival.bingo.BingoCard;
 import com.freshwater.colorsurvival.color.GameColor;
 import com.freshwater.colorsurvival.game.GameManager;
+import com.freshwater.colorsurvival.game.GameState;
 import com.freshwater.colorsurvival.game.GameTeam;
 import com.freshwater.colorsurvival.util.Text;
 import org.bukkit.Bukkit;
@@ -16,7 +18,8 @@ import org.bukkit.scoreboard.Scoreboard;
 import java.util.UUID;
 
 /**
- * 侧边栏 HUD：展示玩家颜色、队伍、连线进度、阶段。作者：淡水岛开发组
+ * 常驻侧边栏 HUD：从插件启用起一直显示，并按对局状态（大厅 / 进行中 / 观战 / 结束）切换内容。
+ * 作者：淡水岛开发组
  */
 public final class HudManager {
 
@@ -32,12 +35,14 @@ public final class HudManager {
         this.game = game;
     }
 
-    public void onGameStart() {
+    /** 插件启用时调用，开始常驻刷新。 */
+    public void enable() {
         stopTask();
-        task = Bukkit.getScheduler().runTaskTimer(plugin, this::updateAll, 0L, 20L);
+        task = Bukkit.getScheduler().runTaskTimer(plugin, this::updateAll, 20L, 20L);
     }
 
-    public void onGameStop() {
+    /** 插件卸载时调用，停止并还原主记分板。 */
+    public void disable() {
         stopTask();
         Scoreboard main = Bukkit.getScoreboardManager().getMainScoreboard();
         for (Player p : Bukkit.getOnlinePlayers()) {
@@ -45,11 +50,17 @@ public final class HudManager {
         }
     }
 
-    /** 数据变化后立即刷新一次。 */
+    /** 对局状态变化时调用（开始/结束）：立即刷新一次。 */
+    public void onGameStart() {
+        updateAll();
+    }
+
+    public void onGameStop() {
+        updateAll();
+    }
+
     public void refreshSoon() {
-        if (task != null) {
-            updateAll();
-        }
+        updateAll();
     }
 
     private void stopTask() {
@@ -64,57 +75,92 @@ public final class HudManager {
             return;
         }
         for (Player p : Bukkit.getOnlinePlayers()) {
-            GameColor color = game.getColor(p.getUniqueId());
-            if (color == null) {
-                continue;
-            }
-            updatePlayer(p);
+            render(p);
         }
     }
 
-    private void updatePlayer(Player player) {
-        UUID id = player.getUniqueId();
-        GameColor color = game.getColor(id);
-        GameTeam team = game.getTeam(id);
-        if (color == null || team == null) {
-            return;
-        }
-
+    private void render(Player player) {
         Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
-        Objective obj = board.registerNewObjective("fwc", "dummy",
-                Text.amp("&b&l颜色生存"));
+        Objective obj = board.registerNewObjective("fwc", "dummy", Text.amp("&b&l颜色生存"));
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
 
-        int progress = game.bingo() != null && game.bingo().getCard() != null
-                ? game.bingo().getCard().bestLineProgress(team) : 0;
-        int completed = game.bingo() != null && game.bingo().getCard() != null
-                ? game.bingo().getCard().completedCount(team) : 0;
+        GameState state = game.getState();
+        int score = 10;
 
-        String phaseLine;
-        long remain = game.punishment().remainingSecondsToAuto();
-        if (game.punishment().isPunishPhase()) {
-            phaseLine = ChatColor.RED + "阶段: 惩罚";
-        } else if (remain >= 0) {
-            phaseLine = ChatColor.GREEN + "阶段: 宽容 " + ChatColor.GRAY + "(" + formatTime(remain) + ")";
-        } else {
-            phaseLine = ChatColor.GREEN + "阶段: 宽容";
-        }
-
-        int score = 8;
         set(obj, ChatColor.DARK_GRAY + "----------------", score--);
-        set(obj, ChatColor.WHITE + "颜色: " + color.colored(), score--);
-        set(obj, ChatColor.WHITE + "队伍: " + team.colored(), score--);
-        set(obj, ChatColor.WHITE + "连线: " + ChatColor.YELLOW + progress + "/5", score--);
-        set(obj, ChatColor.WHITE + "完成: " + ChatColor.YELLOW + completed + "/25", score--);
-        set(obj, phaseLine, score--);
+        switch (state) {
+            case RUNNING -> score = renderRunning(player, obj, score);
+            case ENDED -> score = renderEnded(obj, score);
+            default -> score = renderLobby(obj, score);
+        }
         set(obj, ChatColor.DARK_GRAY + "=========", score--);
         set(obj, ChatColor.AQUA + "淡水岛开发组", score--);
 
         player.setScoreboard(board);
     }
 
+    private int renderLobby(Objective obj, int score) {
+        set(obj, ChatColor.WHITE + "状态: " + ChatColor.YELLOW + "等待开始", score--);
+        set(obj, GameTeam.TEAM_A.colored() + ChatColor.WHITE + ": "
+                + game.teamMembers(GameTeam.TEAM_A).size() + " 人", score--);
+        set(obj, GameTeam.TEAM_B.colored() + ChatColor.WHITE + ": "
+                + game.teamMembers(GameTeam.TEAM_B).size() + " 人", score--);
+        set(obj, ChatColor.GRAY + "/fwc join A|B", score--);
+        return score;
+    }
+
+    private int renderRunning(Player player, Objective obj, int score) {
+        UUID id = player.getUniqueId();
+        GameColor color = game.getColor(id);
+        GameTeam team = game.getTeam(id);
+        BingoCard card = game.bingo() != null ? game.bingo().getCard() : null;
+
+        if (color != null && team != null) {
+            int progress = card != null ? card.bestLineProgress(team) : 0;
+            int completed = card != null ? card.completedCount(team) : 0;
+            set(obj, ChatColor.WHITE + "颜色: " + color.colored(), score--);
+            set(obj, ChatColor.WHITE + "队伍: " + team.colored(), score--);
+            set(obj, ChatColor.WHITE + "连线: " + ChatColor.YELLOW + progress + "/5", score--);
+            set(obj, ChatColor.WHITE + "完成: " + ChatColor.YELLOW + completed + "/25", score--);
+        } else {
+            // 观战者
+            set(obj, ChatColor.GRAY + "观战中", score--);
+            set(obj, teamProgressLine(GameTeam.TEAM_A, card), score--);
+            set(obj, teamProgressLine(GameTeam.TEAM_B, card), score--);
+        }
+        set(obj, phaseLine(), score--);
+        return score;
+    }
+
+    private int renderEnded(Objective obj, int score) {
+        BingoCard card = game.bingo() != null ? game.bingo().getCard() : null;
+        GameTeam w = game.getWinner();
+        set(obj, ChatColor.GOLD + "对局结束", score--);
+        set(obj, ChatColor.WHITE + "胜者: " + (w != null ? w.colored() : ChatColor.GRAY + "无"), score--);
+        set(obj, teamProgressLine(GameTeam.TEAM_A, card), score--);
+        set(obj, teamProgressLine(GameTeam.TEAM_B, card), score--);
+        set(obj, ChatColor.GRAY + "/fwc stop 重置", score--);
+        return score;
+    }
+
+    private String teamProgressLine(GameTeam team, BingoCard card) {
+        int progress = card != null ? card.bestLineProgress(team) : 0;
+        int completed = card != null ? card.completedCount(team) : 0;
+        return team.colored() + ChatColor.WHITE + ": " + completed + "/25 "
+                + ChatColor.GRAY + "(连" + progress + ")";
+    }
+
+    private String phaseLine() {
+        long remain = game.punishment().remainingSecondsToAuto();
+        if (game.punishment().isPunishPhase()) {
+            return ChatColor.RED + "阶段: 惩罚";
+        } else if (remain >= 0) {
+            return ChatColor.GREEN + "阶段: 宽容 " + ChatColor.GRAY + "(" + formatTime(remain) + ")";
+        }
+        return ChatColor.GREEN + "阶段: 宽容";
+    }
+
     private void set(Objective obj, String entry, int score) {
-        // 保证条目唯一，避免重复字符串冲突
         String unique = entry;
         while (obj.getScoreboard().getEntries().contains(unique)) {
             unique += ChatColor.RESET;

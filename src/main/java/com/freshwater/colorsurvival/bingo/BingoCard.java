@@ -39,21 +39,35 @@ public final class BingoCard {
         return done.get(team)[index];
     }
 
-    /**
-     * 标记某队获得了某物品。
-     *
-     * @return 是否为新标记（之前未完成）
-     */
-    public boolean mark(GameTeam team, Material material) {
-        boolean[] flags = done.get(team);
-        boolean changed = false;
-        for (int i = 0; i < CELLS; i++) {
-            if (items[i] == material && !flags[i]) {
-                flags[i] = true;
-                changed = true;
-            }
+    /** 一次刷新的变化结果。 */
+    public static final class Diff {
+        public final List<Material> added = new ArrayList<>();
+        public final List<Material> removed = new ArrayList<>();
+
+        public boolean isEmpty() {
+            return added.isEmpty() && removed.isEmpty();
         }
-        return changed;
+    }
+
+    /**
+     * 按某队「当前持有的物品集合」刷新整张卡的完成状态：
+     * 持有的格子点亮，不再持有的格子熄灭。
+     *
+     * @return 本次新点亮 / 新熄灭的物品
+     */
+    public Diff updateHeld(GameTeam team, java.util.Set<Material> held) {
+        boolean[] flags = done.get(team);
+        Diff diff = new Diff();
+        for (int i = 0; i < CELLS; i++) {
+            boolean now = held.contains(items[i]);
+            if (now && !flags[i]) {
+                diff.added.add(items[i]);
+            } else if (!now && flags[i]) {
+                diff.removed.add(items[i]);
+            }
+            flags[i] = now;
+        }
+        return diff;
     }
 
     public int completedCount(GameTeam team) {
