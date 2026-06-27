@@ -10,14 +10,14 @@ import org.bukkit.Material;
  */
 public enum GameColor {
     RED("红", ChatColor.RED, DyeColor.RED),
-    BROWN("棕", ChatColor.GOLD, DyeColor.BROWN),
+    BROWN("棕", ChatColor.DARK_RED, DyeColor.BROWN),
     ORANGE("橙", ChatColor.GOLD, DyeColor.ORANGE),
     YELLOW("黄", ChatColor.YELLOW, DyeColor.YELLOW),
     GREEN("绿", ChatColor.GREEN, DyeColor.LIME),
-    BLUE("蓝", ChatColor.AQUA, DyeColor.LIGHT_BLUE),
+    BLUE("蓝", ChatColor.BLUE, DyeColor.BLUE),
     PURPLE("紫", ChatColor.DARK_PURPLE, DyeColor.PURPLE),
     PINK("粉", ChatColor.LIGHT_PURPLE, DyeColor.PINK),
-    BLACK("黑", ChatColor.DARK_GRAY, DyeColor.BLACK),
+    BLACK("黑", ChatColor.BLACK, DyeColor.BLACK),
     GRAY("灰", ChatColor.GRAY, DyeColor.GRAY),
     WHITE("白", ChatColor.WHITE, DyeColor.WHITE);
 

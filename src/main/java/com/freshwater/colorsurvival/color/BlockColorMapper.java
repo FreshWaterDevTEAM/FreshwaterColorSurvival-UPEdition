@@ -43,6 +43,7 @@ public final class BlockColorMapper {
 
     private final List<String> prefixSorted = new ArrayList<>();
     private final Map<Material, Set<GameColor>> curated = new EnumMap<>(Material.class);
+    private final Map<String, GameColor> keywords = new LinkedHashMap<>();
     private final Map<Material, Set<GameColor>> overrides = new HashMap<>();
     private final Map<Material, Set<GameColor>> cache = new EnumMap<>(Material.class);
 
@@ -51,6 +52,7 @@ public final class BlockColorMapper {
         // 长名优先，保证 LIGHT_BLUE 先于 BLUE、LIGHT_GRAY 先于 GRAY
         prefixSorted.sort((a, b) -> Integer.compare(b.length(), a.length()));
         buildCurated();
+        buildKeywords();
     }
 
     public void setOverrides(Map<Material, Set<GameColor>> map) {
@@ -90,8 +92,132 @@ public final class BlockColorMapper {
         if (cur != null) {
             return EnumSet.copyOf(cur);
         }
+        Set<GameColor> kw = keywordColors(name);
+        if (!kw.isEmpty()) {
+            return kw;
+        }
         GameColor[] values = GameColor.values();
         return EnumSet.of(values[Math.floorMod(name.hashCode(), values.length)]);
+    }
+
+    /** 按名称里出现的关键词推断颜色（一个名字可命中多个 -&gt; 取并集）。 */
+    private Set<GameColor> keywordColors(String name) {
+        EnumSet<GameColor> set = EnumSet.noneOf(GameColor.class);
+        for (Map.Entry<String, GameColor> e : keywords.entrySet()) {
+            if (name.contains(e.getKey())) {
+                set.add(e.getValue());
+            }
+        }
+        return set;
+    }
+
+    private void buildKeywords() {
+        // 矿物 / 材料
+        keywords.put("NETHERITE", GameColor.BLACK);
+        keywords.put("DIAMOND", GameColor.BLUE);
+        keywords.put("GOLDEN", GameColor.YELLOW);
+        keywords.put("GOLD", GameColor.YELLOW);
+        keywords.put("IRON", GameColor.WHITE);
+        keywords.put("CHAINMAIL", GameColor.GRAY);
+        keywords.put("COPPER", GameColor.ORANGE);
+        keywords.put("EMERALD", GameColor.GREEN);
+        keywords.put("LAPIS", GameColor.BLUE);
+        keywords.put("REDSTONE", GameColor.RED);
+        keywords.put("AMETHYST", GameColor.PURPLE);
+        keywords.put("QUARTZ", GameColor.WHITE);
+        keywords.put("CHARCOAL", GameColor.BLACK);
+        keywords.put("COAL", GameColor.BLACK);
+        keywords.put("OBSIDIAN", GameColor.PURPLE);
+        keywords.put("PRISMARINE", GameColor.BLUE);
+        keywords.put("FLINT", GameColor.GRAY);
+        keywords.put("CLAY", GameColor.GRAY);
+        keywords.put("BRICK", GameColor.RED);
+        // 生物掉落 / 杂项材料
+        keywords.put("LEATHER", GameColor.BROWN);
+        keywords.put("BONE", GameColor.WHITE);
+        keywords.put("FEATHER", GameColor.WHITE);
+        keywords.put("PAPER", GameColor.WHITE);
+        keywords.put("EGG", GameColor.WHITE);
+        keywords.put("SUGAR", GameColor.WHITE);
+        keywords.put("SNOW", GameColor.WHITE);
+        keywords.put("MILK", GameColor.WHITE);
+        keywords.put("STRING", GameColor.WHITE);
+        keywords.put("INK", GameColor.BLACK);
+        keywords.put("SLIME", GameColor.GREEN);
+        keywords.put("GUNPOWDER", GameColor.GRAY);
+        keywords.put("PHANTOM", GameColor.GRAY);
+        keywords.put("SHULKER", GameColor.PURPLE);
+        keywords.put("ENDER", GameColor.GREEN);
+        keywords.put("BLAZE", GameColor.ORANGE);
+        keywords.put("MAGMA", GameColor.ORANGE);
+        keywords.put("GLOWSTONE", GameColor.YELLOW);
+        keywords.put("GLOW", GameColor.YELLOW);
+        keywords.put("HONEY", GameColor.ORANGE);
+        keywords.put("ROTTEN", GameColor.GREEN);
+        keywords.put("ARROW", GameColor.GRAY);
+        keywords.put("BUCKET", GameColor.GRAY);
+        keywords.put("SHEARS", GameColor.GRAY);
+        keywords.put("BELL", GameColor.YELLOW);
+        // 工具 / 物品基底
+        keywords.put("BOOK", GameColor.BROWN);
+        keywords.put("FISHING", GameColor.BROWN);
+        keywords.put("BOW", GameColor.BROWN);
+        keywords.put("BOWL", GameColor.BROWN);
+        keywords.put("TORCH", GameColor.ORANGE);
+        keywords.put("STICK", GameColor.BROWN);
+        // 植物 / 食物
+        keywords.put("WHEAT", GameColor.YELLOW);
+        keywords.put("HAY", GameColor.YELLOW);
+        keywords.put("CARROT", GameColor.ORANGE);
+        keywords.put("POTATO", GameColor.YELLOW);
+        keywords.put("BEETROOT", GameColor.RED);
+        keywords.put("APPLE", GameColor.RED);
+        keywords.put("BERRIES", GameColor.RED);
+        keywords.put("BERRY", GameColor.RED);
+        keywords.put("PUMPKIN", GameColor.ORANGE);
+        keywords.put("MELON", GameColor.GREEN);
+        keywords.put("BREAD", GameColor.BROWN);
+        keywords.put("COOKIE", GameColor.BROWN);
+        keywords.put("CAKE", GameColor.WHITE);
+        keywords.put("COOKED", GameColor.BROWN);
+        keywords.put("BEEF", GameColor.BROWN);
+        keywords.put("PORK", GameColor.BROWN);
+        keywords.put("CHICKEN", GameColor.BROWN);
+        keywords.put("MUTTON", GameColor.BROWN);
+        keywords.put("RABBIT", GameColor.BROWN);
+        keywords.put("COD", GameColor.BROWN);
+        keywords.put("SALMON", GameColor.RED);
+        keywords.put("KELP", GameColor.GREEN);
+        keywords.put("SEAGRASS", GameColor.GREEN);
+        keywords.put("GRASS", GameColor.GREEN);
+        keywords.put("MOSS", GameColor.GREEN);
+        keywords.put("VINE", GameColor.GREEN);
+        keywords.put("FERN", GameColor.GREEN);
+        keywords.put("LEAVES", GameColor.GREEN);
+        keywords.put("SAPLING", GameColor.GREEN);
+        keywords.put("FLOWER", GameColor.PINK);
+        keywords.put("TULIP", GameColor.PINK);
+        keywords.put("BAMBOO", GameColor.GREEN);
+        keywords.put("SUGAR_CANE", GameColor.GREEN);
+        // 地形 / 方块基底
+        keywords.put("CHORUS", GameColor.PURPLE);
+        keywords.put("PURPUR", GameColor.PURPLE);
+        keywords.put("NETHERRACK", GameColor.RED);
+        keywords.put("NETHER", GameColor.RED);
+        keywords.put("CRIMSON", GameColor.RED);
+        keywords.put("WARPED", GameColor.BLUE);
+        keywords.put("WART", GameColor.RED);
+        keywords.put("BLACKSTONE", GameColor.BLACK);
+        keywords.put("DEEPSLATE", GameColor.GRAY);
+        keywords.put("COBBLE", GameColor.GRAY);
+        keywords.put("STONE", GameColor.GRAY);
+        keywords.put("DIRT", GameColor.BROWN);
+        keywords.put("SAND", GameColor.YELLOW);
+        keywords.put("LOG", GameColor.BROWN);
+        keywords.put("PLANK", GameColor.BROWN);
+        keywords.put("WOOD", GameColor.BROWN);
+        keywords.put("DOOR", GameColor.BROWN);
+        keywords.put("FENCE", GameColor.BROWN);
     }
 
     /** 将一组颜色拼成彩色 ■ 字符串，用于提示玩家可交互颜色。 */
