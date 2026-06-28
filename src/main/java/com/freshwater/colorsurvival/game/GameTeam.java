@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * 两支队伍。两队都从全部 11 色中取色（同队内唯一，跨队可重复）。作者：淡水岛开发组
+ * 两支队伍。两队都从全部主色中取色（同队内唯一，跨队可重复）。作者：淡水岛开发组
  */
 public enum GameTeam {
     TEAM_A("A队", ChatColor.RED),
@@ -36,7 +36,7 @@ public enum GameTeam {
         return chatColor + displayName + ChatColor.RESET;
     }
 
-    /** 该队的 8 色池。 */
+    /** 该队的色池（全部主色）。 */
     public List<GameColor> pool() {
         return pool;
     }

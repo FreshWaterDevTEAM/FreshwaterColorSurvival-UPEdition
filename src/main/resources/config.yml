@@ -109,11 +109,6712 @@ bingo-items:
   - BOW
   - ARROW
 
-# 方块->颜色 覆盖（一个方块可拥有多种颜色，玩家有其中任意一种即可交互）
-# 颜色名：RED BROWN ORANGE YELLOW GREEN BLUE PURPLE PINK BLACK GRAY WHITE
-# value 可写单个颜色，或用列表/逗号分隔的多个颜色，例如：
-# block-colors:
-#   GRASS_BLOCK: [GREEN, BROWN]
-#   BIRCH_LOG: "YELLOW, WHITE"
-#   STONE: GRAY
-block-colors: {}
+# 方块 -> 颜色 对照表（一个方块可拥有多种颜色，玩家拥有其中任意一种主色即可交互）
+# 玩家可分配的 16 主色：
+#   RED 红  ORANGE 橙  YELLOW 黄  LIME 黄绿  GREEN 绿  CYAN 青  LIGHT_BLUE 淡蓝
+#   BLUE 蓝  PURPLE 紫  MAGENTA 品红  PINK 粉  BROWN 棕  WHITE 白  LIGHT_GRAY 浅灰
+#   GRAY 灰  BLACK 黑
+# 下表还可使用 37 个细分类别名（取自 ColorBound 调色板），它们会自动归并到最接近的主色，例如：
+#   DARK_OAK/EXPOSED_COPPER -> 棕；SANDSTONE -> 黄；TEAL -> 青；DARK_RED/CRIMSON_RED/LIGHT_RED -> 红；
+#   ACACIA/COPPER/HONEY -> 橙；BAMBOO -> 黄绿；PURPUR/GRAY_PURPLE/PURPLE_BLUE -> 紫；
+#   CHERRY_PINK/CORAL_PINK -> 粉；ENCHANTED -> 品红；LIGHT_GRAY_BLUE -> 淡蓝；GRAY_BLUE -> 蓝 等。
+# 你可以自由增删/修改下面的条目；未列出的方块由插件内置规则自动判定颜色。
+block-colors:
+  # ════════════════════════════════════════════════
+  # 1. BLACK CRAFTER PROGRESSION (CRITICAL)
+  # Black must be able to craft the Crafter from scratch.
+  # ════════════════════════════════════════════════
+  # Wood Gathering
+  OAK_LOG:
+    - SANDSTONE
+    - BROWN
+    - DARK_OAK
+    - BLACK
+  SPRUCE_LOG:
+    - BROWN
+    - DARK_OAK
+    - BLACK
+  BIRCH_LOG:
+    - WHITE
+    - SANDSTONE
+    - BAMBOO
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  JUNGLE_LOG:
+    - EXPOSED_COPPER
+    - BROWN
+    - DARK_OAK
+  ACACIA_LOG:
+    - COPPER
+    - ACACIA
+    - LIGHT_GRAY
+    - GRAY
+  DARK_OAK_LOG:
+    - BROWN
+    - DARK_OAK
+    - BLACK
+  MANGROVE_LOG:
+    - BROWN
+    - CRIMSON_RED
+    - DARK_RED
+    - DARK_OAK
+  CHERRY_LOG:
+    - CHERRY_PINK
+    - PINK
+    - DARK_RED
+    - BLACK
+  OAK_PLANKS:
+    - SANDSTONE
+    - BROWN
+    - BLACK
+  SPRUCE_PLANKS:
+    - BROWN
+    - DARK_OAK
+    - BLACK
+  BIRCH_PLANKS:
+    - SANDSTONE
+    - BAMBOO
+    - BLACK
+  JUNGLE_PLANKS:
+    - EXPOSED_COPPER
+    - BROWN
+    - DARK_OAK
+  ACACIA_PLANKS:
+    - COPPER
+    - ACACIA
+    - BLACK
+  DARK_OAK_PLANKS:
+    - BROWN
+    - DARK_OAK
+    - BLACK
+  MANGROVE_PLANKS:
+    - BROWN
+    - CRIMSON_RED
+    - DARK_RED
+  CHERRY_PLANKS:
+    - CHERRY_PINK
+    - PINK
+    - CORAL_PINK
+    - BLACK
+  BAMBOO_PLANKS:
+    - SANDSTONE
+    - BAMBOO
+    - BLACK
+  CRIMSON_PLANKS:
+    - CRIMSON_RED
+    - DARK_RED
+  WARPED_PLANKS:
+    - TEAL
+    - BLACK
+  PALE_OAK_PLANKS:
+    - WHITE
+    - LIGHT_GRAY
+    - BLACK
+  STICK:
+    - BROWN
+    - DARK_OAK
+    - BLACK
+  CRAFTING_TABLE:
+    - WHITE
+    - SANDSTONE
+    - ACACIA
+    - BROWN
+    - BLACK
+
+  # Tools required for mining
+  WOODEN_PICKAXE:
+    - BROWN
+    - DARK_OAK
+  STONE_PICKAXE:
+    - LIGHT_GRAY
+    - GRAY
+    - BROWN
+    - DARK_OAK
+  IRON_PICKAXE:
+    - WHITE
+    - LIGHT_GRAY
+    - BLACK
+    - BROWN
+    - DARK_OAK
+
+  # Stone & Smelting
+  COBBLESTONE:
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  COBBLESTONE_SLAB:
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  COBBLESTONE_STAIRS:
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  COBBLESTONE_WALL:
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  FURNACE:
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+
+  # Ores & Resources
+  COAL_ORE:
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  DEEPSLATE_COAL_ORE:
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  COAL:
+    - GRAY
+    - BLACK
+  IRON_ORE:
+    - EXPOSED_COPPER
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  DEEPSLATE_IRON_ORE:
+    - EXPOSED_COPPER
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  RAW_IRON:
+    - SANDSTONE
+    - CHERRY_PINK
+    - EXPOSED_COPPER
+    - BLACK
+  IRON_INGOT:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  IRON_NUGGET:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - LIGHT_GRAY_BLUE
+    - BLACK
+  IRON_BLOCK:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  REDSTONE_ORE:
+    - EXPOSED_COPPER
+    - LIGHT_RED
+    - RED
+    - DARK_RED
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  DEEPSLATE_REDSTONE_ORE:
+    - CHERRY_PINK
+    - RED
+    - DARK_RED
+    - GRAY
+    - BLACK
+  REDSTONE:
+    - LIGHT_RED
+    - RED
+    - DARK_RED
+    - BLACK
+  REDSTONE_BLOCK:
+    - LIGHT_RED
+    - RED
+    - DARK_RED
+    - BLACK
+
+  # Final Recipe Blocks
+  DROPPER:
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  CRAFTER:
+    - EXPOSED_COPPER
+    - ACACIA
+    - LIGHT_GRAY
+    - GRAY
+    - DARK_RED
+    - BLACK
+
+  ACACIA_BOAT:
+    - COPPER
+    - ACACIA
+    - BROWN
+  ACACIA_CHEST_BOAT:
+    - WHITE
+    - PINK
+    - RED
+    - PURPLE
+    - BLUE
+    - GREEN
+    - YELLOW
+    - ORANGE
+    - BROWN
+    - BLACK
+  ACACIA_DOOR:
+    - BROWN
+    - GRAY
+  ACACIA_HANGING_SIGN:
+    - ACACIA
+    - GRAY
+  ACACIA_LEAVES:
+    - LIGHT_GREEN
+    - GREEN
+  ACACIA_SAPLING:
+    - BAMBOO
+    - LIME
+    - ACACIA
+    - BROWN
+  ACACIA_SHELF:
+    - COPPER
+    - ACACIA
+  ACACIA_SIGN:
+    - ACACIA
+    - LIGHT_GRAY
+    - GRAY
+  ACACIA_TRAPDOOR:
+    - COPPER
+    - ACACIA
+    - GRAY
+  ACTIVATOR_RAIL:
+    - LIGHT_GRAY
+    - GRAY
+    - ACACIA
+    - BROWN
+    - DARK_RED
+  ALLAY_SPAWN_EGG:
+    - WHITE
+    - CYAN
+    - LIGHT_BLUE
+    - GRAY_BLUE
+  ALLIUM:
+    - WHITE
+    - LIME
+    - LIGHT_GREEN
+    - PURPUR
+    - PURPLE
+  AMETHYST_BLOCK:
+    - CHERRY_PINK
+    - PURPUR
+    - PURPLE
+  AMETHYST_CLUSTER:
+    - WHITE
+    - CHERRY_PINK
+    - PURPUR
+    - PURPLE
+  AMETHYST_SHARD:
+    - WHITE
+    - CHERRY_PINK
+    - PURPUR
+    - PURPLE
+  ANCIENT_DEBRIS:
+    - SANDSTONE
+    - BROWN
+    - DARK_OAK
+    - DARK_RED
+  ANDESITE:
+    - SANDSTONE
+    - LIGHT_GRAY
+    - GRAY
+  ANGLER_POTTERY_SHERD:
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  ANVIL:
+    - GRAY
+    - BLACK
+  APPLE:
+    - CHERRY_PINK
+    - LIGHT_RED
+    - RED
+    - BROWN
+    - DARK_OAK
+  ARCHER_POTTERY_SHERD:
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  ARMADILLO_SCUTE:
+    - CHERRY_PINK
+    - EXPOSED_COPPER
+    - CRIMSON_RED
+  ARMADILLO_SPAWN_EGG:
+    - EXPOSED_COPPER
+    - COPPER
+    - ACACIA
+    - BROWN
+  ARMOR_STAND:
+    - SANDSTONE
+    - BROWN
+    - LIGHT_GRAY
+    - GRAY
+  ARMS_UP_POTTERY_SHERD:
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  ARROW:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - BROWN
+    - DARK_OAK
+  ATTACHED_MELON_STEM:
+    - WHITE
+    - BROWN
+  ATTACHED_PUMPKIN_STEM:
+    - WHITE
+    - BROWN
+  AXOLOTL_BUCKET:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - PINK
+    - CORAL_PINK
+    - MAGENTA
+    - BLUE
+    - GRAY_BLUE
+  AXOLOTL_SPAWN_EGG:
+    - CHERRY_PINK
+    - PINK
+    - CORAL_PINK
+    - MAGENTA
+  AZALEA:
+    - BAMBOO
+    - LIME
+    - GREEN
+    - BROWN
+  AZALEA_LEAVES:
+    - BAMBOO
+    - LIME
+    - GREEN
+  AZURE_BLUET:
+    - WHITE
+    - YELLOW
+    - LIGHT_GREEN
+    - GREEN
+  BAKED_POTATO:
+    - YELLOW
+    - HONEY
+    - BROWN
+  BAMBOO:
+    - LIME
+    - GREEN
+  BAMBOO_BLOCK:
+    - BAMBOO
+    - LIME
+    - GREEN
+  BAMBOO_CHEST_RAFT:
+    - WHITE
+    - PINK
+    - RED
+    - PURPLE
+    - BLUE
+    - GREEN
+    - YELLOW
+    - ORANGE
+    - BROWN
+    - BLACK
+  BAMBOO_DOOR:
+    - SANDSTONE
+    - BAMBOO
+  BAMBOO_FENCE:
+    - SANDSTONE
+    - BAMBOO
+  BAMBOO_FENCE_GATE:
+    - SANDSTONE
+    - BAMBOO
+  BAMBOO_HANGING_SIGN:
+    - SANDSTONE
+    - BAMBOO
+    - GRAY
+  BAMBOO_MOSAIC:
+    - SANDSTONE
+    - BAMBOO
+  BAMBOO_RAFT:
+    - SANDSTONE
+    - BAMBOO
+    - GREEN
+  BAMBOO_SHELF:
+    - SANDSTONE
+    - BAMBOO
+  BAMBOO_SIGN:
+    - SANDSTONE
+    - BAMBOO
+    - GRAY
+  BAMBOO_TRAPDOOR:
+    - SANDSTONE
+    - BAMBOO
+  BARREL:
+    - LIGHT_GRAY
+    - GRAY
+    - BROWN
+    - DARK_OAK
+  BARRIER:
+    - RED
+  BASALT:
+    - LIGHT_GRAY
+    - GRAY
+    - GRAY_PURPLE
+  BAT_SPAWN_EGG:
+    - PURPUR
+    - BROWN
+    - DARK_OAK
+    - BLACK
+  BEACON:
+    - WHITE
+    - LIGHT_GRAY
+    - LIGHT_BLUE
+    - BLACK
+  BEDROCK:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  BEEF:
+    - CHERRY_PINK
+    - RED
+    - DARK_RED
+  BEEHIVE:
+    - SANDSTONE
+    - YELLOW
+    - BROWN
+  BEETROOT:
+    - CHERRY_PINK
+    - RED
+    - CRIMSON_RED
+    - DARK_RED
+  BEETROOTS:
+    - BROWN
+    - GREEN
+    - BLACK
+  BEETROOT_SEEDS:
+    - SANDSTONE
+    - BROWN
+    - DARK_OAK
+  BEETROOT_SOUP:
+    - RED
+    - CRIMSON_RED
+    - DARK_RED
+    - BROWN
+    - BLACK
+  BEE_NEST:
+    - SANDSTONE
+    - BAMBOO
+    - YELLOW
+    - HONEY
+    - BROWN
+  BEE_SPAWN_EGG:
+    - WHITE
+    - BAMBOO
+    - YELLOW
+    - HONEY
+    - DARK_OAK
+    - BLACK
+  BELL:
+    - SANDSTONE
+    - BAMBOO
+    - YELLOW
+    - ACACIA
+    - BROWN
+  BIG_DRIPLEAF:
+    - LIME
+    - LIGHT_GREEN
+    - GREEN
+  BIG_DRIPLEAF_STEM:
+    - BROWN
+  BIRCH_BOAT:
+    - SANDSTONE
+    - BAMBOO
+    - BROWN
+    - DARK_OAK
+  BIRCH_CHEST_BOAT:
+    - WHITE
+    - PINK
+    - RED
+    - PURPLE
+    - BLUE
+    - GREEN
+    - YELLOW
+    - ORANGE
+    - BROWN
+    - BLACK
+  BIRCH_DOOR:
+    - WHITE
+    - SANDSTONE
+    - BAMBOO
+    - BROWN
+  BIRCH_HANGING_SIGN:
+    - SANDSTONE
+    - BAMBOO
+    - GRAY
+  BIRCH_LEAVES:
+    - GREEN
+    - DARK_GREEN
+  BIRCH_SAPLING:
+    - SANDSTONE
+    - LIME
+    - GREEN
+  BIRCH_SHELF:
+    - SANDSTONE
+    - BAMBOO
+  BIRCH_SIGN:
+    - WHITE
+    - SANDSTONE
+    - BAMBOO
+    - GRAY
+  BIRCH_TRAPDOOR:
+    - WHITE
+    - SANDSTONE
+    - BAMBOO
+    - BROWN
+  BLACKSTONE:
+    - GRAY_BLUE
+    - GRAY
+    - BLACK
+  BLACK_BUNDLE:
+    - EXPOSED_COPPER
+    - GRAY_BLUE
+    - BLACK
+  BLACK_CANDLE:
+    - GRAY_BLUE
+    - BLACK
+  BLACK_CONCRETE:
+    - BLACK
+  BLACK_CONCRETE_POWDER:
+    - BLACK
+  BLACK_DYE:
+    - EXPOSED_COPPER
+    - BROWN
+    - BLACK
+  BLACK_GLAZED_TERRACOTTA:
+    - RED
+    - DARK_RED
+    - GRAY
+    - BLACK
+  BLACK_HARNESS:
+    - LIGHT_GRAY_BLUE
+    - COPPER
+    - ACACIA
+    - BROWN
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  BLACK_SHULKER_BOX:
+    - BLACK
+  BLACK_STAINED_GLASS:
+    - BLACK
+  BLACK_STAINED_GLASS_PANE:
+    - BLACK
+  BLACK_TERRACOTTA:
+    - DARK_OAK
+    - BLACK
+  BLACK_WOOL:
+    - GRAY
+    - BLACK
+  BLADE_POTTERY_SHERD:
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  BLAST_FURNACE:
+    - LIGHT_GRAY
+    - GRAY
+  BLAZE_POWDER:
+    - YELLOW
+    - HONEY
+    - ORANGE
+    - DARK_RED
+  BLAZE_ROD:
+    - YELLOW
+    - COPPER
+    - ACACIA
+  BLAZE_SPAWN_EGG:
+    - YELLOW
+    - HONEY
+    - ORANGE
+    - ACACIA
+    - DARK_RED
+  BLUE_BUNDLE:
+    - EXPOSED_COPPER
+    - LIGHT_GRAY_BLUE
+    - GRAY_BLUE
+    - BLUE
+  BLUE_CANDLE:
+    - BLUE
+    - GRAY_BLUE
+    - BLACK
+  BLUE_CONCRETE:
+    - BLUE
+  BLUE_CONCRETE_POWDER:
+    - GRAY_BLUE
+    - BLUE
+  BLUE_DYE:
+    - EXPOSED_COPPER
+    - BROWN
+    - GRAY_BLUE
+    - BLUE
+  BLUE_EGG:
+    - LIGHT_GRAY
+  BLUE_GLAZED_TERRACOTTA:
+    - LIGHT_BLUE
+    - LIGHT_GRAY_BLUE
+    - BLUE
+    - GRAY_BLUE
+  BLUE_HARNESS:
+    - LIGHT_GRAY_BLUE
+    - COPPER
+    - ACACIA
+    - BROWN
+    - LIGHT_GRAY
+    - GRAY
+    - GRAY_BLUE
+  BLUE_ICE:
+    - LIGHT_GRAY_BLUE
+    - LIGHT_BLUE
+  BLUE_ORCHID:
+    - LIGHT_GREEN
+    - GREEN
+    - CYAN
+    - LIGHT_BLUE
+  BLUE_SHULKER_BOX:
+    - GRAY_BLUE
+    - BLUE
+  BLUE_STAINED_GLASS:
+    - BLUE
+  BLUE_STAINED_GLASS_PANE:
+    - BLUE
+  BLUE_TERRACOTTA:
+    - GRAY_PURPLE
+  BLUE_WOOL:
+    - LIGHT_BLUE
+    - BLUE
+  BOGGED_SPAWN_EGG:
+    - SANDSTONE
+    - COPPER
+    - RED
+    - GREEN
+    - LIGHT_GRAY
+    - GRAY
+  BOLT_ARMOR_TRIM_SMITHING_TEMPLATE:
+    - CYAN
+    - LIGHT_BLUE
+    - TEAL
+    - COPPER
+    - ACACIA
+  BONE:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+  BONE_BLOCK:
+    - WHITE
+    - SANDSTONE
+    - LIGHT_GRAY
+  BONE_MEAL:
+    - WHITE
+    - LIGHT_GRAY
+    - LIGHT_GRAY_BLUE
+    - GRAY_BLUE
+  BOOK:
+    - LIGHT_GRAY
+    - BROWN
+    - DARK_OAK
+  BOOKSHELF:
+    - WHITE
+    - SANDSTONE
+    - CYAN
+    - YELLOW
+    - RED
+    - GREEN
+    - BLUE
+    - BROWN
+  BORDURE_INDENTED_BANNER_PATTERN:
+    - SANDSTONE
+    - BROWN
+    - DARK_OAK
+  BOW:
+    - ACACIA
+    - BROWN
+    - LIGHT_GRAY
+    - GRAY
+  BOWL:
+    - BROWN
+    - DARK_OAK
+  BRAIN_CORAL:
+    - CHERRY_PINK
+    - PINK
+    - CORAL_PINK
+    - MAGENTA
+  BRAIN_CORAL_BLOCK:
+    - CHERRY_PINK
+    - PINK
+    - CORAL_PINK
+    - MAGENTA
+  BRAIN_CORAL_FAN:
+    - CHERRY_PINK
+    - PINK
+    - CORAL_PINK
+    - MAGENTA
+  BREAD:
+    - HONEY
+    - BROWN
+  BREEZE_ROD:
+    - LIGHT_GRAY_BLUE
+    - GRAY_BLUE
+  BREEZE_SPAWN_EGG:
+    - WHITE
+    - LIGHT_GRAY_BLUE
+    - GRAY_BLUE
+  BREWER_POTTERY_SHERD:
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  BREWING_STAND:
+    - YELLOW
+    - HONEY
+    - ORANGE
+    - GRAY
+    - BLACK
+  BRICK:
+    - COPPER
+    - ACACIA
+  BRICKS:
+    - LIGHT_GRAY
+    - EXPOSED_COPPER
+    - COPPER
+  BROWN_BUNDLE:
+    - SANDSTONE
+    - ACACIA
+    - BROWN
+  BROWN_CANDLE:
+    - BROWN
+    - DARK_OAK
+    - BLACK
+  BROWN_CONCRETE:
+    - BROWN
+  BROWN_CONCRETE_POWDER:
+    - BROWN
+    - DARK_OAK
+  BROWN_DYE:
+    - EXPOSED_COPPER
+    - BROWN
+  BROWN_EGG:
+    - ACACIA
+    - COPPER
+    - CHERRY_PINK
+  BROWN_GLAZED_TERRACOTTA:
+    - CHERRY_PINK
+    - BROWN
+    - DARK_OAK
+    - LIGHT_BLUE
+    - TEAL
+  BROWN_HARNESS:
+    - LIGHT_GRAY_BLUE
+    - COPPER
+    - ACACIA
+    - BROWN
+    - LIGHT_GRAY
+    - GRAY
+    - ORANGE
+  BROWN_MUSHROOM:
+    - BROWN
+    - EXPOSED_COPPER
+  BROWN_MUSHROOM_BLOCK:
+    - EXPOSED_COPPER
+  BROWN_SHULKER_BOX:
+    - BROWN
+    - DARK_OAK
+  BROWN_STAINED_GLASS:
+    - BROWN
+  BROWN_STAINED_GLASS_PANE:
+    - BROWN
+  BROWN_TERRACOTTA:
+    - BROWN
+  BROWN_WOOL:
+    - BROWN
+    - DARK_OAK
+  BRUSH:
+    - CHERRY_PINK
+    - ACACIA
+    - BROWN
+    - LIGHT_RED
+  BUBBLE_CORAL:
+    - CORAL_PINK
+    - MAGENTA
+    - PURPLE
+  BUBBLE_CORAL_BLOCK:
+    - CORAL_PINK
+    - MAGENTA
+    - PURPLE
+  BUBBLE_CORAL_FAN:
+    - CORAL_PINK
+    - MAGENTA
+    - PURPLE
+  BUCKET:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+  BUDDING_AMETHYST:
+    - CHERRY_PINK
+    - PURPUR
+    - PURPLE
+  BUNDLE:
+    - EXPOSED_COPPER
+    - ACACIA
+    - BROWN
+  BURN_POTTERY_SHERD:
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  BUSH:
+    - GREEN
+    - DARK_GREEN
+  CACTUS:
+    - SANDSTONE
+    - LIME
+    - GREEN
+  CACTUS_FLOWER:
+    - CHERRY_PINK
+    - PINK
+    - CORAL_PINK
+    - CRIMSON_RED
+    - LIGHT_GREEN
+  CAKE:
+    - WHITE
+    - SANDSTONE
+    - ACACIA
+    - BROWN
+    - LIGHT_RED
+    - RED
+  CALCITE:
+    - WHITE
+    - LIGHT_GRAY
+  CALIBRATED_SCULK_SENSOR:
+    - WHITE
+    - LIGHT_GRAY
+    - CYAN
+    - TEAL
+    - CHERRY_PINK
+    - PURPUR
+    - PURPLE
+    - BLACK
+  CAMEL_HUSK_SPAWN_EGG:
+    - BROWN
+    - DARK_OAK
+    - BLACK
+  CAMEL_SPAWN_EGG:
+    - SANDSTONE
+    - HONEY
+    - ACACIA
+    - BROWN
+    - GRAY
+  CAMPFIRE:
+    - WHITE
+    - SANDSTONE
+    - YELLOW
+    - HONEY
+    - ORANGE
+    - ACACIA
+    - BROWN
+  CANDLE:
+    - WHITE
+    - SANDSTONE
+    - BLACK
+  CARROT:
+    - SANDSTONE
+    - HONEY
+    - ORANGE
+    - LIME
+    - LIGHT_GREEN
+    - GREEN
+  CARROTS:
+    - BROWN
+    - BLACK
+  CARROT_ON_A_STICK:
+    - SANDSTONE
+    - HONEY
+    - ORANGE
+    - LIME
+    - LIGHT_GREEN
+    - GREEN
+    - BROWN
+    - DARK_OAK
+  CARTOGRAPHY_TABLE:
+    - WHITE
+    - SANDSTONE
+    - BAMBOO
+    - YELLOW
+    - HONEY
+    - LIME
+    - LIGHT_GREEN
+    - GREEN
+    - DARK_GREEN
+    - LIGHT_BLUE
+    - BLUE
+    - LIGHT_RED
+    - RED
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  CARVED_PUMPKIN:
+    - YELLOW
+    - HONEY
+    - ORANGE
+    - ACACIA
+    - DARK_RED
+    - BLACK
+  CAT_SPAWN_EGG:
+    - WHITE
+    - LIGHT_GRAY
+    - PINK
+    - GRAY
+  CAULDRON:
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  CAVE_SPIDER_SPAWN_EGG:
+    - LIGHT_GRAY
+    - BAMBOO
+    - TEAL
+    - GRAY
+    - BLACK
+  CAVE_VINES:
+    - LIME
+    - LIGHT_GREEN
+    - GREEN
+    - ACACIA
+    - BROWN
+  CAVE_VINES_PLANT:
+    - LIME
+    - LIGHT_GREEN
+    - GREEN
+    - ACACIA
+    - BROWN
+  CHAINMAIL_BOOTS:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  CHAINMAIL_CHESTPLATE:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  CHAINMAIL_HELMET:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  CHAINMAIL_LEGGINGS:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  CHAIN_COMMAND_BLOCK:
+    - WHITE
+  CHARCOAL:
+    - GRAY
+    - BLACK
+  CHERRY_BOAT:
+    - CHERRY_PINK
+    - PINK
+    - CORAL_PINK
+  CHERRY_CHEST_BOAT:
+    - WHITE
+    - PINK
+    - RED
+    - PURPLE
+    - BLUE
+    - GREEN
+    - YELLOW
+    - ORANGE
+    - BROWN
+    - BLACK
+  CHERRY_DOOR:
+    - WHITE
+    - CHERRY_PINK
+    - PINK
+  CHERRY_HANGING_SIGN:
+    - PINK
+    - GRAY
+  CHERRY_LEAVES:
+    - WHITE
+    - CHERRY_PINK
+    - PINK
+    - LIME
+  CHERRY_SAPLING:
+    - CHERRY_PINK
+    - PINK
+    - CORAL_PINK
+    - CRIMSON_RED
+    - DARK_RED
+  CHERRY_SHELF:
+    - CHERRY_PINK
+    - PINK
+    - CORAL_PINK
+  CHERRY_SIGN:
+    - CHERRY_PINK
+    - PINK
+    - GRAY_PURPLE
+  CHERRY_TRAPDOOR:
+    - CHERRY_PINK
+    - PINK
+    - CORAL_PINK
+  CHEST_MINECART:
+    - YELLOW
+    - ORANGE
+    - RED
+    - BROWN
+    - GREEN
+    - BLUE
+    - PURPLE
+    - PINK
+    - WHITE
+    - BLACK
+  CHICKEN:
+    - CHERRY_PINK
+    - EXPOSED_COPPER
+  CHICKEN_SPAWN_EGG:
+    - WHITE
+    - LIGHT_GRAY
+    - YELLOW
+    - HONEY
+    - LIGHT_RED
+  CHIPPED_ANVIL:
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  CHISELED_BOOKSHELF:
+    - SANDSTONE
+    - BAMBOO
+    - DARK_OAK
+  CHISELED_COPPER:
+    - EXPOSED_COPPER
+    - COPPER
+    - ACACIA
+  CHISELED_DEEPSLATE:
+    - GRAY
+    - BLACK
+  CHISELED_NETHER_BRICKS:
+    - CRIMSON_RED
+    - DARK_RED
+    - BLACK
+  CHISELED_POLISHED_BLACKSTONE:
+    - GRAY_BLUE
+    - GRAY
+    - BLACK
+  CHISELED_QUARTZ_BLOCK:
+    - WHITE
+    - LIGHT_GRAY
+  CHISELED_RED_SANDSTONE:
+    - ORANGE
+    - COPPER
+    - ACACIA
+  CHISELED_RESIN_BRICKS:
+    - HONEY
+    - ORANGE
+    - RED
+  CHISELED_SANDSTONE:
+    - SANDSTONE
+    - BAMBOO
+  CHISELED_STONE_BRICKS:
+    - LIGHT_GRAY
+    - GRAY
+  CHISELED_TUFF:
+    - LIGHT_GRAY
+    - GREEN
+    - TEAL
+    - GRAY
+  CHISELED_TUFF_BRICKS:
+    - LIGHT_GRAY
+    - GRAY
+    - LIGHT_GRAY_BLUE
+  CHORUS_FLOWER:
+    - WHITE
+    - CHERRY_PINK
+    - PURPUR
+    - PURPLE
+  CHORUS_FRUIT:
+    - WHITE
+    - CHERRY_PINK
+    - PURPUR
+    - PURPLE
+  CHORUS_PLANT:
+    - CHERRY_PINK
+    - PURPUR
+    - PURPLE
+  CLAY:
+    - LIGHT_GRAY
+    - LIGHT_GRAY_BLUE
+  CLAY_BALL:
+    - LIGHT_GRAY
+    - LIGHT_GRAY_BLUE
+  CLOCK:
+    - YELLOW
+    - HONEY
+    - ACACIA
+    - BLUE
+  CLOSED_EYEBLOSSOM:
+    - LIGHT_GRAY
+    - GRAY
+  COAL_BLOCK:
+    - BLACK
+  COARSE_DIRT:
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+    - LIGHT_GRAY
+    - GRAY
+  COAST_ARMOR_TRIM_SMITHING_TEMPLATE:
+    - CYAN
+    - LIGHT_BLUE
+    - TEAL
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  COBBLED_DEEPSLATE:
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  COBWEB:
+    - WHITE
+    - LIGHT_GRAY
+  COCOA:
+    - COPPER
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  COCOA_BEANS:
+    - EXPOSED_COPPER
+    - BROWN
+    - DARK_OAK
+  COD:
+    - SANDSTONE
+    - HONEY
+    - ACACIA
+    - BROWN
+  COD_BUCKET:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - SANDSTONE
+    - ACACIA
+    - BROWN
+    - BLUE
+    - GRAY_BLUE
+    - BLACK
+  COD_SPAWN_EGG:
+    - WHITE
+    - LIGHT_GRAY
+    - SANDSTONE
+    - HONEY
+    - ACACIA
+    - BROWN
+    - GRAY_BLUE
+  COMMAND_BLOCK:
+    - SANDSTONE
+    - BAMBOO
+    - YELLOW
+    - HONEY
+    - ORANGE
+    - COPPER
+    - ACACIA
+    - EXPOSED_COPPER
+    - BROWN
+    - DARK_OAK
+    - BLACK
+    - GRAY
+    - LIGHT_GRAY
+    - WHITE
+    - LIGHT_GRAY_BLUE
+    - LIGHT_BLUE
+    - CYAN
+    - TEAL
+    - GRAY_BLUE
+    - BLUE
+    - PURPLE_BLUE
+    - GRAY_PURPLE
+    - PURPLE
+    - PURPUR
+    - MAGENTA
+    - CORAL_PINK
+    - PINK
+    - CHERRY_PINK
+    - LIGHT_RED
+    - RED
+    - CRIMSON_RED
+    - DARK_RED
+    - DARK_GREEN
+    - GREEN
+    - LIGHT_GREEN
+    - LIME
+  COMMAND_BLOCK_MINECART:
+    - SANDSTONE
+    - BAMBOO
+    - YELLOW
+    - HONEY
+    - ORANGE
+    - COPPER
+    - ACACIA
+    - EXPOSED_COPPER
+    - BROWN
+    - DARK_OAK
+    - BLACK
+    - GRAY
+    - LIGHT_GRAY
+    - WHITE
+    - LIGHT_GRAY_BLUE
+    - LIGHT_BLUE
+    - CYAN
+    - TEAL
+    - GRAY_BLUE
+    - BLUE
+    - PURPLE_BLUE
+    - GRAY_PURPLE
+    - PURPLE
+    - PURPUR
+    - MAGENTA
+    - CORAL_PINK
+    - PINK
+    - CHERRY_PINK
+    - LIGHT_RED
+    - RED
+    - CRIMSON_RED
+    - DARK_RED
+    - DARK_GREEN
+    - GREEN
+    - LIGHT_GREEN
+    - LIME
+  COMPARATOR:
+    - LIGHT_GRAY
+    - GRAY
+    - BROWN
+    - DARK_OAK
+    - RED
+    - DARK_RED
+  COMPASS:
+    - LIGHT_RED
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  COMPOSTER:
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  CONDUIT:
+    - WHITE
+    - SANDSTONE
+    - BAMBOO
+    - COPPER
+  COOKED_BEEF:
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  COOKED_CHICKEN:
+    - COPPER
+    - ACACIA
+    - BROWN
+  COOKED_COD:
+    - WHITE
+    - SANDSTONE
+    - BAMBOO
+    - BROWN
+    - BLACK
+  COOKED_MUTTON:
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+    - BLACK
+  COOKED_PORKCHOP:
+    - SANDSTONE
+    - BAMBOO
+    - ACACIA
+  COOKED_RABBIT:
+    - COPPER
+    - ACACIA
+    - BROWN
+  COOKED_SALMON:
+    - SANDSTONE
+    - ORANGE
+    - COPPER
+    - ACACIA
+    - TEAL
+    - BLACK
+  COOKIE:
+    - PINK
+    - BROWN
+  COPPER_AXE:
+    - EXPOSED_COPPER
+    - COPPER
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  COPPER_BARS:
+    - EXPOSED_COPPER
+    - COPPER
+    - ACACIA
+  COPPER_BLOCK:
+    - EXPOSED_COPPER
+    - COPPER
+    - ACACIA
+  COPPER_BOOTS:
+    - CHERRY_PINK
+    - EXPOSED_COPPER
+    - COPPER
+    - ACACIA
+    - BROWN
+  COPPER_BULB:
+    - EXPOSED_COPPER
+    - COPPER
+    - ACACIA
+    - BROWN
+  COPPER_CHAIN:
+    - EXPOSED_COPPER
+    - COPPER
+    - ACACIA
+  COPPER_CHESTPLATE:
+    - CHERRY_PINK
+    - EXPOSED_COPPER
+    - COPPER
+    - ACACIA
+    - BROWN
+  COPPER_DOOR:
+    - EXPOSED_COPPER
+    - COPPER
+    - ACACIA
+    - GRAY
+  COPPER_GOLEM_SPAWN_EGG:
+    - EXPOSED_COPPER
+    - COPPER
+    - ACACIA
+  COPPER_GRATE:
+    - EXPOSED_COPPER
+    - COPPER
+    - ACACIA
+  COPPER_HELMET:
+    - CHERRY_PINK
+    - EXPOSED_COPPER
+    - COPPER
+    - ACACIA
+    - BROWN
+  COPPER_HOE:
+    - EXPOSED_COPPER
+    - COPPER
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  COPPER_HORSE_ARMOR:
+    - CYAN
+    - TEAL
+    - CHERRY_PINK
+    - COPPER
+    - ACACIA
+  COPPER_INGOT:
+    - CHERRY_PINK
+    - EXPOSED_COPPER
+    - COPPER
+    - ACACIA
+    - BROWN
+  COPPER_LANTERN:
+    - LIME
+    - COPPER
+    - ACACIA
+  COPPER_LEGGINGS:
+    - CHERRY_PINK
+    - EXPOSED_COPPER
+    - COPPER
+    - ACACIA
+    - BROWN
+  COPPER_NAUTILUS_ARMOR:
+    - CHERRY_PINK
+    - COPPER
+    - ACACIA
+  COPPER_NUGGET:
+    - CHERRY_PINK
+    - EXPOSED_COPPER
+    - COPPER
+  COPPER_ORE:
+    - LIGHT_GRAY
+    - GRAY
+    - EXPOSED_COPPER
+    - COPPER
+    - ACACIA
+    - CYAN
+    - TEAL
+    - BLACK
+  COPPER_PICKAXE:
+    - EXPOSED_COPPER
+    - COPPER
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  COPPER_SHOVEL:
+    - EXPOSED_COPPER
+    - COPPER
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  COPPER_SPEAR:
+    - CHERRY_PINK
+    - COPPER
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+    - DARK_RED
+  COPPER_SWORD:
+    - CHERRY_PINK
+    - COPPER
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  COPPER_TORCH:
+    - ACACIA
+    - BROWN
+    - LIME
+  COPPER_TRAPDOOR:
+    - COPPER
+    - ACACIA
+    - BROWN
+  CORNFLOWER:
+    - GRAY_BLUE
+    - BLUE
+    - GREEN
+    - DARK_GREEN
+  COW_SPAWN_EGG:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+    - BROWN
+    - DARK_OAK
+  CRACKED_DEEPSLATE_BRICKS:
+    - GRAY
+    - BLACK
+  CRACKED_DEEPSLATE_TILES:
+    - GRAY
+    - BLACK
+  CRACKED_NETHER_BRICKS:
+    - CRIMSON_RED
+    - DARK_RED
+    - BLACK
+  CRACKED_POLISHED_BLACKSTONE_BRICKS:
+    - GRAY
+    - GRAY_PURPLE
+    - BLACK
+  CRACKED_STONE_BRICKS:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+  CREAKING_HEART:
+    - BROWN
+    - DARK_OAK
+    - GRAY
+  CREAKING_SPAWN_EGG:
+    - HONEY
+    - ORANGE
+    - LIGHT_GRAY
+    - GRAY
+  CREEPER_BANNER_PATTERN:
+    - WHITE
+    - SANDSTONE
+    - BROWN
+    - DARK_OAK
+  CREEPER_HEAD:
+    - WHITE
+    - LIME
+    - GREEN
+    - BLACK
+  CREEPER_SPAWN_EGG:
+    - WHITE
+    - LIME
+    - GREEN
+    - BLACK
+  CRIMSON_DOOR:
+    - CORAL_PINK
+    - CRIMSON_RED
+  CRIMSON_FUNGUS:
+    - SANDSTONE
+    - ORANGE
+    - RED
+    - BROWN
+  CRIMSON_HANGING_SIGN:
+    - CRIMSON_RED
+    - GRAY
+  CRIMSON_NYLIUM:
+    - LIGHT_RED
+    - RED
+    - DARK_RED
+  CRIMSON_ROOTS:
+    - RED
+    - CRIMSON_RED
+    - DARK_RED
+  CRIMSON_SHELF:
+    - CRIMSON_RED
+    - DARK_RED
+  CRIMSON_SIGN:
+    - RED
+    - CRIMSON_RED
+    - DARK_RED
+  CRIMSON_STEM:
+    - RED
+    - CRIMSON_RED
+    - DARK_RED
+    - GRAY_PURPLE
+  CRIMSON_TRAPDOOR:
+    - CRIMSON_RED
+    - DARK_RED
+  CRYING_OBSIDIAN:
+    - PURPLE
+    - PURPLE_BLUE
+    - BLACK
+  CUT_COPPER:
+    - ORANGE
+    - COPPER
+    - ACACIA
+  CUT_RED_SANDSTONE:
+    - ORANGE
+    - COPPER
+  CUT_SANDSTONE:
+    - SANDSTONE
+    - BAMBOO
+  CYAN_BUNDLE:
+    - CYAN
+    - LIGHT_BLUE
+    - TEAL
+    - EXPOSED_COPPER
+  CYAN_CANDLE:
+    - CYAN
+    - TEAL
+    - BLACK
+  CYAN_CONCRETE:
+    - TEAL
+  CYAN_CONCRETE_POWDER:
+    - CYAN
+    - TEAL
+  CYAN_DYE:
+    - CYAN
+    - LIGHT_BLUE
+    - EXPOSED_COPPER
+  CYAN_GLAZED_TERRACOTTA:
+    - CYAN
+    - TEAL
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  CYAN_HARNESS:
+    - LIGHT_GRAY_BLUE
+    - COPPER
+    - ACACIA
+    - BROWN
+    - LIGHT_GRAY
+    - GRAY
+    - TEAL
+  CYAN_SHULKER_BOX:
+    - CYAN
+    - TEAL
+  CYAN_STAINED_GLASS:
+    - CYAN
+  CYAN_STAINED_GLASS_PANE:
+    - CYAN
+  CYAN_TERRACOTTA:
+    - GRAY
+  CYAN_WOOL:
+    - CYAN
+    - TEAL
+  DAMAGED_ANVIL:
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  DANDELION:
+    - LIGHT_GREEN
+    - GREEN
+    - YELLOW
+    - HONEY
+    - ACACIA
+  DANGER_POTTERY_SHERD:
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  DARK_OAK_BOAT:
+    - BROWN
+    - DARK_OAK
+    - BLACK
+  DARK_OAK_CHEST_BOAT:
+    - WHITE
+    - PINK
+    - RED
+    - PURPLE
+    - BLUE
+    - GREEN
+    - YELLOW
+    - ORANGE
+    - BROWN
+    - BLACK
+  DARK_OAK_DOOR:
+    - BROWN
+    - DARK_OAK
+    - YELLOW
+    - HONEY
+    - GRAY
+  DARK_OAK_HANGING_SIGN:
+    - DARK_OAK
+    - GRAY
+  DARK_OAK_LEAVES:
+    - LIGHT_GREEN
+    - GREEN
+    - DARK_GREEN
+  DARK_OAK_SAPLING:
+    - GREEN
+    - DARK_GREEN
+    - BROWN
+    - DARK_OAK
+  DARK_OAK_SHELF:
+    - BROWN
+    - DARK_OAK
+  DARK_OAK_SIGN:
+    - DARK_OAK
+  DARK_OAK_TRAPDOOR:
+    - BROWN
+    - DARK_OAK
+  DARK_PRISMARINE:
+    - TEAL
+  DAYLIGHT_DETECTOR:
+    - SANDSTONE
+    - BROWN
+  DEAD_BRAIN_CORAL:
+    - LIGHT_GRAY
+    - GRAY
+  DEAD_BRAIN_CORAL_BLOCK:
+    - LIGHT_GRAY
+    - GRAY
+  DEAD_BRAIN_CORAL_FAN:
+    - LIGHT_GRAY
+    - GRAY
+  DEAD_BUBBLE_CORAL:
+    - LIGHT_GRAY
+    - GRAY
+  DEAD_BUBBLE_CORAL_BLOCK:
+    - LIGHT_GRAY
+    - GRAY
+  DEAD_BUBBLE_CORAL_FAN:
+    - LIGHT_GRAY
+    - GRAY
+  DEAD_BUSH:
+    - EXPOSED_COPPER
+    - ACACIA
+    - BROWN
+  DEAD_FIRE_CORAL:
+    - LIGHT_GRAY
+    - GRAY
+  DEAD_FIRE_CORAL_BLOCK:
+    - LIGHT_GRAY
+    - GRAY
+  DEAD_FIRE_CORAL_FAN:
+    - LIGHT_GRAY
+    - GRAY
+  DEAD_HORN_CORAL:
+    - LIGHT_GRAY
+    - GRAY
+  DEAD_HORN_CORAL_BLOCK:
+    - LIGHT_GRAY
+    - GRAY
+  DEAD_HORN_CORAL_FAN:
+    - LIGHT_GRAY
+    - GRAY
+  DEAD_TUBE_CORAL:
+    - LIGHT_GRAY
+    - GRAY
+  DEAD_TUBE_CORAL_BLOCK:
+    - LIGHT_GRAY
+    - GRAY
+  DEAD_TUBE_CORAL_FAN:
+    - LIGHT_GRAY
+    - GRAY
+  DEEPSLATE:
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  DEEPSLATE_BRICKS:
+    - GRAY
+    - BLACK
+  DEEPSLATE_COPPER_ORE:
+    - LIME
+    - TEAL
+    - COPPER
+    - ACACIA
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  DEEPSLATE_DIAMOND_ORE:
+    - CYAN
+    - LIGHT_BLUE
+    - TEAL
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  DEEPSLATE_EMERALD_ORE:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+    - LIGHT_GREEN
+    - GREEN
+  DEEPSLATE_GOLD_ORE:
+    - YELLOW
+    - HONEY
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  DEEPSLATE_LAPIS_ORE:
+    - LIGHT_BLUE
+    - BLUE
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  DEEPSLATE_TILES:
+    - GRAY
+    - BLACK
+  DETECTOR_RAIL:
+    - LIGHT_GRAY
+    - GRAY
+    - ACACIA
+    - BROWN
+    - DARK_RED
+  DIAMOND:
+    - WHITE
+    - CYAN
+    - LIGHT_BLUE
+    - TEAL
+  DIAMOND_AXE:
+    - CYAN
+    - TEAL
+    - BROWN
+    - DARK_OAK
+  DIAMOND_BLOCK:
+    - WHITE
+    - CYAN
+    - TEAL
+  DIAMOND_BOOTS:
+    - WHITE
+    - CYAN
+    - TEAL
+  DIAMOND_CHESTPLATE:
+    - WHITE
+    - CYAN
+    - TEAL
+  DIAMOND_HELMET:
+    - WHITE
+    - CYAN
+    - TEAL
+  DIAMOND_HOE:
+    - CYAN
+    - TEAL
+    - BROWN
+    - DARK_OAK
+  DIAMOND_HORSE_ARMOR:
+    - WHITE
+    - CYAN
+    - LIGHT_BLUE
+    - TEAL
+    - BAMBOO
+    - LIME
+    - DARK_GREEN
+  DIAMOND_LEGGINGS:
+    - WHITE
+    - CYAN
+    - TEAL
+  DIAMOND_NAUTILUS_ARMOR:
+    - WHITE
+    - CYAN
+    - LIGHT_BLUE
+    - TEAL
+  DIAMOND_ORE:
+    - CYAN
+    - LIGHT_BLUE
+    - TEAL
+    - LIGHT_GRAY
+    - GRAY
+  DIAMOND_PICKAXE:
+    - CYAN
+    - LIGHT_BLUE
+    - TEAL
+    - BROWN
+    - DARK_OAK
+  DIAMOND_SHOVEL:
+    - CYAN
+    - LIGHT_BLUE
+    - TEAL
+    - BROWN
+    - DARK_OAK
+  DIAMOND_SPEAR:
+    - WHITE
+    - CYAN
+    - LIGHT_BLUE
+    - TEAL
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+    - DARK_RED
+  DIAMOND_SWORD:
+    - CYAN
+    - LIGHT_BLUE
+    - TEAL
+    - BROWN
+    - DARK_OAK
+  DIORITE:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+  DIRT:
+    - EXPOSED_COPPER
+    - BROWN
+    - DARK_OAK
+    - LIGHT_GRAY
+    - GRAY
+  DIRT_PATH:
+    - SANDSTONE
+    - BAMBOO
+    - BROWN
+    - DARK_OAK
+  DISPENSER:
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  DOLPHIN_SPAWN_EGG:
+    - LIGHT_GRAY_BLUE
+    - GRAY_BLUE
+  DONKEY_SPAWN_EGG:
+    - EXPOSED_COPPER
+    - BROWN
+    - GRAY
+    - BLACK
+  DRAGON_BREATH:
+    - WHITE
+    - CHERRY_PINK
+    - PINK
+    - CORAL_PINK
+    - MAGENTA
+    - ACACIA
+    - BROWN
+  DRAGON_EGG:
+    - GRAY_PURPLE
+    - BLACK
+  DRIED_KELP:
+    - GRAY
+    - BLACK
+  DRIPSTONE_BLOCK:
+    - EXPOSED_COPPER
+  DROWNED_SPAWN_EGG:
+    - WHITE
+    - CYAN
+    - TEAL
+    - DARK_GREEN
+    - BROWN
+    - GRAY
+  DUNE_ARMOR_TRIM_SMITHING_TEMPLATE:
+    - CYAN
+    - LIGHT_BLUE
+    - TEAL
+    - SANDSTONE
+    - BAMBOO
+  ECHO_SHARD:
+    - CYAN
+    - TEAL
+    - GRAY
+    - BLACK
+  EGG:
+    - SANDSTONE
+  ELDER_GUARDIAN_SPAWN_EGG:
+    - EXPOSED_COPPER
+    - LIGHT_GRAY_BLUE
+    - BLUE
+    - GRAY_BLUE
+    - LIGHT_GRAY
+    - GRAY
+  ELYTRA:
+    - LIGHT_GRAY
+    - GRAY
+  EMERALD:
+    - WHITE
+    - LIME
+    - LIGHT_GREEN
+    - GREEN
+    - DARK_GREEN
+  EMERALD_BLOCK:
+    - LIGHT_GREEN
+    - GREEN
+    - DARK_GREEN
+  EMERALD_ORE:
+    - LIGHT_GREEN
+    - GREEN
+    - DARK_GREEN
+    - LIGHT_GRAY
+    - GRAY
+  ENCHANTED_BOOK:
+    - WHITE
+    - LIGHT_GRAY
+    - HONEY
+    - RED
+    - BROWN
+    - DARK_OAK
+  ENCHANTING_TABLE:
+    - WHITE
+    - CYAN
+    - TEAL
+    - LIGHT_RED
+    - RED
+    - GRAY_PURPLE
+    - BLACK
+  ENDERMAN_SPAWN_EGG:
+    - PURPUR
+    - MAGENTA
+    - PURPLE
+    - BLACK
+  ENDERMITE_SPAWN_EGG:
+    - PURPUR
+    - MAGENTA
+    - PURPLE
+    - DARK_RED
+    - BLACK
+  ENDER_DRAGON_SPAWN_EGG:
+    - MAGENTA
+    - PURPLE
+    - GRAY_PURPLE
+    - BLACK
+  ENDER_EYE:
+    - LIME
+    - LIGHT_GREEN
+    - GREEN
+    - DARK_GREEN
+    - TEAL
+  ENDER_PEARL:
+    - LIGHT_BLUE
+    - TEAL
+  END_CRYSTAL:
+    - WHITE
+    - MAGENTA
+    - PURPLE
+    - LIGHT_RED
+    - RED
+  END_PORTAL_FRAME:
+    - SANDSTONE
+    - BAMBOO
+    - TEAL
+  END_ROD:
+    - WHITE
+    - SANDSTONE
+    - LIGHT_GRAY
+  END_STONE:
+    - SANDSTONE
+    - BAMBOO
+  END_STONE_BRICKS:
+    - SANDSTONE
+    - BAMBOO
+  EVOKER_SPAWN_EGG:
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+    - HONEY
+    - BROWN
+  EXPERIENCE_BOTTLE:
+    - WHITE
+    - LIME
+    - LIGHT_GREEN
+    - TEAL
+    - BROWN
+  EXPLORER_POTTERY_SHERD:
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  EXPOSED_CHISELED_COPPER:
+    - BAMBOO
+    - EXPOSED_COPPER
+    - ACACIA
+    - BROWN
+  EXPOSED_COPPER:
+    - BAMBOO
+    - EXPOSED_COPPER
+    - ACACIA
+    - BROWN
+  EXPOSED_COPPER_BARS:
+    - BAMBOO
+    - EXPOSED_COPPER
+    - ACACIA
+    - BROWN
+  EXPOSED_COPPER_BULB:
+    - BAMBOO
+    - EXPOSED_COPPER
+    - ACACIA
+    - BROWN
+  EXPOSED_COPPER_CHAIN:
+    - BAMBOO
+    - EXPOSED_COPPER
+    - ACACIA
+    - BROWN
+  EXPOSED_COPPER_DOOR:
+    - BAMBOO
+    - EXPOSED_COPPER
+    - ACACIA
+    - BROWN
+    - GRAY
+  EXPOSED_COPPER_GRATE:
+    - BAMBOO
+    - EXPOSED_COPPER
+    - ACACIA
+    - BROWN
+  EXPOSED_COPPER_LANTERN:
+    - BAMBOO
+    - EXPOSED_COPPER
+    - ACACIA
+    - BROWN
+    - LIME
+    - DARK_GREEN
+  EXPOSED_COPPER_TRAPDOOR:
+    - BAMBOO
+    - EXPOSED_COPPER
+    - ACACIA
+    - BROWN
+  EXPOSED_CUT_COPPER:
+    - BAMBOO
+    - EXPOSED_COPPER
+    - ACACIA
+    - BROWN
+  EXPOSED_LIGHTNING_ROD:
+    - BAMBOO
+    - EXPOSED_COPPER
+    - ACACIA
+    - BROWN
+  EYE_ARMOR_TRIM_SMITHING_TEMPLATE:
+    - CYAN
+    - LIGHT_BLUE
+    - TEAL
+    - SANDSTONE
+    - BROWN
+  FARMLAND:
+    - BROWN
+    - DARK_OAK
+    - LIGHT_GRAY
+    - GRAY
+  FEATHER:
+    - WHITE
+    - LIGHT_GRAY
+  FERMENTED_SPIDER_EYE:
+    - LIGHT_RED
+    - RED
+    - DARK_RED
+    - BLACK
+  FERN:
+    - GREEN
+    - DARK_GREEN
+  FIELD_MASONED_BANNER_PATTERN:
+    - WHITE
+    - SANDSTONE
+    - BROWN
+    - DARK_OAK
+  FILLED_MAP:
+    - WHITE
+    - SANDSTONE
+    - GRAY
+    - BLACK
+  FIREFLY_BUSH:
+    - WHITE
+    - GREEN
+    - DARK_GREEN
+    - ACACIA
+  FIREWORK_ROCKET:
+    - WHITE
+    - LIGHT_RED
+    - RED
+    - BLACK
+  FIREWORK_STAR:
+    - LIGHT_GRAY
+    - GRAY
+  FIRE_CHARGE:
+    - ORANGE
+    - COPPER
+    - ACACIA
+    - GRAY
+    - BLACK
+  FIRE_CORAL:
+    - LIGHT_RED
+    - RED
+    - DARK_RED
+  FIRE_CORAL_BLOCK:
+    - LIGHT_RED
+    - RED
+    - DARK_RED
+  FIRE_CORAL_FAN:
+    - LIGHT_RED
+    - RED
+    - DARK_RED
+  FISHING_ROD:
+    - WHITE
+    - BROWN
+    - DARK_OAK
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  FLETCHING_TABLE:
+    - SANDSTONE
+    - BAMBOO
+    - BROWN
+    - DARK_OAK
+    - RED
+    - DARK_RED
+  FLINT:
+    - GRAY
+    - BLACK
+  FLINT_AND_STEEL:
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  FLOWERING_AZALEA:
+    - PINK
+    - CORAL_PINK
+    - MAGENTA
+    - BAMBOO
+    - LIME
+    - GREEN
+    - EXPOSED_COPPER
+    - BROWN
+  FLOWERING_AZALEA_LEAVES:
+    - PINK
+    - CORAL_PINK
+    - MAGENTA
+    - BAMBOO
+    - LIME
+    - GREEN
+  FLOWER_BANNER_PATTERN:
+    - WHITE
+    - SANDSTONE
+    - BROWN
+    - DARK_OAK
+  FLOWER_POT:
+    - BROWN
+  FLOW_ARMOR_TRIM_SMITHING_TEMPLATE:
+    - CYAN
+    - LIGHT_BLUE
+    - TEAL
+    - GRAY_BLUE
+    - PURPLE_BLUE
+    - PURPUR
+  FLOW_BANNER_PATTERN:
+    - WHITE
+    - SANDSTONE
+    - BROWN
+    - DARK_OAK
+  FLOW_POTTERY_SHERD:
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  FOX_SPAWN_EGG:
+    - WHITE
+    - ORANGE
+    - COPPER
+    - ACACIA
+    - GRAY
+    - BLACK
+  FRIEND_POTTERY_SHERD:
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  FROGSPAWN:
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  FROG_SPAWN_EGG:
+    - SANDSTONE
+    - COPPER
+    - ACACIA
+    - BROWN
+  FURNACE_MINECART:
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  GHAST_SPAWN_EGG:
+    - WHITE
+    - SANDSTONE
+    - LIGHT_GRAY
+  GHAST_TEAR:
+    - WHITE
+    - LIGHT_GRAY
+    - LIGHT_GRAY_BLUE
+  GILDED_BLACKSTONE:
+    - YELLOW
+    - HONEY
+    - BROWN
+    - DARK_RED
+    - GRAY_BLUE
+    - GRAY
+    - BLACK
+  GLASS:
+    - WHITE
+    - LIGHT_GRAY_BLUE
+  GLASS_BOTTLE:
+    - WHITE
+    - LIGHT_GRAY_BLUE
+    - ACACIA
+  GLASS_PANE:
+    - WHITE
+    - LIGHT_GRAY_BLUE
+  GLISTERING_MELON_SLICE:
+    - WHITE
+    - PINK
+    - BAMBOO
+    - HONEY
+    - ACACIA
+    - LIGHT_RED
+    - RED
+  GLOBE_BANNER_PATTERN:
+    - WHITE
+    - SANDSTONE
+    - BROWN
+    - DARK_OAK
+  GLOWSTONE:
+    - WHITE
+    - SANDSTONE
+    - BAMBOO
+    - YELLOW
+    - ACACIA
+    - BROWN
+  GLOWSTONE_DUST:
+    - SANDSTONE
+    - YELLOW
+    - ACACIA
+    - BROWN
+  GLOW_BERRIES:
+    - SANDSTONE
+    - YELLOW
+    - HONEY
+    - ACACIA
+    - BROWN
+    - LIME
+    - GREEN
+    - DARK_GREEN
+  GLOW_INK_SAC:
+    - CYAN
+    - LIGHT_GRAY_BLUE
+    - LIGHT_BLUE
+    - TEAL
+    - EXPOSED_COPPER
+  GLOW_ITEM_FRAME:
+    - WHITE
+    - SANDSTONE
+    - BAMBOO
+    - YELLOW
+    - HONEY
+    - BROWN
+    - BLACK
+  GLOW_LICHEN:
+    - BAMBOO
+    - TEAL
+  GLOW_SQUID_SPAWN_EGG:
+    - CYAN
+    - LIGHT_GRAY_BLUE
+    - TEAL
+  GOAT_HORN:
+    - BROWN
+    - BLACK
+    - WHITE
+  GOAT_SPAWN_EGG:
+    - WHITE
+    - SANDSTONE
+    - BAMBOO
+    - GRAY
+    - BLACK
+  GOLDEN_APPLE:
+    - YELLOW
+    - HONEY
+    - DARK_RED
+  GOLDEN_AXE:
+    - YELLOW
+    - HONEY
+    - BROWN
+    - DARK_OAK
+  GOLDEN_BOOTS:
+    - YELLOW
+    - HONEY
+    - DARK_OAK
+  GOLDEN_CARROT:
+    - YELLOW
+    - HONEY
+    - DARK_OAK
+  GOLDEN_CHESTPLATE:
+    - WHITE
+    - YELLOW
+    - HONEY
+    - DARK_OAK
+  GOLDEN_HELMET:
+    - WHITE
+    - YELLOW
+    - HONEY
+    - DARK_OAK
+  GOLDEN_HOE:
+    - YELLOW
+    - HONEY
+    - BROWN
+    - DARK_OAK
+  GOLDEN_HORSE_ARMOR:
+    - YELLOW
+    - HONEY
+    - ACACIA
+    - DARK_RED
+  GOLDEN_LEGGINGS:
+    - WHITE
+    - YELLOW
+    - HONEY
+    - DARK_OAK
+  GOLDEN_NAUTILUS_ARMOR:
+    - YELLOW
+    - HONEY
+    - ACACIA
+  GOLDEN_PICKAXE:
+    - YELLOW
+    - HONEY
+    - BROWN
+    - DARK_OAK
+  GOLDEN_SHOVEL:
+    - YELLOW
+    - HONEY
+    - BROWN
+    - DARK_OAK
+  GOLDEN_SPEAR:
+    - WHITE
+    - YELLOW
+    - HONEY
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+    - DARK_RED
+  GOLDEN_SWORD:
+    - WHITE
+    - SANDSTONE
+    - YELLOW
+    - HONEY
+    - BROWN
+    - DARK_OAK
+  GOLD_BLOCK:
+    - YELLOW
+    - HONEY
+  GOLD_INGOT:
+    - SANDSTONE
+    - YELLOW
+    - HONEY
+    - COPPER
+  GOLD_NUGGET:
+    - SANDSTONE
+    - YELLOW
+    - HONEY
+  GOLD_ORE:
+    - SANDSTONE
+    - YELLOW
+    - HONEY
+    - LIGHT_GRAY
+    - GRAY
+  GRANITE:
+    - EXPOSED_COPPER
+    - BROWN
+    - DARK_OAK
+  GRASS_BLOCK:
+    - LIGHT_GREEN
+    - GREEN
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  GRAVEL:
+    - CHERRY_PINK
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+  GRAY_BUNDLE:
+    - LIGHT_GRAY
+    - GRAY
+    - LIGHT_GRAY_BLUE
+    - EXPOSED_COPPER
+  GRAY_CANDLE:
+    - GRAY
+    - BLACK
+  GRAY_CONCRETE:
+    - GRAY
+  GRAY_CONCRETE_POWDER:
+    - GRAY
+  GRAY_DYE:
+    - EXPOSED_COPPER
+    - LIGHT_GRAY
+    - GRAY
+  GRAY_GLAZED_TERRACOTTA:
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+    - TEAL
+  GRAY_HARNESS:
+    - LIGHT_GRAY_BLUE
+    - COPPER
+    - ACACIA
+    - BROWN
+    - LIGHT_GRAY
+    - GRAY
+  GRAY_SHULKER_BOX:
+    - GRAY
+    - BLACK
+  GRAY_STAINED_GLASS:
+    - GRAY
+  GRAY_STAINED_GLASS_PANE:
+    - GRAY
+  GRAY_TERRACOTTA:
+    - DARK_OAK
+  GRAY_WOOL:
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  GREEN_BUNDLE:
+    - LIME
+    - GREEN
+    - EXPOSED_COPPER
+  GREEN_CANDLE:
+    - GREEN
+    - DARK_GREEN
+    - BLACK
+  GREEN_CONCRETE:
+    - DARK_GREEN
+  GREEN_CONCRETE_POWDER:
+    - GREEN
+    - DARK_GREEN
+  GREEN_DYE:
+    - EXPOSED_COPPER
+    - LIME
+    - DARK_GREEN
+  GREEN_GLAZED_TERRACOTTA:
+    - LIME
+    - LIGHT_GREEN
+    - GREEN
+    - DARK_GREEN
+    - WHITE
+  GREEN_HARNESS:
+    - LIGHT_GRAY_BLUE
+    - COPPER
+    - ACACIA
+    - BROWN
+    - LIGHT_GRAY
+    - GRAY
+    - LIME
+  GREEN_SHULKER_BOX:
+    - GREEN
+    - DARK_GREEN
+  GREEN_STAINED_GLASS:
+    - DARK_GREEN
+  GREEN_STAINED_GLASS_PANE:
+    - DARK_GREEN
+  GREEN_TERRACOTTA:
+    - DARK_GREEN
+  GREEN_WOOL:
+    - LIME
+    - GREEN
+    - DARK_GREEN
+  GRINDSTONE:
+    - LIGHT_GRAY
+    - GRAY
+    - BROWN
+    - DARK_OAK
+  GUARDIAN_SPAWN_EGG:
+    - ORANGE
+    - COPPER
+    - LIGHT_BLUE
+    - TEAL
+    - GRAY_BLUE
+  GUNPOWDER:
+    - LIGHT_GRAY
+    - GRAY
+  GUSTER_BANNER_PATTERN:
+    - WHITE
+    - SANDSTONE
+    - BROWN
+    - DARK_OAK
+  GUSTER_POTTERY_SHERD:
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  HANGING_ROOTS:
+    - EXPOSED_COPPER
+  HAPPY_GHAST_SPAWN_EGG:
+    - WHITE
+    - SANDSTONE
+    - LIGHT_GRAY
+  HAY_BLOCK:
+    - YELLOW
+    - HONEY
+    - ORANGE
+    - RED
+  HEARTBREAK_POTTERY_SHERD:
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  HEART_OF_THE_SEA:
+    - LIGHT_GRAY_BLUE
+    - LIGHT_BLUE
+    - TEAL
+  HEART_POTTERY_SHERD:
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  HEAVY_CORE:
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  HOGLIN_SPAWN_EGG:
+    - SANDSTONE
+    - BAMBOO
+    - COPPER
+    - LIGHT_GRAY
+    - GRAY
+  HONEYCOMB:
+    - YELLOW
+    - HONEY
+    - ORANGE
+  HONEYCOMB_BLOCK:
+    - YELLOW
+    - HONEY
+    - ORANGE
+  HONEY_BLOCK:
+    - YELLOW
+    - HONEY
+    - ORANGE
+  HONEY_BOTTLE:
+    - WHITE
+    - LIGHT_GRAY_BLUE
+    - YELLOW
+    - HONEY
+    - ORANGE
+  HOPPER:
+    - LIGHT_GRAY
+    - GRAY
+  HOPPER_MINECART:
+    - LIGHT_GRAY
+    - GRAY
+  HORN_CORAL:
+    - YELLOW
+    - HONEY
+  HORN_CORAL_BLOCK:
+    - BAMBOO
+    - YELLOW
+    - HONEY
+  HORN_CORAL_FAN:
+    - YELLOW
+    - HONEY
+  HORSE_SPAWN_EGG:
+    - WHITE
+    - LIGHT_GRAY
+    - BROWN
+    - DARK_OAK
+    - BLACK
+  HOST_ARMOR_TRIM_SMITHING_TEMPLATE:
+    - CYAN
+    - LIGHT_BLUE
+    - BROWN
+    - DARK_OAK
+  HOWL_POTTERY_SHERD:
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  HUSK_SPAWN_EGG:
+    - SANDSTONE
+    - BAMBOO
+  ICE:
+    - LIGHT_GRAY_BLUE
+  INK_SAC:
+    - EXPOSED_COPPER
+    - GRAY
+    - BLACK
+  IRON_AXE:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+    - BROWN
+    - DARK_OAK
+  IRON_BARS:
+    - LIGHT_GRAY
+    - GRAY
+  IRON_BOOTS:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  IRON_CHAIN:
+    - GRAY
+  IRON_CHESTPLATE:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  IRON_DOOR:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  IRON_GOLEM_SPAWN_EGG:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - EXPOSED_COPPER
+    - BROWN
+    - LIGHT_GREEN
+    - GREEN
+    - YELLOW
+  IRON_HELMET:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  IRON_HOE:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+    - BROWN
+    - DARK_OAK
+  IRON_HORSE_ARMOR:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+    - DARK_RED
+  IRON_LEGGINGS:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  IRON_NAUTILUS_ARMOR:
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  IRON_SHOVEL:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+    - BROWN
+    - DARK_OAK
+  IRON_SPEAR:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+    - DARK_RED
+  IRON_SWORD:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+    - BROWN
+    - DARK_OAK
+  IRON_TRAPDOOR:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+  ITEM_FRAME:
+    - WHITE
+    - SANDSTONE
+    - BAMBOO
+    - ACACIA
+    - BLACK
+  JACK_O_LANTERN:
+    - YELLOW
+    - HONEY
+    - ORANGE
+  JIGSAW:
+    - WHITE
+    - CHERRY_PINK
+    - PURPUR
+    - GRAY
+    - BLACK
+  JUKEBOX:
+    - BROWN
+    - DARK_OAK
+    - BLACK
+  JUNGLE_BOAT:
+    - EXPOSED_COPPER
+    - BROWN
+    - DARK_OAK
+  JUNGLE_CHEST_BOAT:
+    - WHITE
+    - PINK
+    - RED
+    - PURPLE
+    - BLUE
+    - GREEN
+    - YELLOW
+    - ORANGE
+    - BROWN
+    - BLACK
+  JUNGLE_DOOR:
+    - EXPOSED_COPPER
+    - BROWN
+    - DARK_OAK
+    - GRAY
+  JUNGLE_HANGING_SIGN:
+    - EXPOSED_COPPER
+    - BROWN
+    - DARK_OAK
+    - GRAY
+  JUNGLE_LEAVES:
+    - LIGHT_GREEN
+    - GREEN
+    - DARK_GREEN
+  JUNGLE_SAPLING:
+    - DARK_GREEN
+    - DARK_OAK
+  JUNGLE_SHELF:
+    - EXPOSED_COPPER
+    - BROWN
+    - DARK_OAK
+  JUNGLE_SIGN:
+    - EXPOSED_COPPER
+    - BROWN
+    - DARK_OAK
+  JUNGLE_TRAPDOOR:
+    - EXPOSED_COPPER
+    - BROWN
+    - DARK_OAK
+  KELP:
+    - LIGHT_GREEN
+    - GREEN
+    - DARK_GREEN
+  KELP_PLANT:
+    - BROWN
+  KNOWLEDGE_BOOK:
+    - LIGHT_GRAY
+    - LIGHT_GREEN
+    - GREEN
+  LADDER:
+    - ACACIA
+    - BROWN
+  LANTERN:
+    - SANDSTONE
+    - YELLOW
+    - HONEY
+    - ORANGE
+    - BROWN
+    - GRAY
+  LAPIS_BLOCK:
+    - GRAY_BLUE
+    - BLUE
+  LAPIS_LAZULI:
+    - LIGHT_GRAY_BLUE
+    - GRAY_BLUE
+    - BLUE
+  LAPIS_ORE:
+    - LIGHT_GRAY_BLUE
+    - LIGHT_BLUE
+    - BLUE
+    - GRAY_BLUE
+    - LIGHT_GRAY
+    - GRAY
+  LARGE_AMETHYST_BUD:
+    - WHITE
+    - PURPLE
+    - PURPUR
+    - CHERRY_PINK
+  LARGE_FERN:
+    - GREEN
+    - DARK_GREEN
+  LAVA:
+    - ORANGE
+    - RED
+    - BROWN
+  LAVA_BUCKET:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - YELLOW
+    - HONEY
+    - ORANGE
+    - LIGHT_RED
+  LEAD:
+    - EXPOSED_COPPER
+    - ACACIA
+    - BROWN
+  LEAF_LITTER:
+    - COPPER
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  LEATHER:
+    - COPPER
+    - ACACIA
+    - BROWN
+  LEATHER_BOOTS:
+    - BROWN
+    - DARK_OAK
+  LEATHER_CHESTPLATE:
+    - BROWN
+    - DARK_OAK
+  LEATHER_HELMET:
+    - BROWN
+    - DARK_OAK
+  LEATHER_HORSE_ARMOR:
+    - BROWN
+    - DARK_OAK
+    - DARK_RED
+  LEATHER_LEGGINGS:
+    - BROWN
+    - DARK_OAK
+  LECTERN:
+    - SANDSTONE
+    - BAMBOO
+    - BROWN
+    - RED
+  LEVER:
+    - WHITE
+    - LIGHT_GRAY
+    - ACACIA
+    - BROWN
+  LIGHT:
+    - WHITE
+    - LIGHT_GRAY
+    - SANDSTONE
+    - YELLOW
+  LIGHTNING_ROD:
+    - COPPER
+    - ACACIA
+    - EXPOSED_COPPER
+  LIGHT_BLUE_BUNDLE:
+    - CYAN
+    - LIGHT_GRAY_BLUE
+    - LIGHT_BLUE
+    - EXPOSED_COPPER
+  LIGHT_BLUE_CANDLE:
+    - LIGHT_BLUE
+    - BLACK
+  LIGHT_BLUE_CONCRETE:
+    - LIGHT_BLUE
+  LIGHT_BLUE_CONCRETE_POWDER:
+    - CYAN
+    - LIGHT_BLUE
+  LIGHT_BLUE_DYE:
+    - LIGHT_GRAY_BLUE
+    - GRAY_BLUE
+    - EXPOSED_COPPER
+  LIGHT_BLUE_GLAZED_TERRACOTTA:
+    - WHITE
+    - CYAN
+    - LIGHT_BLUE
+    - BLUE
+  LIGHT_BLUE_HARNESS:
+    - LIGHT_GRAY_BLUE
+    - COPPER
+    - ACACIA
+    - BROWN
+    - LIGHT_GRAY
+    - GRAY
+    - LIGHT_BLUE
+  LIGHT_BLUE_SHULKER_BOX:
+    - LIGHT_BLUE
+    - BLUE
+  LIGHT_BLUE_STAINED_GLASS:
+    - LIGHT_BLUE
+  LIGHT_BLUE_STAINED_GLASS_PANE:
+    - LIGHT_BLUE
+  LIGHT_BLUE_TERRACOTTA:
+    - GRAY_BLUE
+  LIGHT_BLUE_WOOL:
+    - LIGHT_GRAY_BLUE
+    - LIGHT_BLUE
+  LIGHT_GRAY_BUNDLE:
+    - LIGHT_GRAY
+    - GRAY
+    - EXPOSED_COPPER
+  LIGHT_GRAY_CANDLE:
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  LIGHT_GRAY_CONCRETE:
+    - LIGHT_GRAY
+  LIGHT_GRAY_CONCRETE_POWDER:
+    - LIGHT_GRAY
+    - GRAY
+  LIGHT_GRAY_DYE:
+    - LIGHT_GRAY
+    - GRAY
+    - EXPOSED_COPPER
+  LIGHT_GRAY_GLAZED_TERRACOTTA:
+    - TEAL
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+  LIGHT_GRAY_HARNESS:
+    - LIGHT_GRAY_BLUE
+    - COPPER
+    - ACACIA
+    - BROWN
+    - LIGHT_GRAY
+    - GRAY
+  LIGHT_GRAY_SHULKER_BOX:
+    - LIGHT_GRAY
+    - GRAY
+  LIGHT_GRAY_STAINED_GLASS:
+    - LIGHT_GRAY
+  LIGHT_GRAY_STAINED_GLASS_PANE:
+    - LIGHT_GRAY
+  LIGHT_GRAY_TERRACOTTA:
+    - EXPOSED_COPPER
+    - LIGHT_GRAY
+  LIGHT_GRAY_WOOL:
+    - LIGHT_GRAY
+    - GRAY
+  LILAC:
+    - CHERRY_PINK
+    - PINK
+    - CORAL_PINK
+    - GREEN
+    - DARK_GREEN
+  LILY_OF_THE_VALLEY:
+    - WHITE
+    - LIGHT_GRAY
+    - LIME
+    - GREEN
+    - DARK_GREEN
+  LILY_PAD:
+    - GREEN
+    - DARK_GREEN
+  LIME_BUNDLE:
+    - LIME
+    - LIGHT_GREEN
+    - GREEN
+    - EXPOSED_COPPER
+  LIME_CANDLE:
+    - LIME
+    - LIGHT_GREEN
+    - GREEN
+    - BLACK
+  LIME_CONCRETE:
+    - LIGHT_GREEN
+  LIME_CONCRETE_POWDER:
+    - LIME
+    - LIGHT_GREEN
+    - GREEN
+  LIME_DYE:
+    - LIME
+    - LIGHT_GREEN
+    - GREEN
+    - EXPOSED_COPPER
+    - BROWN
+  LIME_GLAZED_TERRACOTTA:
+    - SANDSTONE
+    - YELLOW
+    - HONEY
+    - LIME
+    - GREEN
+    - DARK_GREEN
+  LIME_HARNESS:
+    - LIGHT_GRAY_BLUE
+    - COPPER
+    - ACACIA
+    - BROWN
+    - LIGHT_GRAY
+    - GRAY
+    - LIME
+  LIME_SHULKER_BOX:
+    - LIME
+    - GREEN
+  LIME_STAINED_GLASS:
+    - LIME
+  LIME_STAINED_GLASS_PANE:
+    - LIME
+  LIME_TERRACOTTA:
+    - GREEN
+    - DARK_GREEN
+  LIME_WOOL:
+    - LIME
+    - LIGHT_GREEN
+    - GREEN
+  LINGERING_POTION:
+    - WHITE
+    - LIGHT_GRAY_BLUE
+    - GRAY_BLUE
+    - BLUE
+    - ACACIA
+  LLAMA_SPAWN_EGG:
+    - SANDSTONE
+    - BAMBOO
+    - EXPOSED_COPPER
+  LODESTONE:
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  LOOM:
+    - SANDSTONE
+    - LIGHT_GRAY
+    - EXPOSED_COPPER
+    - BROWN
+    - DARK_OAK
+    - GRAY
+  MACE:
+    - LIGHT_GRAY_BLUE
+    - GRAY_BLUE
+    - LIGHT_GRAY
+    - GRAY
+  MAGENTA_BUNDLE:
+    - PINK
+    - CORAL_PINK
+    - MAGENTA
+    - EXPOSED_COPPER
+  MAGENTA_CANDLE:
+    - CORAL_PINK
+    - MAGENTA
+    - BLACK
+  MAGENTA_CONCRETE:
+    - MAGENTA
+  MAGENTA_CONCRETE_POWDER:
+    - CHERRY_PINK
+    - CORAL_PINK
+    - MAGENTA
+  MAGENTA_DYE:
+    - CHERRY_PINK
+    - PURPUR
+    - MAGENTA
+    - EXPOSED_COPPER
+  MAGENTA_GLAZED_TERRACOTTA:
+    - CHERRY_PINK
+    - CORAL_PINK
+    - MAGENTA
+    - PURPLE
+  MAGENTA_HARNESS:
+    - LIGHT_GRAY_BLUE
+    - COPPER
+    - ACACIA
+    - BROWN
+    - LIGHT_GRAY
+    - GRAY
+    - CORAL_PINK
+    - MAGENTA
+  MAGENTA_SHULKER_BOX:
+    - MAGENTA
+    - PURPLE
+  MAGENTA_STAINED_GLASS:
+    - MAGENTA
+    - PURPLE
+  MAGENTA_STAINED_GLASS_PANE:
+    - MAGENTA
+    - PURPLE
+  MAGENTA_TERRACOTTA:
+    - MAGENTA
+    - CRIMSON_RED
+  MAGENTA_WOOL:
+    - MAGENTA
+  MAGMA_CREAM:
+    - WHITE
+    - LIME
+    - DARK_GREEN
+    - YELLOW
+    - HONEY
+    - ORANGE
+    - RED
+    - DARK_RED
+  MAGMA_CUBE_SPAWN_EGG:
+    - YELLOW
+    - HONEY
+    - ORANGE
+    - RED
+    - DARK_RED
+  MANGROVE_BOAT:
+    - CRIMSON_RED
+    - DARK_RED
+  MANGROVE_CHEST_BOAT:
+    - WHITE
+    - PINK
+    - RED
+    - PURPLE
+    - BLUE
+    - GREEN
+    - YELLOW
+    - ORANGE
+    - BROWN
+    - BLACK
+  MANGROVE_DOOR:
+    - BROWN
+    - CRIMSON_RED
+    - DARK_RED
+    - GRAY
+  MANGROVE_HANGING_SIGN:
+    - DARK_RED
+    - GRAY
+  MANGROVE_LEAVES:
+    - BAMBOO
+    - GREEN
+    - DARK_GREEN
+  MANGROVE_PROPAGULE:
+    - LIME
+    - LIGHT_GREEN
+    - GREEN
+    - EXPOSED_COPPER
+  MANGROVE_ROOTS:
+    - BROWN
+    - DARK_OAK
+  MANGROVE_SHELF:
+    - BROWN
+    - CRIMSON_RED
+    - DARK_RED
+  MANGROVE_SIGN:
+    - DARK_RED
+    - BROWN
+  MANGROVE_TRAPDOOR:
+    - BROWN
+    - CRIMSON_RED
+    - DARK_RED
+  MAP:
+    - WHITE
+    - SANDSTONE
+    - BAMBOO
+  MEDIUM_AMETHYST_BUD:
+    - CHERRY_PINK
+    - PURPUR
+    - PURPLE
+  MELON:
+    - YELLOW
+    - LIME
+    - LIGHT_GREEN
+    - GREEN
+  MELON_SEEDS:
+    - BROWN
+    - DARK_OAK
+  MELON_SLICE:
+    - SANDSTONE
+    - LIME
+    - GREEN
+    - RED
+    - DARK_RED
+  MELON_STEM:
+    - WHITE
+    - BROWN
+  MILK_BUCKET:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - LIGHT_GRAY_BLUE
+  MINECART:
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  MINER_POTTERY_SHERD:
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  MOJANG_BANNER_PATTERN:
+    - WHITE
+    - SANDSTONE
+    - BROWN
+    - DARK_OAK
+  MOOSHROOM_SPAWN_EGG:
+    - WHITE
+    - BLACK
+    - RED
+    - BROWN
+  MOSSY_COBBLESTONE:
+    - LIGHT_GRAY
+    - GRAY
+    - LIME
+    - GREEN
+  MOSSY_STONE_BRICKS:
+    - LIGHT_GRAY
+    - GRAY
+    - LIME
+    - GREEN
+  MOSS_BLOCK:
+    - LIME
+    - GREEN
+  MOURNER_POTTERY_SHERD:
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  MUD:
+    - GRAY
+    - DARK_OAK
+    - BLACK
+  MUDDY_MANGROVE_ROOTS:
+    - GRAY_BLUE
+    - GRAY
+    - BROWN
+    - DARK_OAK
+  MUD_BRICKS:
+    - BROWN
+    - DARK_OAK
+  MULE_SPAWN_EGG:
+    - EXPOSED_COPPER
+    - BROWN
+    - DARK_OAK
+    - GRAY
+  MUSHROOM_STEM:
+    - WHITE
+    - LIGHT_GRAY
+  MUSHROOM_STEW:
+    - CHERRY_PINK
+    - EXPOSED_COPPER
+    - ACACIA
+    - BROWN
+  MUSIC_DISC_BLOCKS:
+    - ACACIA
+    - GRAY
+    - BLACK
+  MUSIC_DISC_CAT:
+    - LIGHT_GREEN
+    - GRAY
+    - BLACK
+  MUSIC_DISC_CHIRP:
+    - LIGHT_RED
+    - DARK_RED
+    - GRAY
+    - BLACK
+  MUSIC_DISC_CREATOR:
+    - SANDSTONE
+    - YELLOW
+    - HONEY
+    - LIME
+    - TEAL
+  MUSIC_DISC_CREATOR_MUSIC_BOX:
+    - SANDSTONE
+    - CHERRY_PINK
+    - YELLOW
+    - HONEY
+    - COPPER
+    - ACACIA
+  MUSIC_DISC_FAR:
+    - LIME
+    - LIGHT_GREEN
+    - GRAY
+    - BLACK
+  MUSIC_DISC_LAVA_CHICKEN:
+    - WHITE
+    - LIGHT_GRAY
+    - CHERRY_PINK
+    - LIGHT_RED
+    - GRAY
+    - BLACK
+  MUSIC_DISC_MALL:
+    - BLUE
+    - PURPLE_BLUE
+    - GRAY
+    - BLACK
+  MUSIC_DISC_MELLOHI:
+    - WHITE
+    - PURPLE
+    - GRAY
+    - BLACK
+  MUSIC_DISC_OTHERSIDE:
+    - LIGHT_GREEN
+    - GREEN
+    - DARK_GREEN
+    - LIGHT_BLUE
+    - TEAL
+    - GRAY
+    - BLACK
+  MUSIC_DISC_PIGSTEP:
+    - YELLOW
+    - HONEY
+    - ORANGE
+    - CRIMSON_RED
+    - DARK_RED
+    - BLACK
+  MUSIC_DISC_PRECIPICE:
+    - COPPER
+    - LIGHT_BLUE
+    - TEAL
+    - LIGHT_GRAY
+    - GRAY
+  MUSIC_DISC_RELIC:
+    - LIGHT_GRAY_BLUE
+    - LIGHT_BLUE
+    - ACACIA
+    - BROWN
+  MUSIC_DISC_STAL:
+    - GRAY
+    - BLACK
+  MUSIC_DISC_STRAD:
+    - WHITE
+    - GRAY
+    - BLACK
+  MUSIC_DISC_TEARS:
+    - WHITE
+    - LIGHT_GRAY
+    - LIGHT_GRAY_BLUE
+    - GRAY
+  MUSIC_DISC_WAIT:
+    - LIGHT_GRAY_BLUE
+    - GRAY_BLUE
+    - GRAY
+    - BLACK
+  MUSIC_DISC_WARD:
+    - LIME
+    - DARK_GREEN
+    - GRAY
+    - BLACK
+  MUTTON:
+    - PINK
+    - LIGHT_RED
+    - RED
+    - DARK_RED
+    - BLACK
+  MYCELIUM:
+    - EXPOSED_COPPER
+    - BROWN
+    - DARK_OAK
+    - LIGHT_GRAY
+    - GRAY
+  NAME_TAG:
+    - WHITE
+    - LIGHT_GRAY
+    - SANDSTONE
+    - BAMBOO
+  NAUTILUS_SHELL:
+    - WHITE
+    - LIGHT_GRAY
+    - SANDSTONE
+    - COPPER
+    - ACACIA
+  NAUTILUS_SPAWN_EGG:
+    - WHITE
+    - LIGHT_GRAY
+    - SANDSTONE
+    - COPPER
+    - ACACIA
+    - LIGHT_GRAY_BLUE
+    - GRAY_BLUE
+    - BLUE
+  NETHERITE_AXE:
+    - GRAY
+    - BROWN
+    - DARK_OAK
+    - GRAY_PURPLE
+  NETHERITE_BLOCK:
+    - GRAY
+    - BLACK
+  NETHERITE_BOOTS:
+    - GRAY
+    - BLACK
+  NETHERITE_CHESTPLATE:
+    - GRAY
+    - BLACK
+  NETHERITE_HELMET:
+    - GRAY
+    - BLACK
+  NETHERITE_HOE:
+    - GRAY
+    - BROWN
+    - DARK_OAK
+    - GRAY_PURPLE
+  NETHERITE_HORSE_ARMOR:
+    - HONEY
+    - ORANGE
+    - RED
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  NETHERITE_INGOT:
+    - GRAY
+    - BLACK
+  NETHERITE_LEGGINGS:
+    - GRAY
+    - BLACK
+  NETHERITE_NAUTILUS_ARMOR:
+    - LIGHT_GRAY
+    - GRAY
+    - DARK_OAK
+  NETHERITE_PICKAXE:
+    - GRAY
+    - BROWN
+    - DARK_OAK
+    - GRAY_PURPLE
+  NETHERITE_SCRAP:
+    - BROWN
+    - DARK_OAK
+    - DARK_RED
+  NETHERITE_SHOVEL:
+    - GRAY
+    - BROWN
+    - DARK_OAK
+    - GRAY_PURPLE
+  NETHERITE_SPEAR:
+    - GRAY
+    - BROWN
+    - DARK_OAK
+    - DARK_RED
+    - GRAY_PURPLE
+  NETHERITE_SWORD:
+    - GRAY
+    - BROWN
+    - DARK_OAK
+    - GRAY_PURPLE
+  NETHERITE_UPGRADE_SMITHING_TEMPLATE:
+    - CYAN
+    - LIGHT_BLUE
+    - TEAL
+    - CRIMSON_RED
+    - DARK_RED
+  NETHERRACK:
+    - CRIMSON_RED
+    - DARK_RED
+  NETHER_BRICK:
+    - CRIMSON_RED
+    - DARK_RED
+  NETHER_BRICKS:
+    - CRIMSON_RED
+    - DARK_RED
+  NETHER_GOLD_ORE:
+    - SANDSTONE
+    - YELLOW
+    - HONEY
+    - CRIMSON_RED
+    - DARK_RED
+  NETHER_PORTAL:
+    - MAGENTA
+    - PURPLE
+    - GRAY_PURPLE
+  NETHER_QUARTZ_ORE:
+    - WHITE
+    - SANDSTONE
+    - LIGHT_GRAY
+    - CRIMSON_RED
+    - DARK_RED
+  NETHER_SPROUTS:
+    - LIGHT_BLUE
+    - TEAL
+  NETHER_STAR:
+    - WHITE
+    - LIGHT_GRAY
+    - LIGHT_GRAY_BLUE
+    - GRAY_BLUE
+    - YELLOW
+  NETHER_WART:
+    - LIGHT_RED
+    - RED
+    - DARK_RED
+  NETHER_WART_BLOCK:
+    - LIGHT_RED
+    - RED
+    - DARK_RED
+  NOTE_BLOCK:
+    - BROWN
+    - DARK_OAK
+    - GRAY
+    - BLACK
+  OAK_BOAT:
+    - SANDSTONE
+    - BROWN
+  OAK_CHEST_BOAT:
+    - WHITE
+    - PINK
+    - RED
+    - PURPLE
+    - BLUE
+    - GREEN
+    - YELLOW
+    - ORANGE
+    - BROWN
+    - BLACK
+  OAK_DOOR:
+    - SANDSTONE
+    - BROWN
+    - GRAY
+  OAK_HANGING_SIGN:
+    - SANDSTONE
+    - BROWN
+    - GRAY
+  OAK_LEAVES:
+    - LIGHT_GREEN
+    - GREEN
+    - DARK_GREEN
+  OAK_SAPLING:
+    - LIGHT_GREEN
+    - GREEN
+    - BROWN
+    - DARK_OAK
+  OAK_SHELF:
+    - SANDSTONE
+    - BROWN
+  OAK_SIGN:
+    - SANDSTONE
+    - BROWN
+  OAK_TRAPDOOR:
+    - SANDSTONE
+    - BROWN
+  OBSERVER:
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  OBSIDIAN:
+    - PURPUR
+    - GRAY_PURPLE
+    - BLACK
+  OCELOT_SPAWN_EGG:
+    - WHITE
+    - SANDSTONE
+    - YELLOW
+    - HONEY
+    - BROWN
+  OCHRE_FROGLIGHT:
+    - WHITE
+    - SANDSTONE
+    - BAMBOO
+  OMINOUS_BOTTLE:
+    - LIGHT_GRAY_BLUE
+    - GRAY_BLUE
+    - ACACIA
+    - BROWN
+    - LIGHT_RED
+    - RED
+    - GRAY_PURPLE
+    - BLACK
+  OMINOUS_TRIAL_KEY:
+    - TEAL
+    - LIGHT_RED
+    - RED
+    - GRAY
+    - BLACK
+  OPEN_EYEBLOSSOM:
+    - WHITE
+    - LIGHT_GRAY
+    - HONEY
+    - ORANGE
+    - GRAY
+    - BLACK
+  ORANGE_BUNDLE:
+    - HONEY
+    - ORANGE
+    - EXPOSED_COPPER
+  ORANGE_CANDLE:
+    - YELLOW
+    - HONEY
+    - ORANGE
+    - BLACK
+  ORANGE_CONCRETE:
+    - ORANGE
+  ORANGE_CONCRETE_POWDER:
+    - YELLOW
+    - HONEY
+    - ORANGE
+  ORANGE_DYE:
+    - HONEY
+    - ORANGE
+    - EXPOSED_COPPER
+  ORANGE_GLAZED_TERRACOTTA:
+    - YELLOW
+    - HONEY
+    - ORANGE
+    - CYAN
+    - LIGHT_BLUE
+    - TEAL
+    - WHITE
+  ORANGE_HARNESS:
+    - LIGHT_GRAY_BLUE
+    - COPPER
+    - ACACIA
+    - BROWN
+    - LIGHT_GRAY
+    - GRAY
+    - HONEY
+    - ORANGE
+  ORANGE_SHULKER_BOX:
+    - ORANGE
+    - ACACIA
+  ORANGE_STAINED_GLASS:
+    - ORANGE
+  ORANGE_STAINED_GLASS_PANE:
+    - ORANGE
+  ORANGE_TERRACOTTA:
+    - ORANGE
+    - ACACIA
+  ORANGE_TULIP:
+    - HONEY
+    - ORANGE
+    - ACACIA
+    - GREEN
+    - DARK_GREEN
+  ORANGE_WOOL:
+    - HONEY
+    - ORANGE
+  OXEYE_DAISY:
+    - WHITE
+    - LIGHT_GRAY
+    - SANDSTONE
+    - YELLOW
+    - HONEY
+    - LIME
+    - LIGHT_GREEN
+    - GREEN
+  OXIDIZED_CHISELED_COPPER:
+    - CYAN
+    - TEAL
+  OXIDIZED_COPPER:
+    - CYAN
+    - TEAL
+  OXIDIZED_COPPER_BARS:
+    - CYAN
+    - TEAL
+  OXIDIZED_COPPER_BULB:
+    - CYAN
+    - TEAL
+  OXIDIZED_COPPER_CHAIN:
+    - CYAN
+    - TEAL
+  OXIDIZED_COPPER_DOOR:
+    - CYAN
+    - TEAL
+    - GRAY
+  OXIDIZED_COPPER_GRATE:
+    - CYAN
+    - TEAL
+  OXIDIZED_COPPER_LANTERN:
+    - WHITE
+    - LIGHT_GREEN
+    - TEAL
+  OXIDIZED_COPPER_TRAPDOOR:
+    - CYAN
+    - TEAL
+  OXIDIZED_CUT_COPPER:
+    - CYAN
+    - TEAL
+  OXIDIZED_LIGHTNING_ROD:
+    - CYAN
+    - TEAL
+  PACKED_ICE:
+    - LIGHT_GRAY
+    - LIGHT_GRAY_BLUE
+  PACKED_MUD:
+    - EXPOSED_COPPER
+    - BROWN
+  PAINTING:
+    - LIGHT_GRAY
+    - GRAY
+    - EXPOSED_COPPER
+    - BROWN
+  PALE_HANGING_MOSS:
+    - LIGHT_GRAY
+    - GRAY
+  PALE_MOSS_BLOCK:
+    - LIGHT_GRAY
+    - GRAY
+  PALE_MOSS_CARPET:
+    - LIGHT_GRAY
+    - GRAY
+  PALE_OAK_BOAT:
+    - WHITE
+    - LIGHT_GRAY
+  PALE_OAK_CHEST_BOAT:
+    - WHITE
+    - PINK
+    - RED
+    - PURPLE
+    - BLUE
+    - GREEN
+    - YELLOW
+    - ORANGE
+    - BROWN
+    - BLACK
+  PALE_OAK_DOOR:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+  PALE_OAK_HANGING_SIGN:
+    - WHITE
+    - LIGHT_GRAY
+  PALE_OAK_LEAVES:
+    - LIGHT_GRAY
+    - GRAY
+  PALE_OAK_LOG:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  PALE_OAK_SAPLING:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - EXPOSED_COPPER
+  PALE_OAK_SHELF:
+    - WHITE
+    - LIGHT_GRAY
+  PALE_OAK_SIGN:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+  PALE_OAK_TRAPDOOR:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+  PANDA_SPAWN_EGG:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  PAPER:
+    - WHITE
+    - LIGHT_GRAY
+  PARCHED_SPAWN_EGG:
+    - SANDSTONE
+    - EXPOSED_COPPER
+    - GRAY
+  PARROT_SPAWN_EGG:
+    - GRAY_BLUE
+    - BLUE
+    - YELLOW
+    - HONEY
+    - LIGHT_RED
+    - RED
+    - BLACK
+  PEARLESCENT_FROGLIGHT:
+    - WHITE
+    - LIGHT_GRAY
+    - PURPUR
+  PEONY:
+    - WHITE
+    - CHERRY_PINK
+    - PINK
+    - GREEN
+    - DARK_GREEN
+  PHANTOM_MEMBRANE:
+    - WHITE
+    - SANDSTONE
+    - LIGHT_GRAY
+  PHANTOM_SPAWN_EGG:
+    - WHITE
+    - SANDSTONE
+    - GRAY_BLUE
+    - BLUE
+    - GRAY
+  PIGLIN_BANNER_PATTERN:
+    - WHITE
+    - SANDSTONE
+    - BROWN
+    - DARK_OAK
+  PIGLIN_BRUTE_SPAWN_EGG:
+    - EXPOSED_COPPER
+    - COPPER
+    - HONEY
+    - ORANGE
+    - BROWN
+    - DARK_OAK
+    - BLACK
+  PIGLIN_SPAWN_EGG:
+    - EXPOSED_COPPER
+    - COPPER
+    - HONEY
+    - ORANGE
+    - BROWN
+    - DARK_OAK
+  PIG_SPAWN_EGG:
+    - CHERRY_PINK
+    - PINK
+    - CORAL_PINK
+  PILLAGER_SPAWN_EGG:
+    - LIGHT_GRAY
+    - GRAY
+    - CRIMSON_RED
+    - TEAL
+  PINK_BUNDLE:
+    - CHERRY_PINK
+    - PINK
+    - CORAL_PINK
+    - EXPOSED_COPPER
+  PINK_CANDLE:
+    - CHERRY_PINK
+    - PINK
+    - CORAL_PINK
+    - BLACK
+  PINK_CONCRETE:
+    - CORAL_PINK
+  PINK_CONCRETE_POWDER:
+    - CHERRY_PINK
+    - PINK
+    - CORAL_PINK
+  PINK_DYE:
+    - CHERRY_PINK
+    - PINK
+    - CORAL_PINK
+    - MAGENTA
+    - EXPOSED_COPPER
+  PINK_GLAZED_TERRACOTTA:
+    - LIGHT_GRAY
+    - CHERRY_PINK
+    - PINK
+    - CORAL_PINK
+    - MAGENTA
+  PINK_HARNESS:
+    - LIGHT_GRAY_BLUE
+    - COPPER
+    - ACACIA
+    - BROWN
+    - LIGHT_GRAY
+    - GRAY
+    - PINK
+    - CORAL_PINK
+  PINK_PETALS:
+    - LIME
+    - CHERRY_PINK
+    - PINK
+    - CORAL_PINK
+  PINK_SHULKER_BOX:
+    - PINK
+    - CORAL_PINK
+  PINK_STAINED_GLASS:
+    - PINK
+  PINK_STAINED_GLASS_PANE:
+    - PINK
+  PINK_TERRACOTTA:
+    - CORAL_PINK
+  PINK_TULIP:
+    - WHITE
+    - PURPUR
+    - GREEN
+    - DARK_GREEN
+  PINK_WOOL:
+    - CHERRY_PINK
+    - PINK
+    - CORAL_PINK
+  PISTON:
+    - WHITE
+    - SANDSTONE
+    - BROWN
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  PITCHER_CROP:
+    - BROWN
+    - PINK
+  PITCHER_PLANT:
+    - CYAN
+    - LIGHT_BLUE
+    - TEAL
+    - LIGHT_GRAY_BLUE
+    - GRAY_BLUE
+    - PURPUR
+    - MAGENTA
+    - PURPLE
+    - GRAY_PURPLE
+  PITCHER_POD:
+    - HONEY
+    - EXPOSED_COPPER
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  PLENTY_POTTERY_SHERD:
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  PODZOL:
+    - EXPOSED_COPPER
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  POINTED_DRIPSTONE:
+    - SANDSTONE
+    - EXPOSED_COPPER
+    - BROWN
+  POISONOUS_POTATO:
+    - BAMBOO
+    - YELLOW
+    - LIME
+    - LIGHT_GREEN
+    - DARK_GREEN
+  POLAR_BEAR_SPAWN_EGG:
+    - WHITE
+    - LIGHT_GRAY
+    - BLACK
+  POLISHED_ANDESITE:
+    - LIGHT_GRAY
+    - GRAY
+  POLISHED_BASALT:
+    - LIGHT_GRAY
+    - GRAY
+    - GRAY_BLUE
+  POLISHED_BLACKSTONE:
+    - GRAY_BLUE
+    - GRAY
+    - BLACK
+  POLISHED_BLACKSTONE_BRICKS:
+    - GRAY
+    - GRAY_PURPLE
+    - BLACK
+  POLISHED_DEEPSLATE:
+    - GRAY
+    - BLACK
+  POLISHED_DIORITE:
+    - WHITE
+    - LIGHT_GRAY
+  POLISHED_GRANITE:
+    - LIGHT_GRAY
+    - EXPOSED_COPPER
+  POLISHED_TUFF:
+    - GRAY
+  POPPED_CHORUS_FRUIT:
+    - PURPUR
+    - PURPLE
+    - GRAY_PURPLE
+  POPPY:
+    - LIGHT_GREEN
+    - GREEN
+    - RED
+    - DARK_RED
+  PORKCHOP:
+    - CHERRY_PINK
+    - PINK
+    - EXPOSED_COPPER
+  POTATO:
+    - BAMBOO
+    - YELLOW
+    - HONEY
+  POTATOES:
+    - BROWN
+    - GREEN
+    - BLACK
+  POTION:
+    - LIGHT_GRAY_BLUE
+    - GRAY_BLUE
+    - BLUE
+    - ACACIA
+  POTTED_AZALEA_BUSH:
+    - BROWN
+  POTTED_FLOWERING_AZALEA_BUSH:
+    - BROWN
+    - PURPLE
+  POWDER_SNOW_BUCKET:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - CYAN
+    - LIGHT_BLUE
+  POWERED_RAIL:
+    - LIGHT_GRAY
+    - GRAY
+    - YELLOW
+    - HONEY
+    - ACACIA
+    - BROWN
+    - DARK_RED
+  PRISMARINE:
+    - LIGHT_GRAY_BLUE
+    - TEAL
+  PRISMARINE_BRICKS:
+    - CYAN
+    - TEAL
+  PRISMARINE_CRYSTALS:
+    - WHITE
+    - LIGHT_GRAY_BLUE
+    - TEAL
+  PRISMARINE_SHARD:
+    - LIGHT_GRAY_BLUE
+    - TEAL
+  PRIZE_POTTERY_SHERD:
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  PUFFERFISH:
+    - WHITE
+    - SANDSTONE
+    - YELLOW
+    - HONEY
+    - ACACIA
+    - LIGHT_GRAY_BLUE
+    - LIGHT_BLUE
+    - BLUE
+  PUFFERFISH_BUCKET:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - SANDSTONE
+    - YELLOW
+    - HONEY
+    - ACACIA
+    - LIGHT_GRAY_BLUE
+    - GRAY_BLUE
+    - BLUE
+  PUFFERFISH_SPAWN_EGG:
+    - SANDSTONE
+    - BAMBOO
+    - YELLOW
+    - HONEY
+    - LIGHT_GRAY_BLUE
+    - LIGHT_BLUE
+    - BLUE
+  PUMPKIN:
+    - HONEY
+    - ORANGE
+  PUMPKIN_PIE:
+    - CHERRY_PINK
+    - SANDSTONE
+    - YELLOW
+    - HONEY
+  PUMPKIN_SEEDS:
+    - WHITE
+    - SANDSTONE
+  PUMPKIN_STEM:
+    - WHITE
+    - BROWN
+  PURPLE_BUNDLE:
+    - PURPLE
+    - GRAY_PURPLE
+    - EXPOSED_COPPER
+  PURPLE_CANDLE:
+    - PURPLE
+    - GRAY_PURPLE
+    - BLACK
+  PURPLE_CONCRETE:
+    - PURPLE
+  PURPLE_CONCRETE_POWDER:
+    - PURPUR
+    - PURPLE
+    - GRAY_PURPLE
+  PURPLE_DYE:
+    - EXPOSED_COPPER
+    - MAGENTA
+    - PURPLE
+    - GRAY_PURPLE
+  PURPLE_GLAZED_TERRACOTTA:
+    - PURPUR
+    - PURPLE
+    - GRAY_PURPLE
+    - BLACK
+  PURPLE_HARNESS:
+    - LIGHT_GRAY_BLUE
+    - COPPER
+    - ACACIA
+    - BROWN
+    - LIGHT_GRAY
+    - GRAY
+    - PURPUR
+    - PURPLE
+  PURPLE_SHULKER_BOX:
+    - PURPLE
+    - GRAY_PURPLE
+  PURPLE_STAINED_GLASS:
+    - PURPLE
+  PURPLE_STAINED_GLASS_PANE:
+    - PURPLE
+  PURPLE_TERRACOTTA:
+    - CRIMSON_RED
+  PURPLE_WOOL:
+    - PURPUR
+    - PURPLE
+    - GRAY_PURPLE
+  PURPUR_BLOCK:
+    - PURPUR
+    - PURPLE
+  PURPUR_PILLAR:
+    - PURPUR
+    - PURPLE
+  QUARTZ:
+    - WHITE
+    - SANDSTONE
+    - EXPOSED_COPPER
+  QUARTZ_BLOCK:
+    - WHITE
+    - SANDSTONE
+  QUARTZ_BRICKS:
+    - WHITE
+    - SANDSTONE
+  QUARTZ_PILLAR:
+    - WHITE
+    - SANDSTONE
+  RABBIT:
+    - WHITE
+    - CHERRY_PINK
+    - PINK
+  RABBIT_FOOT:
+    - SANDSTONE
+    - EXPOSED_COPPER
+  RABBIT_HIDE:
+    - SANDSTONE
+    - EXPOSED_COPPER
+  RABBIT_SPAWN_EGG:
+    - PINK
+    - EXPOSED_COPPER
+    - BROWN
+  RABBIT_STEW:
+    - HONEY
+    - ORANGE
+    - BROWN
+    - DARK_OAK
+  RAIL:
+    - LIGHT_GRAY
+    - GRAY
+    - ACACIA
+    - BROWN
+  RAISER_ARMOR_TRIM_SMITHING_TEMPLATE:
+    - CYAN
+    - LIGHT_BLUE
+    - TEAL
+    - BROWN
+    - DARK_OAK
+  RAVAGER_SPAWN_EGG:
+    - LIGHT_GRAY
+    - LIGHT_GRAY_BLUE
+    - GRAY_BLUE
+    - GRAY
+    - BLACK
+  RAW_COPPER:
+    - CHERRY_PINK
+    - ORANGE
+    - COPPER
+    - ACACIA
+    - TEAL
+  RAW_COPPER_BLOCK:
+    - CHERRY_PINK
+    - ORANGE
+    - COPPER
+    - ACACIA
+    - TEAL
+  RAW_GOLD:
+    - SANDSTONE
+    - YELLOW
+    - HONEY
+  RAW_GOLD_BLOCK:
+    - SANDSTONE
+    - YELLOW
+    - HONEY
+  RAW_IRON_BLOCK:
+    - SANDSTONE
+    - EXPOSED_COPPER
+    - BROWN
+    - BLACK
+  RECOVERY_COMPASS:
+    - WHITE
+    - LIGHT_BLUE
+    - TEAL
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  REDSTONE_LAMP:
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  REDSTONE_TORCH:
+    - CHERRY_PINK
+    - LIGHT_RED
+    - RED
+    - DARK_RED
+    - BROWN
+    - DARK_OAK
+  RED_BUNDLE:
+    - RED
+    - DARK_RED
+    - EXPOSED_COPPER
+  RED_CANDLE:
+    - LIGHT_RED
+    - RED
+    - BLACK
+  RED_CONCRETE:
+    - RED
+  RED_CONCRETE_POWDER:
+    - CHERRY_PINK
+    - RED
+    - DARK_RED
+  RED_DYE:
+    - CHERRY_PINK
+    - EXPOSED_COPPER
+    - RED
+    - DARK_RED
+  RED_GLAZED_TERRACOTTA:
+    - CHERRY_PINK
+    - LIGHT_RED
+    - RED
+    - DARK_RED
+  RED_HARNESS:
+    - LIGHT_GRAY_BLUE
+    - COPPER
+    - ACACIA
+    - BROWN
+    - LIGHT_GRAY
+    - GRAY
+  RED_MUSHROOM:
+    - RED
+    - WHITE
+  RED_MUSHROOM_BLOCK:
+    - RED
+  RED_NETHER_BRICKS:
+    - RED
+    - DARK_RED
+  RED_SAND:
+    - HONEY
+    - ACACIA
+  RED_SANDSTONE:
+    - HONEY
+    - ACACIA
+  RED_SHULKER_BOX:
+    - RED
+    - DARK_RED
+  RED_STAINED_GLASS:
+    - RED
+  RED_STAINED_GLASS_PANE:
+    - RED
+  RED_TERRACOTTA:
+    - RED
+  RED_TULIP:
+    - LIGHT_RED
+    - RED
+    - GREEN
+    - DARK_GREEN
+  RED_WOOL:
+    - LIGHT_RED
+    - RED
+  REINFORCED_DEEPSLATE:
+    - LIGHT_GRAY
+    - GRAY
+    - TEAL
+    - BLACK
+  REPEATER:
+    - LIGHT_GRAY
+    - GRAY
+    - BROWN
+    - DARK_OAK
+    - DARK_RED
+  REPEATING_COMMAND_BLOCK:
+    - PURPUR
+    - PURPLE
+    - LIME
+    - GREEN
+    - DARK_GREEN
+    - CHERRY_PINK
+    - PINK
+    - CORAL_PINK
+    - MAGENTA
+    - CRIMSON_RED
+    - DARK_RED
+    - HONEY
+    - ORANGE
+    - LIGHT_GRAY
+    - GRAY
+  RESIN_BLOCK:
+    - ORANGE
+    - RED
+    - BROWN
+  RESIN_BRICK:
+    - WHITE
+    - YELLOW
+    - HONEY
+    - ORANGE
+  RESIN_BRICKS:
+    - YELLOW
+    - HONEY
+    - ORANGE
+  RESIN_CLUMP:
+    - ORANGE
+    - RED
+    - BROWN
+    - YELLOW
+  RESPAWN_ANCHOR:
+    - PURPLE
+    - GRAY_PURPLE
+    - PURPLE_BLUE
+    - BLACK
+  RIB_ARMOR_TRIM_SMITHING_TEMPLATE:
+    - LIGHT_BLUE
+    - TEAL
+    - DARK_RED
+  ROOTED_DIRT:
+    - COPPER
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  ROSE_BUSH:
+    - LIGHT_RED
+    - RED
+    - GREEN
+    - DARK_GREEN
+  ROTTEN_FLESH:
+    - ACACIA
+    - EXPOSED_COPPER
+    - BROWN
+    - DARK_OAK
+    - DARK_RED
+    - DARK_GREEN
+  SADDLE:
+    - ORANGE
+    - COPPER
+    - BROWN
+  SALMON:
+    - EXPOSED_COPPER
+    - TEAL
+    - RED
+  SALMON_BUCKET:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - EXPOSED_COPPER
+    - RED
+    - DARK_RED
+    - DARK_GREEN
+    - TEAL
+    - GRAY_BLUE
+    - BLUE
+    - BLACK
+  SALMON_SPAWN_EGG:
+    - EXPOSED_COPPER
+    - TEAL
+    - RED
+    - GRAY_BLUE
+    - BLUE
+  SAND:
+    - SANDSTONE
+    - BAMBOO
+  SANDSTONE:
+    - SANDSTONE
+    - BAMBOO
+  SCAFFOLDING:
+    - SANDSTONE
+    - BAMBOO
+    - HONEY
+    - ACACIA
+    - BROWN
+  SCRAPE_POTTERY_SHERD:
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  SCULK:
+    - CYAN
+    - TEAL
+    - BLACK
+  SCULK_CATALYST:
+    - SANDSTONE
+    - LIME
+    - CYAN
+    - TEAL
+    - LIGHT_GRAY
+    - BLACK
+  SCULK_SENSOR:
+    - CYAN
+    - TEAL
+    - LIGHT_GRAY
+    - BLACK
+  SCULK_SHRIEKER:
+    - SANDSTONE
+    - BAMBOO
+    - CYAN
+    - TEAL
+    - LIGHT_GRAY
+    - BLACK
+  SCULK_VEIN:
+    - CYAN
+    - TEAL
+    - BLACK
+  SEAGRASS:
+    - LIME
+    - LIGHT_GREEN
+    - GREEN
+  SEA_LANTERN:
+    - WHITE
+    - TEAL
+  SEA_PICKLE:
+    - LIME
+    - DARK_GREEN
+  SENTRY_ARMOR_TRIM_SMITHING_TEMPLATE:
+    - CYAN
+    - LIGHT_BLUE
+    - TEAL
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  SHAPER_ARMOR_TRIM_SMITHING_TEMPLATE:
+    - CYAN
+    - LIGHT_BLUE
+    - TEAL
+    - BROWN
+    - DARK_OAK
+  SHEAF_POTTERY_SHERD:
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  SHEARS:
+    - LIGHT_GRAY
+    - ACACIA
+    - BROWN
+  SHEEP_SPAWN_EGG:
+    - WHITE
+    - LIGHT_GRAY
+    - CHERRY_PINK
+    - PINK
+    - EXPOSED_COPPER
+  SHELTER_POTTERY_SHERD:
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  SHORT_DRY_GRASS:
+    - SANDSTONE
+    - BAMBOO
+  SHORT_GRASS:
+    - LIGHT_GREEN
+    - GREEN
+  SHROOMLIGHT:
+    - SANDSTONE
+    - BAMBOO
+    - HONEY
+    - ORANGE
+    - ACACIA
+  SHULKER_BOX:
+    - PURPUR
+    - GRAY_PURPLE
+  SHULKER_SHELL:
+    - PURPUR
+    - GRAY_PURPLE
+  SHULKER_SPAWN_EGG:
+    - SANDSTONE
+    - BAMBOO
+    - PURPUR
+    - GRAY_PURPLE
+  SILENCE_ARMOR_TRIM_SMITHING_TEMPLATE:
+    - CYAN
+    - LIGHT_BLUE
+    - TEAL
+    - GRAY
+    - BLACK
+  SILVERFISH_SPAWN_EGG:
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  SKELETON_HORSE_SPAWN_EGG:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+  SKELETON_SPAWN_EGG:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+  SKULL_BANNER_PATTERN:
+    - WHITE
+    - SANDSTONE
+    - BROWN
+    - DARK_OAK
+  SKULL_POTTERY_SHERD:
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  SLIME_BALL:
+    - WHITE
+    - LIME
+    - DARK_GREEN
+  SLIME_BLOCK:
+    - LIME
+    - DARK_GREEN
+  SLIME_SPAWN_EGG:
+    - LIME
+    - DARK_GREEN
+  SMALL_AMETHYST_BUD:
+    - PURPUR
+    - PURPLE
+  SMALL_DRIPLEAF:
+    - LIME
+    - LIGHT_GREEN
+    - DARK_GREEN
+  SMITHING_TABLE:
+    - GRAY
+    - COPPER
+    - ACACIA
+    - GRAY_BLUE
+    - DARK_RED
+    - BLACK
+  SMOKER:
+    - BROWN
+    - DARK_OAK
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  SMOOTH_BASALT:
+    - LIGHT_GRAY
+    - GRAY
+    - GRAY_BLUE
+  SMOOTH_STONE:
+    - LIGHT_GRAY
+    - GRAY
+  SMOOTH_STONE_SLAB:
+    - LIGHT_GRAY
+    - GRAY
+  SNIFFER_EGG:
+    - TEAL
+    - COPPER
+    - RED
+    - DARK_RED
+  SNIFFER_SPAWN_EGG:
+    - TEAL
+    - HONEY
+    - COPPER
+    - RED
+    - DARK_RED
+  SNORT_POTTERY_SHERD:
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+  SNOUT_ARMOR_TRIM_SMITHING_TEMPLATE:
+    - CYAN
+    - LIGHT_BLUE
+    - TEAL
+    - GRAY
+    - BLACK
+  SNOW:
+    - WHITE
+  SNOWBALL:
+    - WHITE
+    - LIGHT_GRAY_BLUE
+  SNOW_GOLEM_SPAWN_EGG:
+    - WHITE
+    - HONEY
+    - ORANGE
+    - BROWN
+    - DARK_OAK
+  SOUL_CAMPFIRE:
+    - WHITE
+    - LIGHT_GRAY_BLUE
+    - LIGHT_BLUE
+    - TEAL
+    - SANDSTONE
+    - BROWN
+  SOUL_LANTERN:
+    - WHITE
+    - LIGHT_GRAY_BLUE
+    - LIGHT_BLUE
+    - TEAL
+    - GRAY
+  SOUL_SAND:
+    - BROWN
+    - DARK_OAK
+  SOUL_SOIL:
+    - BROWN
+    - DARK_OAK
+  SOUL_TORCH:
+    - WHITE
+    - LIGHT_GRAY_BLUE
+    - TEAL
+    - BROWN
+    - DARK_OAK
+  SPAWNER:
+    - LIGHT_GRAY_BLUE
+    - GRAY_BLUE
+    - MAGENTA
+    - GRAY
+    - BLACK
+  SPECTRAL_ARROW:
+    - SANDSTONE
+    - YELLOW
+    - HONEY
+    - ORANGE
+  SPIDER_EYE:
+    - CHERRY_PINK
+    - RED
+    - DARK_RED
+  SPIDER_SPAWN_EGG:
+    - DARK_OAK
+    - GRAY
+    - LIGHT_GRAY
+  SPIRE_ARMOR_TRIM_SMITHING_TEMPLATE:
+    - CYAN
+    - LIGHT_BLUE
+    - TEAL
+    - PURPUR
+    - PURPLE
+  SPLASH_POTION:
+    - LIGHT_GRAY_BLUE
+    - GRAY_BLUE
+    - BLUE
+    - ACACIA
+  SPONGE:
+    - BAMBOO
+    - BROWN
+  SPORE_BLOSSOM:
+    - CHERRY_PINK
+    - PINK
+    - CORAL_PINK
+    - MAGENTA
+    - LIME
+    - LIGHT_GREEN
+    - GREEN
+  SPRUCE_BOAT:
+    - BROWN
+    - DARK_OAK
+  SPRUCE_CHEST_BOAT:
+    - WHITE
+    - PINK
+    - RED
+    - PURPLE
+    - BLUE
+    - GREEN
+    - YELLOW
+    - ORANGE
+    - BROWN
+    - BLACK
+  SPRUCE_DOOR:
+    - LIGHT_GRAY
+    - GRAY
+    - BROWN
+    - DARK_OAK
+  SPRUCE_HANGING_SIGN:
+    - BROWN
+    - DARK_OAK
+    - GRAY
+  SPRUCE_LEAVES:
+    - GREEN
+    - DARK_GREEN
+  SPRUCE_SAPLING:
+    - BROWN
+    - DARK_OAK
+    - DARK_GREEN
+  SPRUCE_SHELF:
+    - BROWN
+    - DARK_OAK
+  SPRUCE_SIGN:
+    - BROWN
+    - DARK_OAK
+  SPRUCE_TRAPDOOR:
+    - BROWN
+    - DARK_OAK
+    - GRAY
+  SPYGLASS:
+    - WHITE
+    - CYAN
+    - LIGHT_BLUE
+    - TEAL
+    - YELLOW
+    - HONEY
+    - ACACIA
+    - DARK_OAK
+    - DARK_RED
+  SQUID_SPAWN_EGG:
+    - LIGHT_GRAY_BLUE
+    - LIGHT_BLUE
+    - GRAY_BLUE
+    - BLUE
+    - RED
+    - DARK_RED
+  STONE:
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  STONECUTTER:
+    - LIGHT_GRAY
+    - GRAY
+    - BROWN
+    - DARK_OAK
+  STONE_AXE:
+    - LIGHT_GRAY
+    - GRAY
+    - BROWN
+    - DARK_OAK
+  STONE_BRICKS:
+    - LIGHT_GRAY
+    - GRAY
+  STONE_HOE:
+    - LIGHT_GRAY
+    - GRAY
+    - BROWN
+    - DARK_OAK
+  STONE_SHOVEL:
+    - LIGHT_GRAY
+    - GRAY
+    - BROWN
+    - DARK_OAK
+  STONE_SPEAR:
+    - LIGHT_GRAY
+    - GRAY
+    - ACACIA
+    - BROWN
+    - DARK_RED
+  STONE_SWORD:
+    - LIGHT_GRAY
+    - GRAY
+    - BROWN
+    - DARK_OAK
+  STRAY_SPAWN_EGG:
+    - LIGHT_GRAY
+    - GRAY
+  STRIDER_SPAWN_EGG:
+    - EXPOSED_COPPER
+    - RED
+    - DARK_RED
+    - GRAY
+  STRING:
+    - WHITE
+    - LIGHT_GRAY
+  STRIPPED_ACACIA_LOG:
+    - ACACIA
+  STRIPPED_BAMBOO_BLOCK:
+    - BAMBOO
+  STRIPPED_BIRCH_LOG:
+    - SANDSTONE
+    - BAMBOO
+  STRIPPED_CHERRY_LOG:
+    - CHERRY_PINK
+    - PINK
+  STRIPPED_CRIMSON_STEM:
+    - CRIMSON_RED
+    - DARK_RED
+  STRIPPED_DARK_OAK_LOG:
+    - BROWN
+    - DARK_OAK
+  STRIPPED_JUNGLE_LOG:
+    - SANDSTONE
+    - EXPOSED_COPPER
+    - BROWN
+  STRIPPED_MANGROVE_LOG:
+    - CRIMSON_RED
+    - DARK_RED
+  STRIPPED_OAK_LOG:
+    - SANDSTONE
+    - EXPOSED_COPPER
+  STRIPPED_PALE_OAK_LOG:
+    - WHITE
+    - LIGHT_GRAY
+  STRIPPED_SPRUCE_LOG:
+    - BROWN
+    - DARK_OAK
+  STRIPPED_WARPED_STEM:
+    - TEAL
+  STRUCTURE_BLOCK:
+    - WHITE
+    - PURPUR
+    - PURPLE
+    - GRAY_PURPLE
+  STRUCTURE_VOID:
+    - TEAL
+  SUGAR:
+    - WHITE
+    - LIGHT_GRAY
+  SUGAR_CANE:
+    - LIME
+    - LIGHT_GREEN
+    - GREEN
+  SUNFLOWER:
+    - YELLOW
+    - HONEY
+    - ORANGE
+  SUSPICIOUS_STEW:
+    - LIME
+    - LIGHT_GREEN
+    - EXPOSED_COPPER
+    - BROWN
+    - DARK_OAK
+  SWEET_BERRIES:
+    - CHERRY_PINK
+    - RED
+    - DARK_RED
+    - GREEN
+    - DARK_GREEN
+  SWEET_BERRY_BUSH:
+    - BLACK
+    - BROWN
+  TADPOLE_BUCKET:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - ACACIA
+    - TEAL
+    - BLACK
+  TADPOLE_SPAWN_EGG:
+    - BROWN
+    - LIGHT_GRAY_BLUE
+    - GRAY_BLUE
+  TALL_DRY_GRASS:
+    - SANDSTONE
+    - EXPOSED_COPPER
+  TALL_GRASS:
+    - GREEN
+    - DARK_GREEN
+  TALL_SEAGRASS:
+    - GREEN
+    - BLACK
+    - BROWN
+  TARGET:
+    - WHITE
+    - SANDSTONE
+    - LIGHT_RED
+    - RED
+    - DARK_RED
+  TERRACOTTA:
+    - ACACIA
+  TEST_INSTANCE_BLOCK:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+  TIDE_ARMOR_TRIM_SMITHING_TEMPLATE:
+    - CYAN
+    - LIGHT_BLUE
+    - TEAL
+  TINTED_GLASS:
+    - GRAY
+    - BLACK
+  TNT:
+    - LIGHT_GRAY
+    - LIGHT_RED
+    - RED
+    - DARK_RED
+    - BLACK
+  TNT_MINECART:
+    - LIGHT_GRAY
+    - LIGHT_RED
+    - RED
+    - DARK_RED
+    - GRAY
+    - BLACK
+  TORCH:
+    - WHITE
+    - YELLOW
+    - HONEY
+    - ORANGE
+    - BROWN
+  TORCHFLOWER:
+    - YELLOW
+    - HONEY
+    - COPPER
+    - CORAL_PINK
+    - LIGHT_RED
+    - RED
+    - CRIMSON_RED
+    - DARK_GREEN
+    - GRAY_BLUE
+  TORCHFLOWER_CROP:
+    - BLACK
+    - GREEN
+    - BROWN
+  TORCHFLOWER_SEEDS:
+    - BAMBOO
+    - YELLOW
+    - GREEN
+    - DARK_GREEN
+    - BROWN
+  TOTEM_OF_UNDYING:
+    - WHITE
+    - SANDSTONE
+    - YELLOW
+    - ACACIA
+    - LIGHT_GREEN
+    - GREEN
+  TRADER_LLAMA_SPAWN_EGG:
+    - SANDSTONE
+    - HONEY
+    - RED
+    - BLUE
+  TRIAL_KEY:
+    - COPPER
+    - ACACIA
+    - LIGHT_GRAY
+    - GRAY
+  TRIAL_SPAWNER:
+    - LIGHT_GRAY_BLUE
+    - GRAY_BLUE
+    - GRAY_PURPLE
+    - LIGHT_GRAY
+    - GRAY
+  TRIDENT:
+    - TEAL
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+  TRIPWIRE:
+    - BROWN
+    - WHITE
+  TRIPWIRE_HOOK:
+    - LIGHT_GRAY
+    - BROWN
+    - DARK_OAK
+  TROPICAL_FISH:
+    - WHITE
+    - ORANGE
+    - BLACK
+  TROPICAL_FISH_BUCKET:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - ORANGE
+    - GRAY_BLUE
+    - BLUE
+    - BLACK
+  TROPICAL_FISH_SPAWN_EGG:
+    - WHITE
+    - ORANGE
+    - LIGHT_BLUE
+    - GRAY_BLUE
+  TUBE_CORAL:
+    - GRAY_BLUE
+    - BLUE
+  TUBE_CORAL_BLOCK:
+    - LIGHT_BLUE
+    - GRAY_BLUE
+    - BLUE
+  TUBE_CORAL_FAN:
+    - GRAY_BLUE
+    - BLUE
+  TUFF:
+    - BROWN
+    - WHITE
+  TUFF_BRICKS:
+    - LIGHT_GRAY
+    - GRAY
+    - GRAY_BLUE
+  TURTLE_EGG:
+    - WHITE
+    - SANDSTONE
+    - BROWN
+    - TEAL
+  TURTLE_HELMET:
+    - GREEN
+    - DARK_GREEN
+  TURTLE_SCUTE:
+    - LIGHT_GREEN
+    - GREEN
+    - DARK_GREEN
+  TURTLE_SPAWN_EGG:
+    - SANDSTONE
+    - BAMBOO
+    - LIGHT_GREEN
+    - GREEN
+    - DARK_GREEN
+  TWISTING_VINES:
+    - CYAN
+    - TEAL
+  TWISTING_VINES_PLANT:
+    - BLACK
+    - BLUE
+    - GREEN
+  VAULT:
+    - LIGHT_GRAY
+    - GRAY
+    - LIGHT_GRAY_BLUE
+    - GRAY_BLUE
+    - GRAY_PURPLE
+  VERDANT_FROGLIGHT:
+    - WHITE
+    - LIME
+  VEX_ARMOR_TRIM_SMITHING_TEMPLATE:
+    - CYAN
+    - LIGHT_BLUE
+    - TEAL
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  VEX_SPAWN_EGG:
+    - WHITE
+    - LIGHT_GRAY_BLUE
+    - GRAY_BLUE
+  VILLAGER_SPAWN_EGG:
+    - EXPOSED_COPPER
+    - BROWN
+    - DARK_OAK
+  VINDICATOR_SPAWN_EGG:
+    - LIGHT_GRAY
+    - GRAY
+    - TEAL
+  VINE:
+    - LIGHT_GREEN
+    - GREEN
+  WANDERING_TRADER_SPAWN_EGG:
+    - YELLOW
+    - HONEY
+    - EXPOSED_COPPER
+    - ACACIA
+    - BROWN
+    - RED
+    - DARK_RED
+    - BLUE
+    - GRAY_BLUE
+    - DARK_GREEN
+  WARDEN_SPAWN_EGG:
+    - SANDSTONE
+    - LIGHT_GRAY
+    - GRAY
+    - CYAN
+    - TEAL
+    - BLACK
+  WARD_ARMOR_TRIM_SMITHING_TEMPLATE:
+    - CYAN
+    - LIGHT_BLUE
+    - TEAL
+    - GRAY
+    - BLACK
+  WARPED_DOOR:
+    - CYAN
+    - TEAL
+    - GRAY
+  WARPED_FUNGUS:
+    - ORANGE
+    - TEAL
+    - CRIMSON_RED
+  WARPED_FUNGUS_ON_A_STICK:
+    - LIGHT_GRAY
+    - GRAY
+    - ORANGE
+    - TEAL
+    - BROWN
+    - DARK_OAK
+  WARPED_HANGING_SIGN:
+    - TEAL
+    - GRAY
+  WARPED_NYLIUM:
+    - DARK_RED
+    - LIME
+    - CYAN
+    - TEAL
+    - GRAY_BLUE
+  WARPED_ROOTS:
+    - LIME
+    - CYAN
+    - TEAL
+  WARPED_SHELF:
+    - TEAL
+  WARPED_SIGN:
+    - TEAL
+    - DARK_RED
+    - GRAY_PURPLE
+  WARPED_STEM:
+    - TEAL
+    - DARK_RED
+    - GRAY_PURPLE
+  WARPED_TRAPDOOR:
+    - TEAL
+  WARPED_WART_BLOCK:
+    - TEAL
+  WATER:
+    - WHITE
+  WATER_BUCKET:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - GRAY_BLUE
+    - BLUE
+  WAYFINDER_ARMOR_TRIM_SMITHING_TEMPLATE:
+    - CYAN
+    - LIGHT_BLUE
+    - TEAL
+    - BROWN
+    - DARK_OAK
+  WEATHERED_CHISELED_COPPER:
+    - EXPOSED_COPPER
+    - LIME
+    - TEAL
+  WEATHERED_COPPER:
+    - EXPOSED_COPPER
+    - LIME
+    - TEAL
+  WEATHERED_COPPER_BARS:
+    - EXPOSED_COPPER
+    - LIME
+    - TEAL
+  WEATHERED_COPPER_BULB:
+    - EXPOSED_COPPER
+    - LIME
+    - TEAL
+    - GRAY
+  WEATHERED_COPPER_CHAIN:
+    - LIME
+    - TEAL
+  WEATHERED_COPPER_DOOR:
+    - EXPOSED_COPPER
+    - LIME
+    - TEAL
+    - GRAY
+  WEATHERED_COPPER_GRATE:
+    - EXPOSED_COPPER
+    - LIME
+    - TEAL
+  WEATHERED_COPPER_LANTERN:
+    - WHITE
+    - EXPOSED_COPPER
+    - LIME
+    - DARK_GREEN
+    - TEAL
+  WEATHERED_COPPER_TRAPDOOR:
+    - EXPOSED_COPPER
+    - LIME
+    - TEAL
+  WEATHERED_CUT_COPPER:
+    - EXPOSED_COPPER
+    - LIME
+    - TEAL
+  WEATHERED_LIGHTNING_ROD:
+    - EXPOSED_COPPER
+    - LIME
+    - TEAL
+  WEEPING_VINES:
+    - ORANGE
+    - RED
+    - DARK_RED
+  WEEPING_VINES_PLANT:
+    - ORANGE
+    - RED
+    - DARK_RED
+  WET_SPONGE:
+    - YELLOW
+    - LIME
+    - DARK_GREEN
+  WHEAT:
+    - SANDSTONE
+    - BAMBOO
+    - DARK_OAK
+  WHEAT_SEEDS:
+    - BAMBOO
+    - LIGHT_GREEN
+    - GREEN
+    - DARK_GREEN
+  WHITE_BUNDLE:
+    - WHITE
+    - LIGHT_GRAY
+    - EXPOSED_COPPER
+  WHITE_CANDLE:
+    - WHITE
+    - BLACK
+  WHITE_CONCRETE:
+    - WHITE
+  WHITE_CONCRETE_POWDER:
+    - WHITE
+    - LIGHT_GRAY
+  WHITE_DYE:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - EXPOSED_COPPER
+  WHITE_GLAZED_TERRACOTTA:
+    - WHITE
+    - LIGHT_BLUE
+    - BLUE
+    - YELLOW
+  WHITE_HARNESS:
+    - LIGHT_GRAY_BLUE
+    - COPPER
+    - ACACIA
+    - BROWN
+    - LIGHT_GRAY
+    - GRAY
+  WHITE_SHULKER_BOX:
+    - WHITE
+    - LIGHT_GRAY
+  WHITE_STAINED_GLASS:
+    - WHITE
+  WHITE_STAINED_GLASS_PANE:
+    - WHITE
+  WHITE_TERRACOTTA:
+    - SANDSTONE
+    - CHERRY_PINK
+    - EXPOSED_COPPER
+  WHITE_TULIP:
+    - WHITE
+    - LIGHT_GRAY_BLUE
+    - GREEN
+    - DARK_GREEN
+  WHITE_WOOL:
+    - WHITE
+    - LIGHT_GRAY
+  WILDFLOWERS:
+    - YELLOW
+    - HONEY
+    - LIME
+    - DARK_GREEN
+    - LIGHT_GRAY_BLUE
+    - WHITE
+  WILD_ARMOR_TRIM_SMITHING_TEMPLATE:
+    - CYAN
+    - LIGHT_BLUE
+    - TEAL
+    - GREEN
+    - DARK_GREEN
+    - LIGHT_GRAY
+    - GRAY
+  WIND_CHARGE:
+    - WHITE
+    - LIGHT_GRAY_BLUE
+    - LIGHT_GRAY
+  WITCH_SPAWN_EGG:
+    - SANDSTONE
+    - BROWN
+    - DARK_OAK
+    - LIGHT_GREEN
+    - GREEN
+    - PURPLE
+    - GRAY
+    - BLACK
+  WITHER_ROSE:
+    - BROWN
+    - DARK_OAK
+    - GREEN
+    - DARK_GREEN
+  WITHER_SKELETON_SPAWN_EGG:
+    - GRAY
+    - BLACK
+  WITHER_SPAWN_EGG:
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  WOLF_ARMOR:
+    - CHERRY_PINK
+    - EXPOSED_COPPER
+    - DARK_RED
+  WOLF_SPAWN_EGG:
+    - CHERRY_PINK
+    - EXPOSED_COPPER
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+  WOODEN_AXE:
+    - BROWN
+    - DARK_OAK
+  WOODEN_HOE:
+    - BROWN
+    - DARK_OAK
+  WOODEN_SHOVEL:
+    - BROWN
+    - DARK_OAK
+  WOODEN_SPEAR:
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+    - DARK_RED
+  WOODEN_SWORD:
+    - BROWN
+    - DARK_OAK
+  WRITABLE_BOOK:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - BROWN
+    - DARK_RED
+  WRITTEN_BOOK:
+    - WHITE
+    - GRAY
+    - ENCHANTED
+  YELLOW_BUNDLE:
+    - EXPOSED_COPPER
+    - YELLOW
+    - HONEY
+    - ACACIA
+    - BROWN
+  YELLOW_CANDLE:
+    - SANDSTONE
+    - YELLOW
+    - HONEY
+    - BLACK
+  YELLOW_CONCRETE:
+    - HONEY
+  YELLOW_CONCRETE_POWDER:
+    - SANDSTONE
+    - YELLOW
+  YELLOW_DYE:
+    - SANDSTONE
+    - YELLOW
+    - HONEY
+    - DARK_OAK
+  YELLOW_GLAZED_TERRACOTTA:
+    - WHITE
+    - SANDSTONE
+    - YELLOW
+    - HONEY
+    - BROWN
+  YELLOW_HARNESS:
+    - LIGHT_GRAY_BLUE
+    - YELLOW
+    - HONEY
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+    - LIGHT_GRAY
+    - GRAY
+  YELLOW_SHULKER_BOX:
+    - YELLOW
+    - HONEY
+  YELLOW_STAINED_GLASS:
+    - YELLOW
+  YELLOW_STAINED_GLASS_PANE:
+    - YELLOW
+  YELLOW_TERRACOTTA:
+    - HONEY
+  YELLOW_WOOL:
+    - YELLOW
+    - HONEY
+  ZOGLIN_SPAWN_EGG:
+    - CHERRY_PINK
+    - PINK
+    - LIME
+    - GREEN
+    - COPPER
+    - ACACIA
+    - CRIMSON_RED
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  ZOMBIE_HORSE_SPAWN_EGG:
+    - BAMBOO
+    - LIME
+    - GREEN
+    - GRAY
+    - BLACK
+  ZOMBIE_NAUTILUS_SPAWN_EGG:
+    - SANDSTONE
+    - BAMBOO
+    - LIME
+    - GREEN
+    - LIGHT_BLUE
+    - TEAL
+    - BLUE
+    - BROWN
+  ZOMBIE_SPAWN_EGG:
+    - GREEN
+    - LIGHT_GREEN
+    - CYAN
+    - PURPLE
+  ZOMBIE_VILLAGER_SPAWN_EGG:
+    - LIGHT_GREEN
+    - GREEN
+    - BROWN
+    - DARK_OAK
+  ZOMBIFIED_PIGLIN_SPAWN_EGG:
+    - PINK
+    - GREEN
+    - BROWN
+    - WHITE
+    - LIGHT_GRAY
+  BLUE_BANNER:
+    - BLUE
+    - DARK_OAK
+  BLUE_BED:
+    - WHITE
+    - LIGHT_GRAY
+    - BLUE
+    - LIGHT_BLUE
+    - BROWN
+  ACACIA_BUTTON:
+    - ACACIA
+  ACACIA_FENCE:
+    - ACACIA
+  ACACIA_FENCE_GATE:
+    - ACACIA
+  ACACIA_PRESSURE_PLATE:
+    - COPPER
+    - ACACIA
+  ACACIA_SLAB:
+    - COPPER
+    - ACACIA
+  ACACIA_STAIRS:
+    - COPPER
+    - ACACIA
+  ACACIA_WOOD:
+    - LIGHT_GRAY
+    - GRAY
+  CYAN_CARPET:
+    - CYAN
+    - TEAL
+  CYAN_BED:
+    - WHITE
+    - LIGHT_GRAY
+    - CYAN
+    - TEAL
+    - BROWN
+  CYAN_BANNER:
+    - TEAL
+    - DARK_OAK
+  DARK_PRISMARINE_SLAB:
+    - TEAL
+  DARK_PRISMARINE_STAIRS:
+    - TEAL
+  ANDESITE_SLAB:
+    - SANDSTONE
+    - LIGHT_GRAY
+    - GRAY
+  ANDESITE_STAIRS:
+    - SANDSTONE
+    - LIGHT_GRAY
+    - GRAY
+  ANDESITE_WALL:
+    - SANDSTONE
+    - LIGHT_GRAY
+    - GRAY
+  BAMBOO_BUTTON:
+    - SANDSTONE
+    - BAMBOO
+  BAMBOO_MOSAIC_SLAB:
+    - SANDSTONE
+    - BAMBOO
+  BAMBOO_MOSAIC_STAIRS:
+    - SANDSTONE
+    - BAMBOO
+  BAMBOO_PRESSURE_PLATE:
+    - SANDSTONE
+    - BAMBOO
+  BAMBOO_SLAB:
+    - SANDSTONE
+    - BAMBOO
+  BAMBOO_STAIRS:
+    - SANDSTONE
+    - BAMBOO
+  BIRCH_BUTTON:
+    - SANDSTONE
+    - BAMBOO
+  BIRCH_FENCE:
+    - SANDSTONE
+    - BAMBOO
+  END_STONE_BRICK_SLAB:
+    - SANDSTONE
+    - BAMBOO
+  END_STONE_BRICK_STAIRS:
+    - SANDSTONE
+    - BAMBOO
+  END_STONE_BRICK_WALL:
+    - SANDSTONE
+    - BAMBOO
+  LIME_BED:
+    - WHITE
+    - LIGHT_GRAY
+    - LIME
+    - LIGHT_GREEN
+    - BROWN
+  LIME_CARPET:
+    - LIME
+    - LIGHT_GREEN
+  BIRCH_PRESSURE_PLATE:
+    - SANDSTONE
+    - BAMBOO
+  BIRCH_SLAB:
+    - SANDSTONE
+    - BAMBOO
+  BIRCH_STAIRS:
+    - SANDSTONE
+    - BAMBOO
+  BIRCH_WOOD:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - CHERRY_PINK
+    - BLACK
+  BRICK_SLAB:
+    - LIGHT_GRAY
+    - EXPOSED_COPPER
+    - COPPER
+  BRICK_STAIRS:
+    - LIGHT_GRAY
+    - EXPOSED_COPPER
+    - COPPER
+  BRICK_WALL:
+    - LIGHT_GRAY
+    - EXPOSED_COPPER
+    - COPPER
+  BROWN_BANNER:
+    - BROWN
+    - DARK_OAK
+  BROWN_BED:
+    - WHITE
+    - LIGHT_GRAY
+    - BROWN
+    - DARK_OAK
+  MAGMA_BLOCK:
+    - HONEY
+    - ORANGE
+    - COPPER
+    - RED
+    - CRIMSON_RED
+    - DARK_RED
+  BLACKSTONE_SLAB:
+    - GRAY_BLUE
+    - GRAY
+    - BLACK
+  BLACKSTONE_STAIRS:
+    - GRAY_BLUE
+    - GRAY
+    - BLACK
+  BLACKSTONE_WALL:
+    - GRAY_BLUE
+    - GRAY
+    - BLACK
+  BLACK_BANNER:
+    - DARK_OAK
+    - BLACK
+  BLACK_BED:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+    - BROWN
+  COBBLED_DEEPSLATE_SLAB:
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  COBBLED_DEEPSLATE_STAIRS:
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  COBBLED_DEEPSLATE_WALL:
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  DEEPSLATE_BRICK_SLAB:
+    - GRAY
+    - BLACK
+  DEEPSLATE_BRICK_STAIRS:
+    - GRAY
+    - BLACK
+  DEEPSLATE_BRICK_WALL:
+    - GRAY
+    - BLACK
+  DEEPSLATE_TILE_SLAB:
+    - GRAY
+    - BLACK
+  DEEPSLATE_TILE_STAIRS:
+    - GRAY
+    - BLACK
+  DEEPSLATE_TILE_WALL:
+    - GRAY
+    - BLACK
+  INFESTED_DEEPSLATE:
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  INFESTED_MOSSY_STONE_BRICKS:
+    - LIGHT_GRAY
+    - GRAY
+    - LIME
+    - GREEN
+  MOSSY_COBBLESTONE_SLAB:
+    - LIGHT_GRAY
+    - GRAY
+    - LIME
+    - GREEN
+  MOSSY_COBBLESTONE_STAIRS:
+    - LIGHT_GRAY
+    - GRAY
+    - LIME
+    - GREEN
+  MOSSY_COBBLESTONE_WALL:
+    - LIGHT_GRAY
+    - GRAY
+    - LIME
+    - GREEN
+  MOSSY_STONE_BRICK_SLAB:
+    - LIGHT_GRAY
+    - GRAY
+    - LIME
+    - GREEN
+  MOSSY_STONE_BRICK_STAIRS:
+    - LIGHT_GRAY
+    - GRAY
+    - LIME
+    - GREEN
+  MOSSY_STONE_BRICK_WALL:
+    - LIGHT_GRAY
+    - GRAY
+    - LIME
+    - GREEN
+  BIRCH_FENCE_GATE:
+    - SANDSTONE
+    - BAMBOO
+  COPPER_CHEST:
+    - YELLOW
+    - ORANGE
+    - RED
+    - BROWN
+    - GREEN
+    - BLUE
+    - PURPLE
+    - PINK
+    - WHITE
+    - BLACK
+  COPPER_GOLEM_STATUE:
+    - EXPOSED_COPPER
+    - COPPER
+    - ACACIA
+  CUT_COPPER_SLAB:
+    - ORANGE
+    - COPPER
+    - ACACIA
+  CUT_COPPER_STAIRS:
+    - ORANGE
+    - COPPER
+    - ACACIA
+  ZOMBIE_HEAD:
+    - LIME
+    - LIGHT_GREEN
+    - GREEN
+    - BLACK
+  YELLOW_CARPET:
+    - YELLOW
+    - HONEY
+  YELLOW_BED:
+    - WHITE
+    - LIGHT_GRAY
+    - YELLOW
+    - HONEY
+    - BROWN
+  YELLOW_BANNER:
+    - YELLOW
+    - DARK_OAK
+  WITHER_SKELETON_SKULL:
+    - GRAY
+    - BLACK
+  CHERRY_BUTTON:
+    - CHERRY_PINK
+    - PINK
+  MANGROVE_BUTTON:
+    - CRIMSON_RED
+    - DARK_RED
+  MANGROVE_FENCE:
+    - BROWN
+    - CRIMSON_RED
+    - DARK_RED
+  CHERRY_FENCE:
+    - CHERRY_PINK
+    - PINK
+    - CORAL_PINK
+  CHERRY_FENCE_GATE:
+    - CHERRY_PINK
+    - PINK
+    - CORAL_PINK
+  CHERRY_PRESSURE_PLATE:
+    - CHERRY_PINK
+    - PINK
+    - CORAL_PINK
+  CHERRY_SLAB:
+    - CHERRY_PINK
+    - PINK
+    - CORAL_PINK
+  CHERRY_STAIRS:
+    - CHERRY_PINK
+    - PINK
+    - CORAL_PINK
+  CHERRY_WOOD:
+    - CRIMSON_RED
+    - DARK_RED
+    - BLACK
+  CHEST:
+    - YELLOW
+    - ORANGE
+    - RED
+    - BROWN
+    - GREEN
+    - BLUE
+    - PURPLE
+    - PINK
+    - WHITE
+    - BLACK
+  CRIMSON_BUTTON:
+    - CRIMSON_RED
+    - DARK_RED
+  CRIMSON_FENCE:
+    - CRIMSON_RED
+    - DARK_RED
+  CRIMSON_FENCE_GATE:
+    - CRIMSON_RED
+    - DARK_RED
+  CRIMSON_HYPHAE:
+    - LIGHT_RED
+    - RED
+    - CRIMSON_RED
+    - DARK_RED
+  CRIMSON_PRESSURE_PLATE:
+    - CRIMSON_RED
+    - DARK_RED
+  CRIMSON_SLAB:
+    - CRIMSON_RED
+    - DARK_RED
+  CRIMSON_STAIRS:
+    - CRIMSON_RED
+    - DARK_RED
+  CROSSBOW:
+    - ACACIA
+    - BROWN
+    - DARK_OAK
+    - LIGHT_GRAY
+    - GRAY
+  CUT_RED_SANDSTONE_SLAB:
+    - ORANGE
+    - COPPER
+  CUT_SANDSTONE_SLAB:
+    - SANDSTONE
+    - BAMBOO
+  WHITE_BED:
+    - WHITE
+    - LIGHT_GRAY
+    - BROWN
+  RED_BED:
+    - WHITE
+    - LIGHT_GRAY
+    - LIGHT_RED
+    - RED
+    - BROWN
+  PURPLE_BED:
+    - WHITE
+    - LIGHT_GRAY
+    - PURPLE
+    - GRAY_PURPLE
+    - BROWN
+  PINK_BED:
+    - WHITE
+    - LIGHT_GRAY
+    - PINK
+    - CORAL_PINK
+    - BROWN
+  ORANGE_BED:
+    - WHITE
+    - LIGHT_GRAY
+    - HONEY
+    - ORANGE
+    - BROWN
+  MAGENTA_BED:
+    - WHITE
+    - LIGHT_GRAY
+    - CORAL_PINK
+    - MAGENTA
+    - BROWN
+  MAGENTA_BANNER:
+    - MAGENTA
+    - BROWN
+  DARK_OAK_BUTTON:
+    - BROWN
+    - DARK_OAK
+  DARK_OAK_FENCE:
+    - BROWN
+    - DARK_OAK
+  DARK_OAK_FENCE_GATE:
+    - BROWN
+    - DARK_OAK
+  WHITE_CARPET:
+    - WHITE
+    - LIGHT_GRAY
+  RED_CARPET:
+    - RED
+    - DARK_RED
+  PURPLE_CARPET:
+    - PURPUR
+    - PURPLE
+  PINK_CARPET:
+    - PINK
+    - CORAL_PINK
+  ORANGE_CARPET:
+    - HONEY
+    - ORANGE
+  MOSS_CARPET:
+    - GREEN
+    - DARK_GREEN
+  MAGENTA_CARPET:
+    - CORAL_PINK
+    - MAGENTA
+  LIGHT_BLUE_CARPET:
+    - LIGHT_GRAY_BLUE
+    - LIGHT_BLUE
+  GREEN_CARPET:
+    - GREEN
+    - DARK_GREEN
+  GRAY_CARPET:
+    - GRAY
+  BROWN_CARPET:
+    - BROWN
+    - DARK_OAK
+  BLUE_CARPET:
+    - BLUE
+    - GRAY_BLUE
+  DARK_OAK_PRESSURE_PLATE:
+    - BROWN
+    - DARK_OAK
+  DARK_OAK_SLAB:
+    - BROWN
+    - DARK_OAK
+  DARK_OAK_STAIRS:
+    - BROWN
+    - DARK_OAK
+  DARK_OAK_WOOD:
+    - BROWN
+    - DARK_OAK
+  DEBUG_STICK:
+    - BROWN
+    - DARK_OAK
+    - ENCHANTED
+  DECORATED_POT:
+    - COPPER
+    - ACACIA
+    - DARK_OAK
+  LIGHT_GRAY_BED:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - BROWN
+  LIGHT_BLUE_BED:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY_BLUE
+    - LIGHT_BLUE
+    - BROWN
+  GREEN_BED:
+    - WHITE
+    - LIGHT_GRAY
+    - GREEN
+    - DARK_GREEN
+    - BROWN
+  GRAY_BED:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - GRAY_BLUE
+    - BROWN
+  DISC_FRAGMENT_5:
+    - TEAL
+    - GRAY_BLUE
+    - GRAY
+    - BLACK
+  DRAGON_HEAD:
+    - PURPLE
+    - GRAY_PURPLE
+    - BLACK
+  DRIED_GHAST:
+    - SANDSTONE
+    - CHERRY_PINK
+    - LIGHT_GRAY
+    - GRAY
+  DRIED_KELP_BLOCK:
+    - DARK_GREEN
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  DIORITE_SLAB:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+  DIORITE_STAIRS:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+  DIORITE_WALL:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+  ENCHANTED_GOLDEN_APPLE:
+    - SANDSTONE
+    - YELLOW
+    - HONEY
+    - BROWN
+    - DARK_RED
+  GRAY_BANNER:
+    - GRAY
+    - DARK_OAK
+  GREEN_BANNER:
+    - DARK_GREEN
+    - DARK_OAK
+  LIGHT_BLUE_BANNER:
+    - LIGHT_BLUE
+    - BROWN
+  ENDER_CHEST:
+    - YELLOW
+    - BROWN
+    - RED
+    - GREEN
+    - BLUE
+    - WHITE
+    - BLACK
+    - PURPLE
+    - PINK
+  LIGHT_GRAY_BANNER:
+    - LIGHT_GRAY
+    - BROWN
+  LIME_BANNER:
+    - LIME
+    - BROWN
+  ORANGE_BANNER:
+    - ORANGE
+    - BROWN
+  PINK_BANNER:
+    - PINK
+    - BROWN
+  PURPLE_BANNER:
+    - PURPLE
+    - BROWN
+  RED_BANNER:
+    - RED
+    - BROWN
+  WHITE_BANNER:
+    - WHITE
+    - DARK_OAK
+  EXPOSED_COPPER_CHEST:
+    - YELLOW
+    - BROWN
+    - RED
+    - GREEN
+    - BLUE
+    - WHITE
+    - BLACK
+    - PURPLE
+    - PINK
+  EXPOSED_COPPER_GOLEM_STATUE:
+    - BAMBOO
+    - EXPOSED_COPPER
+    - ACACIA
+    - BROWN
+  EXPOSED_CUT_COPPER_SLAB:
+    - BAMBOO
+    - EXPOSED_COPPER
+    - ACACIA
+    - BROWN
+  EXPOSED_CUT_COPPER_STAIRS:
+    - BAMBOO
+    - EXPOSED_COPPER
+    - ACACIA
+    - BROWN
+  WEATHERED_CUT_COPPER_STAIRS:
+    - EXPOSED_COPPER
+    - LIME
+    - TEAL
+  WEATHERED_CUT_COPPER_SLAB:
+    - EXPOSED_COPPER
+    - LIME
+    - TEAL
+  WEATHERED_COPPER_GOLEM_STATUE:
+    - EXPOSED_COPPER
+    - LIME
+    - TEAL
+  WEATHERED_COPPER_CHEST:
+    - WHITE
+    - PINK
+    - RED
+    - PURPLE
+    - BLUE
+    - GREEN
+    - YELLOW
+    - ORANGE
+    - BROWN
+    - BLACK
+  INFESTED_CHISELED_STONE_BRICKS:
+    - LIGHT_GRAY
+    - GRAY
+  INFESTED_COBBLESTONE:
+    - LIGHT_GRAY
+    - GRAY
+  INFESTED_CRACKED_STONE_BRICKS:
+    - LIGHT_GRAY
+    - GRAY
+  INFESTED_STONE:
+    - LIGHT_GRAY
+    - GRAY
+  INFESTED_STONE_BRICKS:
+    - LIGHT_GRAY
+    - GRAY
+  WAXED_WEATHERED_LIGHTNING_ROD:
+    - EXPOSED_COPPER
+    - LIME
+    - TEAL
+  WAXED_WEATHERED_CUT_COPPER_STAIRS:
+    - EXPOSED_COPPER
+    - LIME
+    - TEAL
+  WAXED_WEATHERED_CUT_COPPER_SLAB:
+    - EXPOSED_COPPER
+    - LIME
+    - TEAL
+  WAXED_WEATHERED_CUT_COPPER:
+    - EXPOSED_COPPER
+    - LIME
+    - TEAL
+  WAXED_WEATHERED_COPPER_TRAPDOOR:
+    - EXPOSED_COPPER
+    - LIME
+    - TEAL
+  WAXED_WEATHERED_COPPER_LANTERN:
+    - WHITE
+    - EXPOSED_COPPER
+    - LIME
+    - DARK_GREEN
+    - TEAL
+  WAXED_WEATHERED_COPPER_GRATE:
+    - EXPOSED_COPPER
+    - LIME
+    - TEAL
+  WAXED_WEATHERED_COPPER_GOLEM_STATUE:
+    - EXPOSED_COPPER
+    - LIME
+    - TEAL
+  WAXED_WEATHERED_COPPER_DOOR:
+    - EXPOSED_COPPER
+    - LIME
+    - TEAL
+    - GRAY
+  WAXED_WEATHERED_COPPER_CHEST:
+    - WHITE
+    - PINK
+    - RED
+    - PURPLE
+    - BLUE
+    - GREEN
+    - YELLOW
+    - ORANGE
+    - BROWN
+    - BLACK
+  WAXED_WEATHERED_COPPER_CHAIN:
+    - LIME
+    - TEAL
+  WAXED_WEATHERED_COPPER_BULB:
+    - EXPOSED_COPPER
+    - LIME
+    - TEAL
+    - GRAY
+  WAXED_WEATHERED_COPPER_BARS:
+    - EXPOSED_COPPER
+    - LIME
+    - TEAL
+  WAXED_WEATHERED_COPPER:
+    - EXPOSED_COPPER
+    - LIME
+    - TEAL
+  WAXED_WEATHERED_CHISELED_COPPER:
+    - EXPOSED_COPPER
+    - LIME
+    - TEAL
+  WAXED_OXIDIZED_LIGHTNING_ROD:
+    - CYAN
+    - TEAL
+  WAXED_OXIDIZED_CUT_COPPER_STAIRS:
+    - CYAN
+    - TEAL
+  WAXED_OXIDIZED_CUT_COPPER_SLAB:
+    - CYAN
+    - TEAL
+  WAXED_OXIDIZED_CUT_COPPER:
+    - CYAN
+    - TEAL
+  GRANITE_SLAB:
+    - EXPOSED_COPPER
+    - BROWN
+    - DARK_OAK
+  GRANITE_STAIRS:
+    - EXPOSED_COPPER
+    - BROWN
+    - DARK_OAK
+  WAXED_OXIDIZED_COPPER_TRAPDOOR:
+    - CYAN
+    - TEAL
+  GRANITE_WALL:
+    - EXPOSED_COPPER
+    - BROWN
+    - DARK_OAK
+  WAXED_OXIDIZED_COPPER_LANTERN:
+    - WHITE
+    - CYAN
+    - TEAL
+    - LIGHT_GREEN
+  WAXED_OXIDIZED_COPPER_GRATE:
+    - CYAN
+    - TEAL
+  WAXED_OXIDIZED_COPPER_GOLEM_STATUE:
+    - CYAN
+    - TEAL
+  WAXED_OXIDIZED_COPPER_DOOR:
+    - CYAN
+    - TEAL
+    - GRAY
+  WAXED_OXIDIZED_COPPER_CHEST:
+    - WHITE
+    - PINK
+    - RED
+    - PURPLE
+    - BLUE
+    - GREEN
+    - YELLOW
+    - ORANGE
+    - BROWN
+    - BLACK
+  WAXED_OXIDIZED_COPPER_CHAIN:
+    - CYAN
+    - TEAL
+  WAXED_OXIDIZED_COPPER_BULB:
+    - CYAN
+    - TEAL
+  WAXED_OXIDIZED_COPPER_BARS:
+    - CYAN
+    - TEAL
+  WAXED_OXIDIZED_COPPER:
+    - CYAN
+    - TEAL
+  WAXED_OXIDIZED_CHISELED_COPPER:
+    - CYAN
+    - TEAL
+  OXIDIZED_CUT_COPPER_STAIRS:
+    - CYAN
+    - TEAL
+  OXIDIZED_CUT_COPPER_SLAB:
+    - CYAN
+    - TEAL
+  OXIDIZED_COPPER_GOLEM_STATUE:
+    - CYAN
+    - TEAL
+  OXIDIZED_COPPER_CHEST:
+    - WHITE
+    - PINK
+    - RED
+    - PURPLE
+    - BLUE
+    - GREEN
+    - YELLOW
+    - ORANGE
+    - BROWN
+    - BLACK
+  WAXED_LIGHTNING_ROD:
+    - COPPER
+    - ACACIA
+  JUNGLE_BUTTON:
+    - EXPOSED_COPPER
+    - BROWN
+    - DARK_OAK
+  WAXED_EXPOSED_LIGHTNING_ROD:
+    - CHERRY_PINK
+    - EXPOSED_COPPER
+    - BAMBOO
+  WAXED_EXPOSED_CUT_COPPER_STAIRS:
+    - CHERRY_PINK
+    - EXPOSED_COPPER
+    - BAMBOO
+  JUNGLE_FENCE:
+    - EXPOSED_COPPER
+    - BROWN
+    - DARK_OAK
+  JUNGLE_FENCE_GATE:
+    - EXPOSED_COPPER
+    - BROWN
+    - DARK_OAK
+  WAXED_EXPOSED_CUT_COPPER_SLAB:
+    - CHERRY_PINK
+    - EXPOSED_COPPER
+    - BAMBOO
+  WAXED_EXPOSED_CUT_COPPER:
+    - CHERRY_PINK
+    - EXPOSED_COPPER
+    - BAMBOO
+  WAXED_EXPOSED_COPPER_TRAPDOOR:
+    - CHERRY_PINK
+    - EXPOSED_COPPER
+    - BAMBOO
+  JUNGLE_PRESSURE_PLATE:
+    - EXPOSED_COPPER
+    - BROWN
+    - DARK_OAK
+  WAXED_EXPOSED_COPPER_LANTERN:
+    - WHITE
+    - CHERRY_PINK
+    - EXPOSED_COPPER
+    - BAMBOO
+    - LIGHT_GREEN
+  JUNGLE_SLAB:
+    - EXPOSED_COPPER
+    - BROWN
+    - DARK_OAK
+  JUNGLE_STAIRS:
+    - EXPOSED_COPPER
+    - BROWN
+    - DARK_OAK
+  JUNGLE_WOOD:
+    - BROWN
+    - DARK_OAK
+  WAXED_EXPOSED_COPPER_GRATE:
+    - CHERRY_PINK
+    - EXPOSED_COPPER
+    - BAMBOO
+  WAXED_EXPOSED_COPPER_GOLEM_STATUE:
+    - CHERRY_PINK
+    - EXPOSED_COPPER
+    - BAMBOO
+  WAXED_EXPOSED_COPPER_DOOR:
+    - CHERRY_PINK
+    - EXPOSED_COPPER
+    - BAMBOO
+    - GRAY
+  WAXED_EXPOSED_COPPER_CHEST:
+    - WHITE
+    - PINK
+    - RED
+    - PURPLE
+    - BLUE
+    - GREEN
+    - YELLOW
+    - ORANGE
+    - BROWN
+    - BLACK
+  WAXED_EXPOSED_COPPER_CHAIN:
+    - CHERRY_PINK
+    - EXPOSED_COPPER
+    - BAMBOO
+  WAXED_EXPOSED_COPPER_BULB:
+    - CHERRY_PINK
+    - EXPOSED_COPPER
+    - BAMBOO
+    - DARK_OAK
+  WAXED_EXPOSED_COPPER_BARS:
+    - CHERRY_PINK
+    - EXPOSED_COPPER
+    - BAMBOO
+  WAXED_EXPOSED_COPPER:
+    - CHERRY_PINK
+    - EXPOSED_COPPER
+    - BAMBOO
+  WAXED_EXPOSED_CHISELED_COPPER:
+    - CHERRY_PINK
+    - EXPOSED_COPPER
+    - BAMBOO
+  WAXED_CUT_COPPER_STAIRS:
+    - COPPER
+    - ACACIA
+  WAXED_CUT_COPPER_SLAB:
+    - COPPER
+    - ACACIA
+  WAXED_CUT_COPPER:
+    - COPPER
+    - ACACIA
+  WAXED_COPPER_TRAPDOOR:
+    - COPPER
+    - ACACIA
+  WAXED_COPPER_LANTERN:
+    - WHITE
+    - LIGHT_GREEN
+    - COPPER
+    - ACACIA
+  WAXED_COPPER_GRATE:
+    - COPPER
+    - ACACIA
+  WAXED_COPPER_GOLEM_STATUE:
+    - COPPER
+    - ACACIA
+  WAXED_COPPER_DOOR:
+    - COPPER
+    - ACACIA
+    - GRAY
+  WAXED_COPPER_CHEST:
+    - WHITE
+    - PINK
+    - RED
+    - PURPLE
+    - BLUE
+    - GREEN
+    - YELLOW
+    - ORANGE
+    - BROWN
+    - BLACK
+  WAXED_COPPER_CHAIN:
+    - COPPER
+    - ACACIA
+  WAXED_COPPER_BULB:
+    - COPPER
+    - ACACIA
+    - BROWN
+  WAXED_COPPER_BLOCK:
+    - COPPER
+    - ACACIA
+  WAXED_COPPER_BARS:
+    - COPPER
+    - ACACIA
+  WAXED_CHISELED_COPPER:
+    - COPPER
+    - ACACIA
+  LIGHT_WEIGHTED_PRESSURE_PLATE:
+    - SANDSTONE
+    - YELLOW
+    - HONEY
+  HEAVY_WEIGHTED_PRESSURE_PLATE:
+    - WHITE
+    - LIGHT_GRAY
+  MUD_BRICK_SLAB:
+    - BROWN
+    - DARK_OAK
+  MUD_BRICK_STAIRS:
+    - BROWN
+    - DARK_OAK
+  MUD_BRICK_WALL:
+    - BROWN
+    - DARK_OAK
+  MUSIC_DISC_11:
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  MUSIC_DISC_13:
+    - WHITE
+    - SANDSTONE
+    - YELLOW
+    - GRAY
+    - BLACK
+  MUSIC_DISC_5:
+    - LIGHT_BLUE
+    - TEAL
+    - GRAY
+    - BLACK
+  WARPED_STAIRS:
+    - TEAL
+  WARPED_SLAB:
+    - TEAL
+  WARPED_PRESSURE_PLATE:
+    - TEAL
+  WARPED_HYPHAE:
+    - TEAL
+    - DARK_RED
+    - GRAY_PURPLE
+  MANGROVE_FENCE_GATE:
+    - BROWN
+    - CRIMSON_RED
+    - DARK_RED
+  MANGROVE_PRESSURE_PLATE:
+    - BROWN
+    - CRIMSON_RED
+    - DARK_RED
+  MANGROVE_SLAB:
+    - BROWN
+    - CRIMSON_RED
+    - DARK_RED
+  MANGROVE_STAIRS:
+    - BROWN
+    - CRIMSON_RED
+    - DARK_RED
+  MANGROVE_WOOD:
+    - BROWN
+    - DARK_OAK
+  WARPED_FENCE_GATE:
+    - TEAL
+  WARPED_FENCE:
+    - TEAL
+  WARPED_BUTTON:
+    - TEAL
+  STRIPPED_WARPED_HYPHAE:
+    - TEAL
+  NETHER_BRICK_FENCE:
+    - CRIMSON_RED
+    - DARK_RED
+  NETHER_BRICK_SLAB:
+    - CRIMSON_RED
+    - DARK_RED
+  NETHER_BRICK_STAIRS:
+    - CRIMSON_RED
+    - DARK_RED
+  NETHER_BRICK_WALL:
+    - CRIMSON_RED
+    - DARK_RED
+  OAK_BUTTON:
+    - SANDSTONE
+    - BROWN
+  OAK_FENCE:
+    - SANDSTONE
+    - BROWN
+  OAK_FENCE_GATE:
+    - SANDSTONE
+    - BROWN
+  OAK_PRESSURE_PLATE:
+    - SANDSTONE
+    - BROWN
+  OAK_SLAB:
+    - SANDSTONE
+    - BROWN
+  OAK_STAIRS:
+    - SANDSTONE
+    - BROWN
+  OAK_WOOD:
+    - BROWN
+    - DARK_OAK
+  PALE_OAK_BUTTON:
+    - WHITE
+    - LIGHT_GRAY
+  PALE_OAK_FENCE:
+    - WHITE
+    - LIGHT_GRAY
+  PALE_OAK_FENCE_GATE:
+    - WHITE
+    - LIGHT_GRAY
+  PALE_OAK_PRESSURE_PLATE:
+    - WHITE
+    - LIGHT_GRAY
+  PALE_OAK_SLAB:
+    - WHITE
+    - LIGHT_GRAY
+  PALE_OAK_STAIRS:
+    - WHITE
+    - LIGHT_GRAY
+  PALE_OAK_WOOD:
+    - LIGHT_GRAY
+    - GRAY
+  PETRIFIED_OAK_SLAB:
+    - SANDSTONE
+    - BROWN
+  PIGLIN_HEAD:
+    - WHITE
+    - EXPOSED_COPPER
+    - HONEY
+    - COPPER
+  TUFF_BRICK_WALL:
+    - LIGHT_GRAY
+    - GRAY
+    - GRAY_BLUE
+  PLAYER_HEAD:
+    - WHITE
+    - PURPLE_BLUE
+    - BROWN
+    - DARK_OAK
+  TUFF_BRICK_STAIRS:
+    - LIGHT_GRAY
+    - GRAY
+    - GRAY_BLUE
+  TUFF_BRICK_SLAB:
+    - LIGHT_GRAY
+    - GRAY
+    - GRAY_BLUE
+  POLISHED_ANDESITE_SLAB:
+    - LIGHT_GRAY
+    - GRAY
+  POLISHED_ANDESITE_STAIRS:
+    - LIGHT_GRAY
+    - GRAY
+  STONE_BRICK_WALL:
+    - LIGHT_GRAY
+    - GRAY
+  POLISHED_BLACKSTONE_BRICK_SLAB:
+    - GRAY
+    - GRAY_PURPLE
+    - BLACK
+  POLISHED_BLACKSTONE_BRICK_STAIRS:
+    - GRAY
+    - GRAY_PURPLE
+    - BLACK
+  POLISHED_BLACKSTONE_BRICK_WALL:
+    - GRAY
+    - GRAY_PURPLE
+    - BLACK
+  POLISHED_BLACKSTONE_BUTTON:
+    - GRAY
+    - GRAY_PURPLE
+    - BLACK
+  STONE_BRICK_STAIRS:
+    - LIGHT_GRAY
+    - GRAY
+  POLISHED_BLACKSTONE_PRESSURE_PLATE:
+    - GRAY_BLUE
+    - GRAY
+    - BLACK
+  STONE_BRICK_SLAB:
+    - LIGHT_GRAY
+    - GRAY
+  POLISHED_BLACKSTONE_SLAB:
+    - GRAY_BLUE
+    - GRAY
+    - BLACK
+  POLISHED_BLACKSTONE_STAIRS:
+    - GRAY_BLUE
+    - GRAY
+    - BLACK
+  POLISHED_BLACKSTONE_WALL:
+    - GRAY_BLUE
+    - GRAY
+    - BLACK
+  RESIN_BRICK_WALL:
+    - YELLOW
+    - HONEY
+    - ORANGE
+  POLISHED_DEEPSLATE_SLAB:
+    - GRAY
+    - BLACK
+  POLISHED_DEEPSLATE_STAIRS:
+    - GRAY
+    - BLACK
+  POLISHED_DEEPSLATE_WALL:
+    - GRAY
+    - BLACK
+  POLISHED_DIORITE_SLAB:
+    - WHITE
+    - LIGHT_GRAY
+  POLISHED_DIORITE_STAIRS:
+    - WHITE
+    - LIGHT_GRAY
+  RESIN_BRICK_STAIRS:
+    - YELLOW
+    - HONEY
+    - ORANGE
+  RESIN_BRICK_SLAB:
+    - YELLOW
+    - HONEY
+    - ORANGE
+  POLISHED_GRANITE_SLAB:
+    - LIGHT_GRAY
+    - EXPOSED_COPPER
+  POLISHED_GRANITE_STAIRS:
+    - LIGHT_GRAY
+    - EXPOSED_COPPER
+  POLISHED_TUFF_SLAB:
+    - GRAY
+  POLISHED_TUFF_STAIRS:
+    - GRAY
+  POLISHED_TUFF_WALL:
+    - GRAY
+  RED_NETHER_BRICK_WALL:
+    - RED
+    - DARK_RED
+  RED_NETHER_BRICK_STAIRS:
+    - RED
+    - DARK_RED
+  RED_NETHER_BRICK_SLAB:
+    - RED
+    - DARK_RED
+  PRISMARINE_BRICK_STAIRS:
+    - CYAN
+    - TEAL
+  PRISMARINE_BRICK_SLAB:
+    - CYAN
+    - TEAL
+  PRISMARINE_SLAB:
+    - LIGHT_GRAY_BLUE
+    - TEAL
+  PRISMARINE_STAIRS:
+    - LIGHT_GRAY_BLUE
+    - TEAL
+  PRISMARINE_WALL:
+    - LIGHT_GRAY_BLUE
+    - TEAL
+  PURPUR_SLAB:
+    - PURPUR
+    - PURPLE
+  PURPUR_STAIRS:
+    - PURPUR
+    - PURPLE
+  QUARTZ_SLAB:
+    - WHITE
+    - SANDSTONE
+  QUARTZ_STAIRS:
+    - WHITE
+    - SANDSTONE
+  RED_SANDSTONE_SLAB:
+    - HONEY
+    - ACACIA
+  RED_SANDSTONE_STAIRS:
+    - HONEY
+    - ACACIA
+  RED_SANDSTONE_WALL:
+    - HONEY
+    - ACACIA
+  SANDSTONE_SLAB:
+    - SANDSTONE
+    - BAMBOO
+  SANDSTONE_STAIRS:
+    - SANDSTONE
+    - BAMBOO
+  SANDSTONE_WALL:
+    - SANDSTONE
+    - BAMBOO
+  SHIELD:
+    - BROWN
+    - DARK_OAK
+    - LIGHT_GRAY
+    - GRAY
+  SKELETON_SKULL:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY
+    - BLACK
+  SMOOTH_QUARTZ:
+    - WHITE
+    - SANDSTONE
+  SMOOTH_QUARTZ_SLAB:
+    - WHITE
+    - SANDSTONE
+  SMOOTH_QUARTZ_STAIRS:
+    - WHITE
+    - SANDSTONE
+  SMOOTH_RED_SANDSTONE:
+    - ORANGE
+  SMOOTH_RED_SANDSTONE_SLAB:
+    - ORANGE
+  SMOOTH_SANDSTONE:
+    - SANDSTONE
+  SMOOTH_SANDSTONE_SLAB:
+    - SANDSTONE
+  SMOOTH_SANDSTONE_STAIRS:
+    - SANDSTONE
+  SPRUCE_BUTTON:
+    - BROWN
+    - DARK_OAK
+  SPRUCE_FENCE:
+    - BROWN
+    - DARK_OAK
+  SPRUCE_FENCE_GATE:
+    - BROWN
+    - DARK_OAK
+  SPRUCE_PRESSURE_PLATE:
+    - BROWN
+    - DARK_OAK
+  SPRUCE_SLAB:
+    - BROWN
+    - DARK_OAK
+  SPRUCE_STAIRS:
+    - BROWN
+    - DARK_OAK
+  SPRUCE_WOOD:
+    - BROWN
+    - DARK_OAK
+  STICKY_PISTON:
+    - LIGHT_GRAY
+    - GRAY
+    - LIME
+    - LIGHT_GREEN
+    - GREEN
+    - DARK_GREEN
+    - BROWN
+    - DARK_OAK
+  TRAPPED_CHEST:
+    - WHITE
+    - PINK
+    - RED
+    - PURPLE
+    - BLUE
+    - GREEN
+    - YELLOW
+    - ORANGE
+    - BROWN
+    - BLACK
+  STONE_BUTTON:
+    - LIGHT_GRAY
+    - GRAY
+  STONE_PRESSURE_PLATE:
+    - LIGHT_GRAY
+    - GRAY
+  STONE_SLAB:
+    - LIGHT_GRAY
+    - GRAY
+  STONE_STAIRS:
+    - LIGHT_GRAY
+    - GRAY
+  STRIPPED_ACACIA_WOOD:
+    - ACACIA
+  STRIPPED_BIRCH_WOOD:
+    - SANDSTONE
+    - BAMBOO
+  STRIPPED_CHERRY_WOOD:
+    - CHERRY_PINK
+    - PINK
+  STRIPPED_CRIMSON_HYPHAE:
+    - CRIMSON_RED
+  STRIPPED_DARK_OAK_WOOD:
+    - BROWN
+    - DARK_OAK
+  STRIPPED_JUNGLE_WOOD:
+    - SANDSTONE
+    - EXPOSED_COPPER
+    - BROWN
+  STRIPPED_MANGROVE_WOOD:
+    - CRIMSON_RED
+    - DARK_RED
+  STRIPPED_OAK_WOOD:
+    - SANDSTONE
+    - EXPOSED_COPPER
+  STRIPPED_PALE_OAK_WOOD:
+    - WHITE
+    - LIGHT_GRAY
+  STRIPPED_SPRUCE_WOOD:
+    - BROWN
+    - DARK_OAK
+  SUSPICIOUS_GRAVEL:
+    - LIGHT_GRAY
+    - GRAY
+  SUSPICIOUS_SAND:
+    - SANDSTONE
+  TEST_BLOCK:
+    - WHITE
+    - LIGHT_GRAY
+    - SANDSTONE
+    - EXPOSED_COPPER
+  TIPPED_ARROW:
+    - WHITE
+    - LIGHT_GRAY
+    - GRAY_BLUE
+    - BLUE
+    - BROWN
+    - DARK_OAK
+    - GRAY

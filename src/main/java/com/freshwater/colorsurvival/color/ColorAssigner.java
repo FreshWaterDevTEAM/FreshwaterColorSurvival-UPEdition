@@ -10,11 +10,11 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * 为每队成员从各自 8 色池中分配唯一颜色。作者：淡水岛开发组
+ * 为每队成员从各自色池中分配唯一颜色（同队内不重复）。作者：淡水岛开发组
  */
 public final class ColorAssigner {
 
-    /** 单队人数上限（= 色池大小）。 */
+    /** 单队人数上限（= 色池大小，即可分配主色数）。 */
     public static final int MAX_PER_TEAM = GameColor.values().length;
 
     public static class AssignException extends Exception {

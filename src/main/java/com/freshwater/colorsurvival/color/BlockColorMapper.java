@@ -19,20 +19,20 @@ import java.util.Set;
  */
 public final class BlockColorMapper {
 
-    /** 16 种染料前缀名 -&gt; 精简后的 11 色之一。 */
+    /** 16 种染料前缀名 -&gt; 对应主色。 */
     private static final Map<String, GameColor> DYE_PREFIX = new LinkedHashMap<>();
 
     static {
         DYE_PREFIX.put("WHITE", GameColor.WHITE);
         DYE_PREFIX.put("ORANGE", GameColor.ORANGE);
-        DYE_PREFIX.put("MAGENTA", GameColor.PINK);
-        DYE_PREFIX.put("LIGHT_BLUE", GameColor.BLUE);
+        DYE_PREFIX.put("MAGENTA", GameColor.MAGENTA);
+        DYE_PREFIX.put("LIGHT_BLUE", GameColor.LIGHT_BLUE);
         DYE_PREFIX.put("YELLOW", GameColor.YELLOW);
-        DYE_PREFIX.put("LIME", GameColor.GREEN);
+        DYE_PREFIX.put("LIME", GameColor.LIME);
         DYE_PREFIX.put("PINK", GameColor.PINK);
         DYE_PREFIX.put("GRAY", GameColor.GRAY);
-        DYE_PREFIX.put("LIGHT_GRAY", GameColor.GRAY);
-        DYE_PREFIX.put("CYAN", GameColor.BLUE);
+        DYE_PREFIX.put("LIGHT_GRAY", GameColor.LIGHT_GRAY);
+        DYE_PREFIX.put("CYAN", GameColor.CYAN);
         DYE_PREFIX.put("PURPLE", GameColor.PURPLE);
         DYE_PREFIX.put("BLUE", GameColor.BLUE);
         DYE_PREFIX.put("BROWN", GameColor.BROWN);

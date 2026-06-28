@@ -86,19 +86,23 @@ public final class PluginConfig {
         blockColorOverrides.clear();
         ConfigurationSection bc = c.getConfigurationSection("block-colors");
         if (bc != null) {
+            int unknownMat = 0;
+            int emptyColor = 0;
             for (String key : bc.getKeys(false)) {
                 Material m = Material.matchMaterial(key);
                 if (m == null) {
-                    plugin.getLogger().log(Level.WARNING, "block-colors 中无效方块: {0}", key);
+                    unknownMat++;
                     continue;
                 }
                 Set<GameColor> colors = parseColors(bc, key);
                 if (!colors.isEmpty()) {
                     blockColorOverrides.put(m, colors);
                 } else {
-                    plugin.getLogger().log(Level.WARNING, "block-colors 中无效颜色: {0}", key);
+                    emptyColor++;
                 }
             }
+            plugin.getLogger().log(Level.INFO, "已加载方块颜色对照表 {0} 条（跳过未知方块 {1}、无效颜色 {2}）。",
+                    new Object[]{blockColorOverrides.size(), unknownMat, emptyColor});
         }
     }
 
