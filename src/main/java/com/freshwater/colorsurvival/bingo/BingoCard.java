@@ -31,6 +31,16 @@ public final class BingoCard {
         }
     }
 
+    /** 使用预先编排好的 25 个格子（按卡平衡生成）。 */
+    public BingoCard(Material[] prebuilt) {
+        for (int i = 0; i < CELLS; i++) {
+            items[i] = prebuilt[i % prebuilt.length];
+        }
+        for (GameTeam team : GameTeam.values()) {
+            done.put(team, new boolean[CELLS]);
+        }
+    }
+
     public Material itemAt(int index) {
         return items[index];
     }

@@ -35,8 +35,10 @@ public final class FreshwaterColorSurvival extends JavaPlugin {
         this.mapper.setOverrides(pluginConfig.getBlockColorOverrides());
 
         this.gameManager = new GameManager(this, pluginConfig);
+        this.gameManager.setMapper(mapper);
         this.bingoManager = new BingoManager(this, pluginConfig);
         this.bingoManager.setGame(gameManager);
+        this.bingoManager.setMapper(mapper);
         this.punishmentManager = new PunishmentManager(this, pluginConfig);
         this.hudManager = new HudManager(this);
         this.hudManager.setGame(gameManager);

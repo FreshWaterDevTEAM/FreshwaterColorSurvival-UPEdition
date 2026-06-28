@@ -1,5 +1,8 @@
 package com.freshwater.colorsurvival.bingo;
 
+import com.freshwater.colorsurvival.color.BlockColorMapper;
+import com.freshwater.colorsurvival.color.ColorBalancer;
+import com.freshwater.colorsurvival.color.GameColor;
 import com.freshwater.colorsurvival.config.PluginConfig;
 import com.freshwater.colorsurvival.game.GameManager;
 import com.freshwater.colorsurvival.game.GameTeam;
@@ -13,6 +16,7 @@ import org.bukkit.scheduler.BukkitTask;
 
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
@@ -24,6 +28,7 @@ public final class BingoManager {
     private final JavaPlugin plugin;
     private final PluginConfig config;
     private GameManager game;
+    private BlockColorMapper mapper;
 
     private BingoCard card;
     private BukkitTask scanTask;
@@ -37,17 +42,31 @@ public final class BingoManager {
         this.game = game;
     }
 
+    public void setMapper(BlockColorMapper mapper) {
+        this.mapper = mapper;
+    }
+
     public BingoCard getCard() {
         return card;
     }
 
-    public void generateCard() {
+    /**
+     * 生成 bingo 卡。
+     *
+     * @param cardColors 卡片相关颜色（两队公共颜色），按卡平衡时将 25 格摊到这些颜色上；为空则随机生成。
+     */
+    public void generateCard(List<GameColor> cardColors) {
         List<Material> pool = config.getBingoItems();
         if (pool.isEmpty()) {
             plugin.getLogger().warning("bingo-items 为空，使用默认物品 STONE 填充。");
             pool = List.of(Material.STONE);
         }
-        card = new BingoCard(pool);
+        if (mapper != null && cardColors != null && !cardColors.isEmpty()) {
+            Material[] cells = ColorBalancer.buildCard(BingoCard.CELLS, cardColors, pool, mapper, new Random());
+            card = new BingoCard(cells);
+        } else {
+            card = new BingoCard(pool);
+        }
         startScanTask();
     }
 

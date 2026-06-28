@@ -1,7 +1,9 @@
 package com.freshwater.colorsurvival.game;
 
 import com.freshwater.colorsurvival.bingo.BingoManager;
+import com.freshwater.colorsurvival.color.BlockColorMapper;
 import com.freshwater.colorsurvival.color.ColorAssigner;
+import com.freshwater.colorsurvival.color.ColorBalancer;
 import com.freshwater.colorsurvival.color.GameColor;
 import com.freshwater.colorsurvival.config.PluginConfig;
 import com.freshwater.colorsurvival.ui.HudManager;
@@ -25,6 +27,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -36,7 +39,7 @@ public final class GameManager {
 
     private final JavaPlugin plugin;
     private final PluginConfig config;
-    private final ColorAssigner assigner = new ColorAssigner();
+    private BlockColorMapper mapper;
 
     private BingoManager bingoManager;
     private PunishmentManager punishmentManager;
@@ -60,6 +63,10 @@ public final class GameManager {
         this.bingoManager = bingoManager;
         this.punishmentManager = punishmentManager;
         this.hudManager = hudManager;
+    }
+
+    public void setMapper(BlockColorMapper mapper) {
+        this.mapper = mapper;
     }
 
     public GameState getState() {
@@ -211,27 +218,42 @@ public final class GameManager {
 
         autoBalance();
 
-        Map<UUID, GameColor> assigned = new HashMap<>();
-        try {
-            for (GameTeam team : GameTeam.values()) {
-                assigned.putAll(assigner.assign(team, teamMembers(team)));
-            }
-        } catch (ColorAssigner.AssignException ex) {
-            sender.sendMessage(Text.amp(config.prefix() + "&c无法开始：" + ex.getMessage()));
-            return false;
-        }
-
-        long totalPlayers = assigned.size();
-        if (totalPlayers == 0) {
+        List<UUID> aMembers = new ArrayList<>(teamMembers(GameTeam.TEAM_A));
+        List<UUID> bMembers = new ArrayList<>(teamMembers(GameTeam.TEAM_B));
+        int maxSize = Math.max(aMembers.size(), bMembers.size());
+        if (maxSize == 0) {
             sender.sendMessage(Text.amp(config.prefix() + "&c没有任何玩家加入队伍，无法开始。"));
             return false;
         }
+        if (maxSize > ColorAssigner.MAX_PER_TEAM) {
+            sender.sendMessage(Text.amp(config.prefix() + "&c单队人数超过颜色上限 "
+                    + ColorAssigner.MAX_PER_TEAM + " 人，无法开始。"));
+            return false;
+        }
+
+        // ① 两队颜色镜像 + ③ 择优色池：两队按下标用同一组颜色，卡片颜色保证可获取
+        Random rng = new Random();
+        ColorBalancer.Plan plan = ColorBalancer.plan(aMembers.size(), bMembers.size(),
+                config.getBingoItems(), mapper, rng);
+        Collections.shuffle(aMembers, rng);
+        Collections.shuffle(bMembers, rng);
+
+        Map<UUID, GameColor> assigned = new HashMap<>();
+        for (int i = 0; i < aMembers.size(); i++) {
+            assigned.put(aMembers.get(i), plan.orderedColors.get(i));
+        }
+        for (int i = 0; i < bMembers.size(); i++) {
+            assigned.put(bMembers.get(i), plan.orderedColors.get(i));
+        }
+
+        long totalPlayers = assigned.size();
 
         colors.clear();
         colors.putAll(assigned);
         winner = null;
 
-        bingoManager.generateCard();
+        // ② 按卡平衡：把 25 格摊到两队公共颜色上
+        bingoManager.generateCard(plan.cardColors);
 
         state = GameState.RUNNING;
         punishmentManager.onGameStart();
